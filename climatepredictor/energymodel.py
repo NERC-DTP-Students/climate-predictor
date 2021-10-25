@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 Solar = 1368 #Wm^2
 albedo = 0.3
@@ -7,10 +8,11 @@ em2 = 0.5
 sigma = 5.67e-8
 timestep = 1 #years
 length = 50 #years
-delta_albedo = 0.01
+delta_albedo = 0.03
 delta_em1 = 0.02
 delta_em2 = 0.02
 delta_Solar = 0
+calcs_per_timestep = 10
 
 solution = np.zeros((3,1))
 
@@ -23,24 +25,21 @@ def solve_model(Solar,albedo,em1,em2,sigma):
     solution = np.sqrt(np.sqrt(solution))
     return solution #[Ts,T1,T2]
 
-
-our_solution = solve_model(Solar,albedo,em1,em2,sigma)
-print(our_solution)
-
 def solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar):
     solutions_over_time = solve_model(Solar,albedo,em1,em2,sigma)
-    for t in range(1,length):
+    for t in range(1,length*calcs_per_timestep):
+        Solar += delta_Solar/calcs_per_timestep
+        albedo += delta_albedo/calcs_per_timestep
+        em1 += delta_em1/calcs_per_timestep
+        em2 += delta_em2/calcs_per_timestep
+
         solutions_over_time = np.hstack([solutions_over_time, solve_model(Solar,albedo,em1,em2,sigma)])
-        #solutions_over_time[:,t] = solve_model(Solar,albedo,em1,em2,sigma)
-        Solar += delta_Solar
-        albedo += delta_albedo
-        em1 += delta_em1
-        em2 += delta_em2
 
     return solutions_over_time
 
-    
-
 our_solution = solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar)
-print(our_solution)
-print(np.shape(our_solution))
+
+#Test plots
+# plt.figure()
+# plt.plot(our_solution[0,:])
+# plt.show()
