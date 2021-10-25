@@ -1,15 +1,20 @@
 from tkinter import *
 from tkinter import ttk
 
-def make_value_entry(root,caption,rowno, default):
+def make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
     label = ttk.Label(root, width = 10, text = caption)
     label.grid(row = rowno, column = 0)
-    entry = ttk.Entry(root, width = 10, textvariable = default)
+    entry = ttk.Entry(root, width = 10, textvariable = default_initial)
     entry.grid(row = rowno, column = 1)
+    label = ttk.Label(root, width = 10, text = unit)
+    label.grid(row = rowno, column = 2)
+    entry = ttk.Entry(root, width = 10, textvariable = default_rate)
+    entry.grid(row = rowno, column = 3)
+    label = ttk.Label(root, width = 10, text = unit+' per yr')
+    label.grid(row = rowno, column = 4)
 
 
 #def make_slider_entry():
-#def
 
 root = Tk()
 root.title('Climate Predictor')
@@ -19,9 +24,10 @@ mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
-albedo = make_value_entry(root,'Albedo',1, '0.3')
-duration = make_value_entry(root,'Duration',2, '100')
-
+albedo_initial = StringVar(value = 0.3)
+albedo_rate = StringVar(value = 0)
+albedo = make_value_entry(root,'Albedo',1, albedo_initial, albedo_rate, '%')
+duration = make_value_entry(root,'Duration', 2, albedo_initial, albedo_rate, '%')
 root.mainloop()
 
 
