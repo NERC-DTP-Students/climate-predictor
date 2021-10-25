@@ -1,3 +1,27 @@
+"""This energy model contains the input variables to calculate the resultant 3 x 50 matrix of
+    temperature on the ground surface, lower layer atmosphere, and upper layer atmosphere. 
+
+    Below are descriptions of each variable.
+    
+    Solar: solar flux at the top of the atmosphere
+    albedo: reflectivity, or the proportion of the radiation reflected by a surface. 
+    em1: broadband thermal emissivity of the lower atmospheric layer
+    em2: broadband thermal emissivity of the upper atmospheric layer
+    sigma: Stefan-Boltzmann constant
+    tunestep: The incrememntal time unit
+    length: the range of years in the model. This model runs up to 50 years. 
+
+    delta_albedo: change of reflectivity
+    delta_em1 = change of emissivity of the lower atmospheric layer
+    delta_em2 = change of emissivity of the upper atmospheric layer 
+    delta_Solar = change of solar flux at the top of the atmosphere
+    calcs_per_timestep = interpolates betweeen timestep
+
+
+    Reference: https://biocycle.atmos.colostate.edu/shiny/2layer/
+"""
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 
