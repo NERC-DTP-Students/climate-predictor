@@ -7,7 +7,7 @@ class PlotTest(unittest.TestCase):
     '''
     Test the plotting function
     '''
-    def test_plotting_error(self):
+    def test_plotting_yerror(self):
         solution = solve_over_time(1368,0.3,0.5,0.5,5.67e-8,1,50,0,0,0,0,10)
         
         with self.assertRaises(ValueError):
@@ -18,6 +18,12 @@ class PlotTest(unittest.TestCase):
         
         with self.assertRaises(ValueError):
             plot = plotting(solution, 'Off','Off','Off','time')
+
+    def test_plotting_xerror(self):
+        solution = solve_over_time(1368,0.3,0.5,0.5,5.67e-8,1,50,0,0,0,0,10)
+
+        with self.assertRaises(ValueError):
+            plot = plotting(solution, 'On', 'On', 'On', None)
 
     # @patch('matplotlib.pyplot.show')
     # def test_plotting_called(self,mock_pyplot):
