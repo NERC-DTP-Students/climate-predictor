@@ -124,3 +124,7 @@ our_solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo
 # plt.xlabel('Time / years')
 # plt.ylabel('Surface temperature / K')
 # plt.show()
+
+if __name__ == '__main__':
+    solve_model(), solve_over_time()
+
