@@ -1,12 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from energymodel import solve_model, solve_over_time
-
-'''
-
-plot interpolation
-save plot
-'''
+import matplotlib.path as mplPath
 
 Solar = 1368 #Wm^2
 albedo = 0.3
@@ -23,19 +18,29 @@ calcs_per_timestep = 10
 
 solution = solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
 
-def plotting(solution, plot_Ts, plot_T1, plot_T2, plot_em):
+def plotting(solution, plot_Ts, plot_T1, plot_T2, plot_co2, plot_alb, plot_t):
     plt.figure()
 
-    if plot_em == 'On':
-        inc_em = []
+    #note co2 and delta_co2 don't currently exist
+    if plot_co2 == 'On':
+        inc_co2 = []
         for i in range(len(solution[0,:])):
-            inc_em.append(em1+ (i*delta_em1))
+            inc_co2.append(co2+ (i*delta_co2))
 
-        if plot_Ts == 'On': plt.plot(inc_em,solution[0,:],label = 'Surface temperature')
-        if plot_T1 == 'On': plt.plot(inc_em,solution[1,:], label = 'Lower atmospheric temperature')
-        if plot_T2 == 'On': plt.plot(inc_em,solution[2,:], label = 'Upper atmospheric temperature')
+        if plot_Ts == 'On': plt.plot(inc_co2,solution[0,:],label = 'Surface temperature')
+        if plot_T1 == 'On': plt.plot(inc_co2,solution[1,:], label = 'Lower atmospheric temperature')
+        if plot_T2 == 'On': plt.plot(inc_co2,solution[2,:], label = 'Upper atmospheric temperature')
+    
+    elif plot_alb == 'On':
+        inc_alb = []
+        for i in range(len(solution[0,:])):
+            inc_alb.append(alb+ (i*delta_albedo))
 
-    else:
+        if plot_Ts == 'On': plt.plot(inc_alb,solution[0,:],label = 'Surface temperature')
+        if plot_T1 == 'On': plt.plot(inc_alb,solution[1,:], label = 'Lower atmospheric temperature')
+        if plot_T2 == 'On': plt.plot(inc_alb,solution[2,:], label = 'Upper atmospheric temperature')
+
+    elif plot_t == 'On':
         t = []
         for i in range(len(solution[0,:])):
             t.append(i*timestep)
@@ -44,12 +49,15 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, plot_em):
         if plot_T1 == 'On': plt.plot(t,solution[1,:], label = 'Lower atmospheric temperature')
         if plot_T2 == 'On': plt.plot(t,solution[2,:], label = 'Upper atmospheric temperature')
     
+    else: raise ValueError('No x axis selected')
+    
 
     plt.suptitle('GLobal average temperature timeseries')
     plt.title(f'Final surface temperature = {round(solution[0,-1],2)}')
     plt.legend()
-    if plot_em == 'On': plt.xlabel('Emissivity')
-    else: plt.xlabel('Time (years)')
+    if plot_co2 == 'On': plt.xlabel('CO2 Concentration (ppm)')
+    elif plot_alb == 'On': plt.xlabel('Albedo')
+    elif plot_t == 'on': plt.xlabel('Time (years)')
     plt.ylabel('Temerature (K)')
     plt.show()
 
@@ -72,9 +80,10 @@ def alb(lat, lon):
     if abs(lat) >= 60: value = 0.8
     elif abs(lat) <60 and abs(lat) > 20: value = 0.15
     else: value = 0.4
-
     #little squre ocean
-    if lat >= -20 and lat <= 50 and lon >= 50 and lon <= 120: value = 0.06
+    #if lat >= -20 and lat <= 50 and lon >= 50 and lon <= 120: value = 0.06
+    #poly = mplPath.Path(indianOcean)
+    #if poly.contains_point((lat,lon)) == True: value = 0.06
     return value
 
 def two_d_plot(Solar,albedo,em1,em2,sigma):
@@ -97,8 +106,8 @@ def two_d_plot(Solar,albedo,em1,em2,sigma):
 
             solv = np.linalg.solve(Matrix1,Matrix2)
             solution[i,j] = np.sqrt(np.sqrt(solv[0]))
-    
-    plt.contourf(solution, x=lat, y=lon)
+
+    plt.contourf(lon,lat,solution)
     plt.show()
 
 #two_d_plot(Solar,albedo,em1,em2,sigma)
