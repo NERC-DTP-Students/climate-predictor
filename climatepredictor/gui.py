@@ -28,8 +28,6 @@ root.tk.call('set_theme','dark')
 root.title('Climate Predictor')
 mainframe = ttk.Frame(root, padding="12 12 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-root.geometry('1000x200')
-root.resizable(False,False)
 root.columnconfigure(0, weight=1)
 
 
@@ -70,7 +68,7 @@ cloud_cover = make_value_entry(varframe,'Cloud cover', 3,0, albedo_initial, albe
 
 #add time widget with slider
 slider_frame = ttk.Frame(root)
-slider_frame.grid(column = 0, row = 0)
+slider_frame.grid(column = 0, row = 4)
 slider_frame.rowconfigure(0,weight=2)
 slider_frame.rowconfigure(1,weight=2)
 slider_label = ttk.Label(slider_frame, text='Time:')
