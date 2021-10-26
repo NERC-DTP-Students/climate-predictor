@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from energymodel import solve_model, solve_over_time
+from climatepredictor import solve_model, solve_over_time
 import matplotlib.path as mplPath
 
 Solar = 1368 #Wm^2
@@ -15,6 +15,8 @@ delta_em1 = 0.02
 delta_em2 = 0.02
 delta_Solar = 0
 calcs_per_timestep = 10
+co2 = 1
+delta_co2 = 1
 
 solution = solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
 
@@ -51,7 +53,6 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, plot_co2, plot_alb, plot_t):
     
     else: raise ValueError('No x axis selected')
     
-
     plt.suptitle('GLobal average temperature timeseries')
     plt.title(f'Final surface temperature = {round(solution[0,-1],2)}')
     plt.legend()
