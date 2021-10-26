@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import ttk
 
-#from energymodel import *
+from energymodel import calculate_albedo
 
 #Default albedo values
 ocean_albedo = 0.06
@@ -38,15 +38,15 @@ def update_albedo(pressed):
     albedo_value.set(albedo)
     take_inputs()
 
-def calculate_albedo(ocean_perc,ice_perc,green_perc,desert_perc,cloud_perc):
-    ocean = ocean_percent.get()
-    ice = ice_percent.get()
-    green = green_percent.get()
-    desert = desert_percent.get()
-    cloud = cloud_percent.get()
-    earth_albedo = (ocean * ocean_albedo) + (ice * ice_albedo) + (green * green_albedo) + (desert * desert_albedo)
-    total_albedo = (cloud * cloud_albedo) + ((1 - cloud) * earth_albedo)
-    return total_albedo
+# def calculate_albedo(ocean_perc,ice_perc,green_perc,desert_perc,cloud_perc):
+#     ocean = ocean_percent.get()
+#     ice = ice_percent.get()
+#     green = green_percent.get()
+#     desert = desert_percent.get()
+#     cloud = cloud_percent.get()
+#     earth_albedo = (ocean * ocean_albedo) + (ice * ice_albedo) + (green * green_albedo) + (desert * desert_albedo)
+#     total_albedo = (cloud * cloud_albedo) + ((1 - cloud) * earth_albedo)
+#     return total_albedo
 
 def take_inputs(pressed=None):
     co2_initial_input = cO2_initial_value.get()
@@ -157,7 +157,5 @@ albedo_entry.bind('<KeyRelease>', albedo_to_cloud)
 
 # event when something is typed
 #root.bind('<KeyPress>', take_inputs)
-
-
 
 root.mainloop()
