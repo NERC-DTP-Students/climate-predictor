@@ -55,6 +55,8 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
         elif plot_T2 == 'On': plt.plot(t,solution[2,:], label = 'Upper atmospheric temperature')
         else: raise ValueError('No y variable selected')
     
+    else: raise ValueError('No x axis selected')
+    
 
     plt.suptitle('GLobal average temperature timeseries')
     plt.title(f'Final surface temperature = {round(solution[0,-1],2)}')
