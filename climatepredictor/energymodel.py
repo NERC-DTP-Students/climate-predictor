@@ -63,5 +63,5 @@ def solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delt
 
     return solutions_over_time
 
-our_solution = solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar)
+our_solution = solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
 #Test plots
