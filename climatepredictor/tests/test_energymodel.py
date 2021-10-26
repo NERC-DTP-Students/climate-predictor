@@ -1,6 +1,5 @@
 import unittest
 import numpy as np
-import climatepredictor
 from climatepredictor import solve_model, solve_over_time
 
 class ModelTest(unittest.TestCase):
