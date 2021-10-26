@@ -114,5 +114,5 @@ def two_d_plot(Solar,albedo,em1,em2,sigma):
     plt.contourf(lon,lat,solution)
     plt.show()
 
-two_d_plot(Solar,albedo,em1,em2,sigma)
+#two_d_plot(Solar,albedo,em1,em2,sigma)
 
