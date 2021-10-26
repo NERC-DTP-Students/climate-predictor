@@ -6,9 +6,9 @@ from tkinter import ttk
 
 #Default albedo values
 ocean_albedo = 0.06
-ice_albedo = 0.7
-green_albedo = 0.15
-desert_albedo = 0.4
+ice_albedo = 0.65
+green_albedo = 0.12
+desert_albedo = 0.35
 cloud_albedo = 0.5
 
 root = Tk()
@@ -29,18 +29,23 @@ def albedo_to_cloud(pressed):
     take_inputs()
 
 def update_albedo(pressed):
-    ocean = float(ocean_percent.get())
-    ice = float(ice_percent.get())
-    green = float(green_percent.get())
-    desert = float(desert_percent.get())
-    cloud = float(cloud_percent.get())
-    albedo = calculate_albedo(ocean,ice,green,desert,cloud,ocean_albedo,ice_albedo,green_albedo,desert_albedo,cloud_albedo)
+    ocean = ocean_percent.get()
+    ice = ice_percent.get()
+    green = green_percent.get()
+    desert = desert_percent.get()
+    cloud = cloud_percent.get()
+    albedo = calculate_albedo(ocean,ice,green,desert,cloud)
     albedo_value.set(albedo)
     take_inputs()
 
-def calculate_albedo(ocean_percent,ice_percent,green_percent,desert_percent,cloud_percent,ocean_albedo,ice_albedo,green_albedo,desert_albedo,cloud_albedo):
-    earth_albedo = ocean_percent * ocean_albedo + ice_percent * ice_albedo + green_percent * green_albedo + desert_percent * desert_albedo
-    total_albedo = cloud_percent * cloud_albedo + (1 - cloud_percent) * earth_albedo + cloud_percent * cloud_albedo * earth_albedo
+def calculate_albedo(ocean_perc,ice_perc,green_perc,desert_perc,cloud_perc):
+    ocean = ocean_percent.get()
+    ice = ice_percent.get()
+    green = green_percent.get()
+    desert = desert_percent.get()
+    cloud = cloud_percent.get()
+    earth_albedo = (ocean * ocean_albedo) + (ice * ice_albedo) + (green * green_albedo) + (desert * desert_albedo)
+    total_albedo = (cloud * cloud_albedo) + ((1 - cloud) * earth_albedo)
     return total_albedo
 
 def take_inputs(pressed=None):
@@ -68,84 +73,84 @@ greeting.pack()
 
 
 # CO2 inputs
-cO2_initial_value = StringVar(root, value = "100ppm")
+cO2_initial_value = DoubleVar(root, value = "100ppm")
 cO2_initial_entry = ttk.Entry(textvariable=cO2_initial_value)
 cO2_initial_entry.pack()
 
-cO2_change_value = StringVar(root, value = 10)
+cO2_change_value = DoubleVar(root, value = 10)
 cO2_change_entry = ttk.Entry(textvariable=cO2_change_value)
 cO2_change_entry.pack()
 
 # oceans input
-ocean_percent = StringVar(root, value = "0.65") #can we make the percentage sign sticky?
+ocean_percent = DoubleVar(root, value = "0.65") #can we make the percentage sign sticky?
 ocean_percent_entry = ttk.Entry(textvariable=ocean_percent)
 ocean_percent_entry.pack()
 ocean_percent_entry.bind('<KeyRelease>', update_albedo)
 
-ocean_change_value = StringVar(root, value = 10)
+ocean_change_value = DoubleVar(root, value = 10)
 ocean_change_entry = ttk.Entry(textvariable=ocean_change_value)
 ocean_change_entry.pack()
 
 # ice input
-ice_percent = StringVar(root, value = "0.65") #can we make the percentage sign sticky?
+ice_percent = DoubleVar(root, value = "0.15") #can we make the percentage sign sticky?
 ice_percent_entry = ttk.Entry(textvariable=ice_percent)
 ice_percent_entry.pack()
 ice_percent_entry.bind('<KeyRelease>', update_albedo)
 
-ice_change_value = StringVar(root, value = 10)
+ice_change_value = DoubleVar(root, value = 10)
 ice_change_entry = ttk.Entry(textvariable=ice_change_value)
 ice_change_entry.pack()
 
 # green input
-green_percent = StringVar(root, value = "0.65") #can we make the percentage sign sticky?
+green_percent = DoubleVar(root, value = "0.15") #can we make the percentage sign sticky?
 green_percent_entry = ttk.Entry(textvariable=green_percent)
 green_percent_entry.pack()
 green_percent_entry.bind('<KeyRelease>', update_albedo)
 
-green_change_value = StringVar(root, value = 10)
+green_change_value = DoubleVar(root, value = 10)
 green_change_entry = ttk.Entry(textvariable=green_change_value)
 green_change_entry.pack()
 
 # desert input
-desert_percent = StringVar(root, value = "0.65") #can we make the percentage sign sticky?
+desert_percent = DoubleVar(root, value = "0.05") #can we make the percentage sign sticky?
 desert_percent_entry = ttk.Entry(textvariable=desert_percent)
 desert_percent_entry.pack()
 desert_percent_entry.bind('<KeyRelease>', update_albedo)
 
-desert_change_value = StringVar(root, value = 10)
+desert_change_value = DoubleVar(root, value = 10)
 desert_change_entry = ttk.Entry(textvariable=desert_change_value)
 desert_change_entry.pack()
 
 # clouds input
-cloud_percent = StringVar(root, value = "0.5") #can we make the percentage sign sticky?
+cloud_percent = DoubleVar(root, value = "0.5") #can we make the percentage sign sticky?
 cloud_percent_entry = ttk.Entry(textvariable=cloud_percent)
 cloud_percent_entry.pack()
 cloud_percent_entry.bind('<KeyRelease>', update_albedo)
 
-cloud_change_value = StringVar(root, value = 10)
+cloud_change_value = DoubleVar(root, value = 10)
 cloud_change_entry = ttk.Entry(textvariable=cloud_change_value)
 cloud_change_entry.pack()
 
 
 # time input
-time_step_value = StringVar(root, value =  5)
+time_step_value = DoubleVar(root, value =  5)
 time_step_entry = ttk.Entry(textvariable=time_step_value)
 time_step_entry.pack()
 time_step_entry.bind('<KeyRelease>', take_inputs)
 
-duration_value = StringVar(root, value =  30)
+duration_value = DoubleVar(root, value =  30)
 duration_entry = ttk.Entry(textvariable=duration_value)
 duration_entry.pack()
 duration_entry.bind('<KeyRelease>', take_inputs)
 
 # Solar input
-solar_value = StringVar(root, value =  1000)
+solar_value = DoubleVar(root, value =  1000)
 solar_entry = ttk.Entry(textvariable=solar_value)
 solar_entry.pack()
 solar_entry.bind('<KeyRelease>', take_inputs)
 
 # albedo box
-albedo_value = StringVar(root, value =  0.5)
+albedo_value = DoubleVar(root, value = calculate_albedo(ocean_percent,ice_percent,green_percent,desert_percent,cloud_percent))
 albedo_entry = ttk.Entry(textvariable=albedo_value)
 albedo_entry.pack()
 albedo_entry.bind('<KeyRelease>', albedo_to_cloud)
