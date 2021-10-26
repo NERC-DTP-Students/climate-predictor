@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter.ttk import *
 import numpy as np
 
+
 class Slider(Frame):
     LINE_COLOR = "#476b6b"
     LINE_WIDTH = 3
@@ -28,6 +29,7 @@ class Slider(Frame):
         self.W = width
         self.canv_H = self.H
         self.canv_W = self.W
+       
         if not show_value:
             self.slider_y = self.canv_H/2 # y pos of the slider
         else:
@@ -56,6 +58,12 @@ class Slider(Frame):
         for bar in self.bars:
             bar["Ids"] = self.__addBar(bar["Pos"], bar["Idx"])
 
+        #initial percentages
+        self.forest_perc = DoubleVar(master,25)
+        self.ice_perc = DoubleVar(master,25)
+        self.water_perc = DoubleVar(master,25)
+        self.desert_perc = DoubleVar(master,25)
+        self.canv.create_text(self.canv_W-2*self.slider_x,self.canv_H-0.8*self.slider_y,text='desert',fill='white')
 
     def getValues(self):
         values = [bar["Value"] for bar in self.bars]
@@ -80,7 +88,7 @@ class Slider(Frame):
         self.__moveBar(idx,pos)
 
         # set the values in the entry boxes
-        values = slider.getValues()
+        values = self.getValues()
         sorted_values = np.array(sorted(values))
         sorted_list = sorted(values)
         n=0
@@ -93,10 +101,10 @@ class Slider(Frame):
 
         percentages = np.concatenate((np.array([sorted_values[0]]), np.diff(sorted_values), np.array([100 - sorted_values[-1]])), axis = 0)
 
-        forest_perc.set(percentages[int(pos[0])])
-        ice_perc.set(percentages[int(pos[1])])
-        water_perc.set(percentages[int(pos[2])])
-        desert_perc.set(percentages[3])
+        self.forest_perc.set(np.round(percentages[int(pos[0])],1))
+        self.ice_perc.set(np.round(percentages[int(pos[1])],1))
+        self.water_perc.set(np.round(percentages[int(pos[2])],1))
+        self.desert_perc.set(np.round(percentages[3],1))
 
 
 
@@ -121,13 +129,13 @@ class Slider(Frame):
             y_value = y+Slider.BAR_RADIUS+8
             #value = pos*(self.max_val - self.min_val)+self.min_val
             #id_value = self.canv.create_text(x,y_value, text = format(value, Slider.DIGIT_PRECISION))
-            id_value = self.canv.create_text(x,y_value, text = names[idx])
+            id_value = self.canv.create_text(x,y_value,fill='white',text = names[idx])
             return [id_outer, id_inner, id_value]
         else:
             return [id_outer, id_inner]
 
     def __moveBar(self, idx, pos):
-        print(idx)
+        
         ids = self.bars[idx]["Ids"]
         for id in ids:
             self.canv.delete(id)
@@ -156,35 +164,3 @@ class Slider(Frame):
             if bbox[0] < x and bbox[2] > x and bbox[1] < y and bbox[3] > y:
                 return [True, idx]
         return [False, None]
-
-root = Tk()
-
-
-#initial percentages
-forest_perc = DoubleVar(root, 25)
-ice_perc = DoubleVar(root, 25)
-water_perc = DoubleVar(root, 25)
-desert_perc = DoubleVar(root, 25)
-
-# initial positions on the slider (calculated from initial percentages)
-init_positions = [ice_perc.get(), forest_perc.get()+ice_perc.get(), forest_perc.get()+ice_perc.get()+water_perc.get()]
-
-# create the slider
-slider = Slider(root, width = 400, height = 60, min_val = 0, max_val = 100, init_lis = init_positions, show_value = True)
-slider.pack()
-
-# Entry boxes for the different values
-forest_value = Entry(textvariable=forest_perc)
-ice_value = Entry(textvariable=ice_perc)
-water_value = Entry(textvariable=water_perc)
-desert_value = Entry(textvariable=desert_perc)
-
-forest_value.pack()
-ice_value.pack()
-water_value.pack()
-desert_value.pack()
-
-root.title("Slider Widget")
-root.mainloop()
-
-print(slider.getValues())
