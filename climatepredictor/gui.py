@@ -21,6 +21,12 @@ def make_value_entry(root,caption,rowno,colno,default_initial, default_rate, uni
     label = ttk.Label(new_frame, width = 10, text = unit+' per yr')
     label.grid(row = 0, column = 4)
 
+#make simple entry with one label
+def make_simple_entry(root,label,variable,rowno,colno):
+    new_label=ttk.Label(root,text=label,width=10)
+    new_label.grid(row=rowno,column=colno)
+    new_entry=ttk.Entry(root,width=10,textvariable=variable)
+    new_entry.grid(row=rowno,column=colno+1)
 
 #function for making a Radiobutton
 def make_radio_button(frame,name,variable_in,value_in,rowno):
@@ -99,9 +105,7 @@ change_label.grid(column=2,row=1, sticky=(N, W, E, S))
 make_value_entry(varframe,u'CO\u2082 conc.',2,0, co2_initial, co2_rate, 'ppm')
 make_value_entry(varframe,'Cloud cover', 3,0, cloud_initial, cloud_rate, '%')
 
-#add land use widget here, row 4 in variable frame
-
-#add advanced frame dropdown in variable frame row 6
+#add advanced frame dropdown in variable frame row 4
 advanced_frame=ttk.Frame(varframe,padding="12 12 12 12")
 advanced_frame.grid(column=0,row=5,sticky=(N,W,E,S),rowspan=1)
 make_value_entry(advanced_frame,u'\u03B1\u2081',0,0,alpha1_initial,alpha1_rate,'')
@@ -126,15 +130,33 @@ def hide():
 
 
 button=ttk.Button(varframe,text='Advanced Options',command=reveal)
-button.grid(row=6, column=0)
+button.grid(row=4, column=0)
 hide_button=ttk.Button(varframe,text='Hide',command=hide)
-hide_button.grid(row=6,column=1)
+hide_button.grid(row=4,column=1)
 
-#add time widget with slider - row 6 in variable frame
+#add land use widget here, row 6 in variable frame
+from slider_setup_2 import Slider
+slider_frame=ttk.Frame(varframe,padding="12 12 12 12")
+slider_frame.grid(row=6,column=0)
+
+
+# initial positions on the slider (calculated from initial percentages)
+init_positions = [25,50,75]
+# create the slider
+slider = Slider(slider_frame, width = 400, height = 60, min_val = 0, max_val = 100, init_lis = init_positions, show_value = True)
+slider.grid(row=0,column=0)
+# Entry boxes for the different values
+# use make_simple_entry(root,label,variable,rowno,colno):
+forest_value = make_simple_entry(slider_frame,'Forest',slider.forest_perc,1,0)
+ice_value = make_simple_entry(slider_frame,'Ice',slider.ice_perc,2,0)
+water_value = make_simple_entry(slider_frame,'Water',slider.water_perc,3,0)
+desert_value = make_simple_entry(slider_frame,'Desert',slider.desert_perc,4,0)
+
+#add time widget with slider - row 8 in variable frame
 if(cloud_rate.get() != 0.0):
     print(cloud_rate.get())
 slider_frame = ttk.Frame(varframe)
-slider_frame.grid(column = 0, row = 7,columnspan=4,rowspan=1)
+slider_frame.grid(column = 0, row = 8,columnspan=4,rowspan=1)
 slider_frame.rowconfigure(0,weight=2)
 slider_frame.rowconfigure(1,weight=2)
 slider_label = ttk.Label(slider_frame, text='Time:')
