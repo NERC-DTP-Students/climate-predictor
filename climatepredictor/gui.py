@@ -18,7 +18,6 @@ def make_value_entry(root,caption,rowno,colno,default_initial, default_rate, uni
     label = ttk.Label(new_frame, width = 10, text = unit+' per yr')
     label.grid(row = 0, column = 4)
 
-#def make_slider_entry():
 
 
 root = Tk()
@@ -63,25 +62,27 @@ ttk.Label(plotframe, text='Plot Options',width=30).grid(column=1,row=0, sticky=(
 
 #default values
 #change this to accurate values later
-albedo_initial = float(0.3)
-albedo_rate = float(0)
-cloud_initial=float(10)
-cloud_rate=float(0)
-alpha1_initial=0.3
-alpha1_rate=0.1
-alpha2_initial=0.4
-alpha2_rate=0.1
-epsilon1_initial=0.3
-epsilon1_rate=0.1
-epsilon2_initial=0.4
-epsilon2_rate=0.1
+co2_initial = DoubleVar(root,value = 278.0)#preindustrial
+co2_rate =  DoubleVar(root,value = 0.0)
+cloud_initial=  DoubleVar(root,value = 10.0)
+cloud_rate= DoubleVar(root,value = 0.0)
+alpha1_initial= DoubleVar(root,value = 0.3)
+alpha1_rate= DoubleVar(root,value = 0.0)
+alpha2_initial= DoubleVar(root,value = 0.4)
+alpha2_rate= DoubleVar(root,value = 0.0)
+epsilon1_initial= DoubleVar(root,value = 0.3)
+epsilon1_rate= DoubleVar(root,value = 0.0)
+epsilon2_initial= DoubleVar(root,value = 0.4)
+epsilon2_rate= DoubleVar(root,value = 0.0)
 
-make_value_entry(varframe,u'CO\u2082 conc.',2,0, albedo_initial, albedo_rate, 'ppm')
+make_value_entry(varframe,u'CO\u2082 conc.',2,0, co2_initial, co2_rate, 'ppm')
 make_value_entry(varframe,'Cloud cover', 3,0, cloud_initial, cloud_rate, '%')
 
 
 
 #add time widget with slider
+if(cloud_rate.get() != 0.0):
+    print(cloud_rate.get())
 slider_frame = ttk.Frame(root)
 slider_frame.grid(column = 0, row = 4)
 slider_frame.rowconfigure(0,weight=2)
@@ -138,4 +139,5 @@ button.grid(row=6, column=0)
 
 root.mainloop()
 
-print(current_value.get())
+print(co2_initial.get())
+#print(current_value.get())
