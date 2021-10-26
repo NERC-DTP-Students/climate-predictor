@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from climatepredictor import solve_model, solve_over_time
+from climatepredictor import energymodel
 import matplotlib.path as mplPath
 
 Solar = 1368 #Wm^2
@@ -17,48 +17,51 @@ delta_Solar = 0
 calcs_per_timestep = 10
 co2 = 1
 delta_co2 = 1
+cc = 1
+delta_cc = 1
 
-solution = solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
+solution = energymodel.solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
 
-def plotting(solution, plot_Ts, plot_T1, plot_T2, plot_co2, plot_alb, plot_t):
+def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     plt.figure()
 
-    #note co2 and delta_co2 don't currently exist
-    if plot_co2 == 'On':
+    if xaxis == 'co2':
         inc_co2 = []
         for i in range(len(solution[0,:])):
             inc_co2.append(co2+ (i*delta_co2))
 
         if plot_Ts == 'On': plt.plot(inc_co2,solution[0,:],label = 'Surface temperature')
-        if plot_T1 == 'On': plt.plot(inc_co2,solution[1,:], label = 'Lower atmospheric temperature')
-        if plot_T2 == 'On': plt.plot(inc_co2,solution[2,:], label = 'Upper atmospheric temperature')
+        elif plot_T1 == 'On': plt.plot(inc_co2,solution[1,:], label = 'Lower atmospheric temperature')
+        elif plot_T2 == 'On': plt.plot(inc_co2,solution[2,:], label = 'Upper atmospheric temperature')
+        else: raise ValueError('No y variable selected')
     
-    elif plot_alb == 'On':
-        inc_alb = []
+    elif xaxis == 'cloud cover':
+        inc_cc = []
         for i in range(len(solution[0,:])):
-            inc_alb.append(alb+ (i*delta_albedo))
+            inc_cc.append(cc + (i*delta_cc))
 
-        if plot_Ts == 'On': plt.plot(inc_alb,solution[0,:],label = 'Surface temperature')
-        if plot_T1 == 'On': plt.plot(inc_alb,solution[1,:], label = 'Lower atmospheric temperature')
-        if plot_T2 == 'On': plt.plot(inc_alb,solution[2,:], label = 'Upper atmospheric temperature')
+        if plot_Ts == 'On': plt.plot(inc_cc,solution[0,:],label = 'Surface temperature')
+        elif plot_T1 == 'On': plt.plot(inc_cc,solution[1,:], label = 'Lower atmospheric temperature')
+        elif plot_T2 == 'On': plt.plot(inc_cc,solution[2,:], label = 'Upper atmospheric temperature')
+        else: raise ValueError('No y variable selected')
 
-    elif plot_t == 'On':
+    elif xaxis == 'time':
         t = []
         for i in range(len(solution[0,:])):
             t.append(i*timestep)
         
         if plot_Ts == 'On': plt.plot(t,solution[0,:],label = 'Surface temperature')
-        if plot_T1 == 'On': plt.plot(t,solution[1,:], label = 'Lower atmospheric temperature')
-        if plot_T2 == 'On': plt.plot(t,solution[2,:], label = 'Upper atmospheric temperature')
+        elif plot_T1 == 'On': plt.plot(t,solution[1,:], label = 'Lower atmospheric temperature')
+        elif plot_T2 == 'On': plt.plot(t,solution[2,:], label = 'Upper atmospheric temperature')
+        else: raise ValueError('No y variable selected')
     
-    else: raise ValueError('No x axis selected')
-    
+
     plt.suptitle('GLobal average temperature timeseries')
     plt.title(f'Final surface temperature = {round(solution[0,-1],2)}')
     plt.legend()
-    if plot_co2 == 'On': plt.xlabel('CO2 Concentration (ppm)')
-    elif plot_alb == 'On': plt.xlabel('Albedo')
-    elif plot_t == 'on': plt.xlabel('Time (years)')
+    if xaxis == 'co2': plt.xlabel('CO2 Concentration (ppm)')
+    elif xaxis == 'cloud cover': plt.xlabel('Cloud Cover')
+    elif xaxis == 'time': plt.xlabel('Time (years)')
     plt.ylabel('Temerature (K)')
     plt.show()
 
@@ -111,5 +114,5 @@ def two_d_plot(Solar,albedo,em1,em2,sigma):
     plt.contourf(lon,lat,solution)
     plt.show()
 
-#two_d_plot(Solar,albedo,em1,em2,sigma)
+two_d_plot(Solar,albedo,em1,em2,sigma)
 
