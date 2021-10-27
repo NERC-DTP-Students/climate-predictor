@@ -135,7 +135,7 @@ hide_button=ttk.Button(varframe,text='Hide',command=hide)
 hide_button.grid(row=4,column=1)
 
 #add land use widget here, row 6 in variable frame
-from climatepredictor.slider_setup_2 import Slider
+from slider_setup_2 import Slider
 slider_frame=ttk.Frame(varframe,padding="12 12 12 12")
 slider_frame.grid(row=10,column=0,columnspan=4,rowspan=5,sticky=(N, S, E, W))
 slider_frame.columnconfigure(0, weight=1)
@@ -195,8 +195,6 @@ slider2.grid(row=1,column=6,sticky=(N, S, E, W))
 plot_options_label=ttk.Label(plotframe, text='Plot Options',width=30)
 plot_options_label.grid(column=0,row=0, sticky=(N, S, E, W))
 
-def plotting(): #add sol's function here
-    pass
 
 # 4 frames
 xaxis_frame=ttk.Frame(plotframe,padding="12 12 12 12")
@@ -236,6 +234,33 @@ make_radio_button(xaxis_advanced,u'\u03B5\u2081','xaxis','epsilon1',1)
 make_radio_button(xaxis_advanced,u'\u03B5\u2082','xaxis','epsilon2',2)
 xaxis_advanced.grid_remove()
 
+def show_plot():
+    from energymodel import solve_over_time
+    from plots import plotting
+    import matplotlib.pyplot as plt
+
+    Solar = 1368 #Wm^2
+    albedo = 0.3
+    em1 = 0.5
+    em2 = 0.5
+    sigma = 5.67e-8
+    timestep = 1 #years
+    length = 50 #years
+    delta_albedo = 0.00
+    delta_em1 = 0.02
+    delta_em2 = 0.02
+    delta_Solar = 0
+    calcs_per_timestep = 10
+    co2 = 1
+    delta_co2 = 1
+    cc = 20
+    delta_cc = 1
+
+    solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
+    plotting(solution, 'On', 'On', 'On','time')
+    plt.show()
+
+
 #functions for button for advanced axis frame
 def reveal_plot():
     
@@ -250,6 +275,8 @@ hide_button2.grid(row=3,column=1,sticky=(N, S, E, W))
 hide_button2.grid_remove()
 button2=ttk.Button(plotframe,text='Advanced X Axis Options',command=reveal_plot)
 button2.grid(row=3, column=0,sticky=(N, S, E, W))
+button3=ttk.Button(plotframe, text='Plot',command=show_plot)
+button3.grid(row=4, column=0,sticky=(N,S,E,W))
 
 # add save button
 def save_plot(): #create this function
