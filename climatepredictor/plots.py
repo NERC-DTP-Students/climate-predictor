@@ -11,13 +11,13 @@ sigma = 5.67e-8
 timestep = 1 #years
 length = 50 #years
 delta_albedo = 0.00
-delta_em1 = 0.01
-delta_em2 = 0.01
+delta_em1 = 0.02
+delta_em2 = 0.02
 delta_Solar = 0
 calcs_per_timestep = 10
 co2 = 1
 delta_co2 = 1
-cc = 1
+cc = 20
 delta_cc = 1
 
 solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
@@ -28,7 +28,7 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     if xaxis == 'co2':
         inc_co2 = []
         for i in range(len(solution[0,:])):
-            inc_co2.append(co2+ (i*delta_co2))
+            inc_co2.append(co2+ (i*delta_co2)/calcs_per_timestep)
 
         if plot_Ts == 'On': plt.plot(inc_co2,solution[0,:],label = 'Surface temperature')
         if plot_T1 == 'On': plt.plot(inc_co2,solution[1,:], label = 'Lower atmospheric temperature')
@@ -38,7 +38,7 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     elif xaxis == 'cloud cover':
         inc_cc = []
         for i in range(len(solution[0,:])):
-            inc_cc.append(cc + (i*delta_cc))
+            inc_cc.append(cc + (i*delta_cc)/calcs_per_timestep)
 
         if plot_Ts == 'On': plt.plot(inc_cc,solution[0,:],label = 'Surface temperature')
         if plot_T1 == 'On': plt.plot(inc_cc,solution[1,:], label = 'Lower atmospheric temperature')
@@ -48,7 +48,7 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     elif xaxis == 'time':
         t = []
         for i in range(len(solution[0,:])):
-            t.append(i*timestep)
+            t.append(i*timestep/calcs_per_timestep)
         
         if plot_Ts == 'On': plt.plot(t,solution[0,:],label = 'Surface temperature')
         if plot_T1 == 'On': plt.plot(t,solution[1,:], label = 'Lower atmospheric temperature')
@@ -58,7 +58,7 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     elif xaxis == 'albedo':
         inc_alb = []
         for i in range(len(solution[0,:])):
-            inc_alb.append(albedo+(i*delta_albedo))
+            inc_alb.append(albedo+(i*delta_albedo)/calcs_per_timestep)
         
         if plot_Ts == 'On': plt.plot(inc_alb,solution[0,:],label = 'Surface temperature')
         if plot_T1 == 'On': plt.plot(inc_alb,solution[1,:], label = 'Lower atmospheric temperature')
@@ -68,7 +68,7 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     elif xaxis == 'emissivity':
         inc_em = []
         for i in range(len(solution[0,:])):
-            inc_em.append(i*timestep)
+            inc_em.append(em1+(i*delta_em1)/calcs_per_timestep)
         
         if plot_Ts == 'On': plt.plot(inc_em,solution[0,:],label = 'Surface temperature')
         if plot_T1 == 'On': plt.plot(inc_em,solution[1,:], label = 'Lower atmospheric temperature')
@@ -82,7 +82,7 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     plt.title(f'Final surface temperature = {round(solution[0,-1],2)}')
     plt.legend()
     if xaxis == 'co2': plt.xlabel('CO2 Concentration (ppm)')
-    elif xaxis == 'cloud cover': plt.xlabel('Cloud Cover')
+    elif xaxis == 'cloud cover': plt.xlabel('Cloud Cover (%)')
     elif xaxis == 'time': plt.xlabel('Time (years)')
     elif xaxis == 'albedo': plt.xlabel('Albedo')
     elif xaxis == 'emissivity': plt.xlabel('Emissivity')
@@ -92,7 +92,7 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     return fig
 
 #commenting out so doesn't run when imported
-plt.figure = plotting(solution, 'On', 'On', 'On','time')
+plotting(solution, 'On', 'On', 'On','time')
 plt.show()
 
 #don't think this is needed but no harm for now.
