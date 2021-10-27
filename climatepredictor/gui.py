@@ -9,10 +9,12 @@ def make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
     label.grid(row = rowno, column = 0,sticky=(N, S, E, W))
     entry = ttk.Entry(root, width = 10, textvariable = default_initial)
     entry.grid(row = rowno, column = 1,sticky=(N, S, E, W))
+    entry.bind('<KeyRelease>', execute_main)
     label = ttk.Label(root, width =10, text = unit)
     label.grid(row = rowno, column = 2,sticky=(N, S, E, W))
     entry = ttk.Entry(root, width = 10, textvariable = default_rate)
     entry.grid(row = rowno, column = 3,sticky=(N, S, E, W))
+    entry.bind('<KeyRelease>', execute_main)
     label = ttk.Label(root, width = 10, text = unit+' per yr')
     label.grid(row = rowno, column = 4,sticky=(N, S, E, W))
 
@@ -22,6 +24,7 @@ def make_simple_entry(root,label,variable,rowno,colno):
     new_label.grid(row=rowno,column=colno,sticky=(N, S, E, W))
     new_entry=ttk.Entry(root,width=10,textvariable=variable)
     new_entry.grid(row=rowno,column=colno+1,sticky=(N, S, E, W))
+    new_entry.bind('<KeyRelease>', execute_main)
 
 #function for making a Radiobutton
 def make_radio_button(frame,name,variable_in,value_in,rowno):
@@ -37,6 +40,24 @@ def make_check_button(frame,name,variable_in,initial_state,rowno):
         check_button.state(['selected'])
     else:
         check_button.state(['!selected'])
+
+def execute_main(pressed):
+    co2_initial_update = co2_initial.get() 
+    co2_rate_update = co2_rate.get()
+    cloud_initial_update = cloud_initial.get()
+    cloud_rate_update = cloud_rate.get()
+    albedo_initial_update = albedo_initial.get()
+    albedo_rate_update = albedo_rate.get()
+    epsilon1_initial_update = epsilon1_initial.get()
+    epsilon1_rate_update = epsilon1_rate.get()
+    epsilon2_initial_update = epsilon2_initial.get()
+    epsilon2_rate_update = epsilon2_rate.get()
+    solar_flux_update = solar_flux.get()
+    print(solar_flux_update)
+    #forest_update = slider.forest_perc.get()
+    #ice_update = 
+    #water_update = 
+    #desert_update = 
 
 
 root = Tk()
@@ -70,14 +91,31 @@ plotframe.rowconfigure(0, weight=1)
 #change this to accurate values later
 co2_initial = DoubleVar(root,value = 278.0)#preindustrial
 co2_rate =  DoubleVar(root,value = 0.0)
-cloud_initial=  DoubleVar(root,value = 10.0)
-cloud_rate= DoubleVar(root,value = 0.0)
-albedo_initial= DoubleVar(root,value = 0.3)
-albedo_rate= DoubleVar(root,value = 0.0)
-epsilon1_initial= DoubleVar(root,value = 0.3)
-epsilon1_rate= DoubleVar(root,value = 0.0)
-epsilon2_initial= DoubleVar(root,value = 0.4)
-epsilon2_rate= DoubleVar(root,value = 0.0)
+cloud_initial = DoubleVar(root,value = 10.0)
+cloud_rate = DoubleVar(root,value = 0.0)
+albedo_initial = DoubleVar(root,value = 0.3)
+albedo_rate = DoubleVar(root,value = 0.0)
+epsilon1_initial = DoubleVar(root,value = 0.3)
+epsilon1_rate = DoubleVar(root,value = 0.0)
+epsilon2_initial = DoubleVar(root,value = 0.4)
+epsilon2_rate = DoubleVar(root,value = 0.0)
+solar_flux = DoubleVar(root,value = 1300.0)
+
+global co2_initial_update
+global co2_rate_update
+global cloud_initial_update
+global cloud_rate_update
+global albedo_initial_update
+global albedo_rate_update
+global epsilon1_initial_update
+global epsilon1_rate_update
+global epsilon2_initial_update
+global epsilon2_rate_update
+global solar_flux_update
+global forest_update
+global ice_update
+global water_update
+global desert_update
 
 
 ttk.Label(varframe, text='Variable Options',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
@@ -114,10 +152,12 @@ make_value_entry(advanced_frame,u'\u03B5\u2081',2,epsilon1_initial,epsilon1_rate
 make_value_entry(advanced_frame,u'\u03B5\u2082',3,epsilon2_initial,epsilon2_rate,'')
 solar_label=ttk.Label(advanced_frame,text=u'S\u2080/present day solar flux')
 solar_label.grid(column=0,row=5, sticky=(N, S, E, W))
-solar_flux=DoubleVar(advanced_frame,0)
 solar_entry=ttk.Entry(advanced_frame,textvariable=solar_flux,width=5)
 solar_entry.grid(column=1,row=5, sticky=(N, S, E, W))
+solar_entry.bind('<KeyRelease>', execute_main)
 advanced_frame.grid_remove()
+
+
 
 #functions for button for advanced frame
 def reveal():
