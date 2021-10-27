@@ -1,3 +1,7 @@
 # ignore venv
 venv/*
 venv/*/*
+climatepredictor/__pycache__/*.*.pyc
+climatepredictor/__pycache__/*
+*.pyc
+*/*.pyc

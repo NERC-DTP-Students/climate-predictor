@@ -10,7 +10,7 @@ class Slider(Frame):
     BAR_COLOR_OUTTER = "#c2d6d6"
     BAR_RADIUS = 10
     BAR_RADIUS_INNER = BAR_RADIUS-5
-    DIGIT_PRECISION = '.1f' # for showing in the canvas
+    DIGIT_PRECISION = '.0f' # for showing in the canvas
 
     # the aesthetics
     def __init__(self, master, width = 400, height = 80, min_val = 0, max_val = 1, init_lis = None, show_value = True):
@@ -21,7 +21,7 @@ class Slider(Frame):
         self.init_lis = init_lis
         self.max_val = max_val
         self.min_val = min_val
-        self.show_value = show_value
+        self.show_value = True
         self.H = height
         self.W = width
         self.canv_H = self.H
@@ -96,13 +96,6 @@ class Slider(Frame):
         desert_perc.set(percentages[3])
 
 
-
-        forest_perc.set(percentages[0])
-        ice_perc.set(percentages[1])
-        water_perc.set(percentages[2])
-        desert_perc.set(percentages[3])
-
-
         #print(values[1])
 
         #print(slider.getValues())
@@ -121,6 +114,8 @@ class Slider(Frame):
         """@ pos: position of the bar, ranged from (0,1)"""
         if pos <0 or pos >1:
             raise Exception("Pos error - Pos: "+str(pos))
+        if id == 1:
+            LINE_COLOR = "ff0000"
         R = Slider.BAR_RADIUS
         r = Slider.BAR_RADIUS_INNER
         L = self.canv_W - 2*self.slider_x
@@ -176,25 +171,25 @@ class Slider(Frame):
 
 root = Tk()
 
-slider = Slider(root, width = 400, height = 60, min_val = 0, max_val = 100, init_lis = [20,50,75], show_value = True)
+slider = Slider(root, width = 400, height = 60, min_val = 0, max_val = 100, init_lis = [25,50,75], show_value = True)
 slider.pack()
 
 #initial percentages
-forest_perc = DoubleVar(root, 10)
-ice_perc = DoubleVar(root, 10)
-water_perc = DoubleVar(root, 10)
-desert_perc = DoubleVar(root, 10)
+forest_perc = DoubleVar(root, 25)
+ice_perc = DoubleVar(root, 25)
+water_perc = DoubleVar(root, 25)
+desert_perc = DoubleVar(root, 25)
 
+# commenting out as probably don't want to see this in the final iteration?
+# forest_value = Entry(textvariable=forest_perc)
+# ice_value = Entry(textvariable=ice_perc)
+# water_value = Entry(textvariable=water_perc)
+# desert_value = Entry(textvariable=desert_perc)
 
-forest_value = Entry(textvariable=forest_perc)
-ice_value = Entry(textvariable=ice_perc)
-water_value = Entry(textvariable=water_perc)
-desert_value = Entry(textvariable=desert_perc)
-
-forest_value.pack()
-ice_value.pack()
-water_value.pack()
-desert_value.pack()
+# forest_value.pack()
+# ice_value.pack()
+# water_value.pack()
+# desert_value.pack()
 
 root.title("Slider Widget")
 root.mainloop()
