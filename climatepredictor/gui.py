@@ -132,7 +132,7 @@ hide_button=ttk.Button(varframe,text='Hide',command=hide)
 hide_button.grid(row=4,column=1)
 
 #add land use widget here, row 6 in variable frame
-from slider_setup_2 import Slider
+from climatepredictor.slider_setup_2 import Slider
 slider_frame=ttk.Frame(varframe,padding="12 12 12 12")
 slider_frame.grid(row=6,column=0)
 
