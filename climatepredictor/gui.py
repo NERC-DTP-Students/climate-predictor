@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 
+from config import * #import variables from config file
 import time_slider_range
+from save import saving
 
 #functions for creating entry types
 
@@ -114,19 +116,19 @@ plotframe.rowconfigure(0, weight=1)
 ######################## Customise Variable Frame ################################################################
 #default values
 #change this to accurate values later
-co2_initial = DoubleVar(root,value = 278.0)#preindustrial
-co2_rate =  DoubleVar(root,value = 0.0)
-cloud_initial = DoubleVar(root,value = 10.0)
-cloud_rate = DoubleVar(root,value = 0.0)
-albedo_initial = DoubleVar(root,value = 0.3)
-albedo_rate = DoubleVar(root,value = 0.0)
-epsilon1_initial = DoubleVar(root,value = 0.3)
-epsilon1_rate = DoubleVar(root,value = 0.0)
-epsilon2_initial = DoubleVar(root,value = 0.4)
-epsilon2_rate = DoubleVar(root,value = 0.0)
-solar_flux = DoubleVar(root,value = 1300.0)
-time_interval = IntVar(value = 1)
-time_duration = StringVar(value=50)
+co2_initial = DoubleVar(root,value = co2_initial_update)#preindustrial
+co2_rate =  DoubleVar(root,value = co2_rate_update)
+cloud_initial = DoubleVar(root,value = cloud_initial_update)
+cloud_rate = DoubleVar(root,value = cloud_rate_update)
+albedo_initial = DoubleVar(root,value = albedo_initial_update)
+albedo_rate = DoubleVar(root,value = albedo_rate_update)
+epsilon1_initial = DoubleVar(root,value = epsilon1_initial_update)
+epsilon1_rate = DoubleVar(root,value = epsilon1_rate_update)
+epsilon2_initial = DoubleVar(root,value = epsilon2_initial_update)
+epsilon2_rate = DoubleVar(root,value = epsilon2_rate_update)
+solar_flux = DoubleVar(root,value = solar_flux_update)
+time_interval = IntVar(value = time_interval_update)
+time_duration = StringVar(value= time_duration_update)
 
 ttk.Label(varframe, text='Variable Options',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
 
@@ -333,11 +335,9 @@ button3=ttk.Button(plotframe, text='Plot',command=show_plot)
 button3.grid(row=4, column=0,sticky=(N,S,E,W))
 
 # add save button
-def save_plot(): #create this function
-    pass
 
-button_save=ttk.Button(save_frame,text='Save Plot',command=save_plot)
-button_save.grid(row=0, column=0,sticky=(N, S, E, W))
-root.mainloop()
+# button_save=ttk.Button(save_frame,text='Save Plot',command=saving(figure)) #needs work
+# button_save.grid(row=0, column=0,sticky=(N, S, E, W))
+# root.mainloop()
 
 
