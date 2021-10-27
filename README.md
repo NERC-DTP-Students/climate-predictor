@@ -2,10 +2,27 @@
 ![Unit tests on multiple python versions](https://github.com/NERC-DTP-Students/climate-predictor/actions/workflows/unit-tests.yml/badge.svg)
 ![Unit tests on multiple operating systems](https://github.com/NERC-DTP-Students/climate-predictor/actions/workflows/os-tests.yml/badge.svg)
 
-# climate-predictor
-Tool for predicting planet surface temperatures based on cloud cover and CO2
 
-Basic model inspired by:
-https://biocycle.atmos.colostate.edu/shiny/2layer/
 
-GUI theme based on https://github.com/rdbende/Sun-Valley-ttk-theme
+# Climate Predictor Model 
+
+<p>
+    This model predicts planet surface temperature as the result of changing cloud cover and amount of CO2 under two layers of atmosphere. 
+  
+    Basic model inspired by:
+    https://biocycle.atmos.colostate.edu/shiny/2layer/
+    GUI theme based on https://github.com/rdbende/Sun-Valley-ttk-theme
+
+    <br />
+      <a href="https://climate-predictor.io/en/latest/index.html"><strong>Explore the docs </strong></a>
+    <br/>
+    <br/>
+      .
+      <a href="https://github.com/NERC-DTP-Students/climate-predictor/issues">Report Bug</a>
+      .
+      <a href="https://github.com/NERC-DTP-Students/climate-predictor/issues">Request Feature</a>
+    </p>
+    </div>
+    
+  
+
