@@ -17,7 +17,7 @@
 GUI theme based on:<br/> https://github.com/rdbende/Sun-Valley-ttk-theme
 </p>
 <p>
-      <a href="https://climate-predictor.io/en/latest/index.html"><strong>Explore the docs </strong></a>
+      <a href="https://climate-predictor.readthedocs.io/en/latest/index.html"><strong>Explore the docs </strong></a>
     <br/>
     <br/>
       .
