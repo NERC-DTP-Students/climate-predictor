@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 
+import time_slider_range
+
 #functions for creating entry types
 
 #function for making entry for user friendly options
@@ -53,11 +55,16 @@ def execute_main(pressed):
     epsilon2_initial_update = epsilon2_initial.get()
     epsilon2_rate_update = epsilon2_rate.get()
     solar_flux_update = solar_flux.get()
-    print(solar_flux_update)
-    #forest_update = slider.forest_perc.get()
-    #ice_update = 
-    #water_update = 
-    #desert_update = 
+    forest_update = forest.get()
+    ice_update = ice.get()
+    water_update = water.get()
+    desert_update = desert.get()
+    time_interval_update = int(time_interval.get())
+    time_duration_update = int(time_duration.get())
+    #print(time_duration_update)
+    #if time_duration_update > 60: print('over')
+    #else: print('under')
+
 
 
 root = Tk()
@@ -100,8 +107,10 @@ epsilon1_rate = DoubleVar(root,value = 0.0)
 epsilon2_initial = DoubleVar(root,value = 0.4)
 epsilon2_rate = DoubleVar(root,value = 0.0)
 solar_flux = DoubleVar(root,value = 1300.0)
+time_interval = IntVar(value = 1)
+time_duration = StringVar(value=50)
 
-global co2_initial_update
+global co2_initial_update  
 global co2_rate_update
 global cloud_initial_update
 global cloud_rate_update
@@ -116,7 +125,8 @@ global forest_update
 global ice_update
 global water_update
 global desert_update
-
+global time_interval_update
+global time_duration_update
 
 ttk.Label(varframe, text='Variable Options',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
 
@@ -182,7 +192,6 @@ slider_frame.columnconfigure(0, weight=1)
 slider_frame.rowconfigure(0, weight=1)
 slider_title=ttk.Label(slider_frame,text='Land Uses')
 slider_title.grid(row=0,column=0,sticky=(N, S, E, W))
-
 # initial positions on the slider (calculated from initial percentages)
 init_positions = [25,50,75]
 # create the slider
@@ -190,6 +199,10 @@ slider = Slider(slider_frame, width = 400, height = 60, min_val = 0, max_val = 1
 slider.grid(row=2,column=0)
 # Entry boxes for the different values
 # use make_simple_entry(root,label,variable,rowno,colno):
+forest = slider.forest_perc
+ice = slider.ice_perc
+water = slider.water_perc
+desert = slider.desert_perc
 forest_value = make_simple_entry(slider_frame,'Forest',slider.forest_perc,4,0)
 ice_value = make_simple_entry(slider_frame,'Ice',slider.ice_perc,5,0)
 water_value = make_simple_entry(slider_frame,'Water',slider.water_perc,6,0)
@@ -202,31 +215,31 @@ slider_frame2.rowconfigure(0,weight=1)
 slider_frame2.rowconfigure(1,weight=1)
 slider_label = ttk.Label(slider_frame2, text='Time:')
 slider_label.grid(column=0,row=0,sticky=(N, S, E, W))
-interval_initial = IntVar(value = 1)
 label = ttk.Label(slider_frame2, width = 13, text = 'Change Interval:')
 label.grid(row = 1, column = 0, sticky=(N, S, E, W))
-entry = ttk.Entry(slider_frame2, width = 4, textvariable = interval_initial)
+entry = ttk.Entry(slider_frame2, width = 4, textvariable = time_interval)
 entry.grid(row = 1, column = 1, sticky=(N, S, E, W))
+entry.bind('<KeyRelease>', execute_main)
 label = ttk.Label(slider_frame2, width = 10, text = 'years')
 label.grid(row = 1, column = 2, sticky=(N, S, E, W))
 label = ttk.Label(slider_frame2, width = 8, text = 'Duration:')
 label.grid(row = 1, column = 3, sticky=(N, S, E, W))
-current_value = StringVar(value=0)
-value_entry = ttk.Entry(slider_frame2, width = 4, textvariable = current_value)
+value_entry = ttk.Entry(slider_frame2, width = 4, textvariable = time_duration)
 value_entry.grid(row = 1, column = 4, sticky=(N, S, E, W))
+value_entry.bind('<KeyRelease>', execute_main)
 label = ttk.Label(slider_frame2, width = 6, text = 'years')
 label.grid(row = 1, column = 5, sticky=(N, S, E, W))
-slider2 = Scale(slider_frame2, 
+'''slider2 = Scale(slider_frame2, 
                     from_ = 0, 
                     to=100,
                     length = 300, 
                     orient = 'horizontal',
-                    command = lambda s:current_value.set('%0.0f' % float(s)), 
-                    variable = current_value,
+                    command = lambda s:time_duration.set('%0.0f' % float(s)), 
+                    variable = time_duration,
                     tickinterval = 25,
                     showvalue = False
                     )
-slider2.grid(row=1,column=6,sticky=(N, S, E, W))
+slider2.grid(row=1,column=6,sticky=(N, S, E, W))'''
 
 
 
