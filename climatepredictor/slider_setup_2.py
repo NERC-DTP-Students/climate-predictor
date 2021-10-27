@@ -4,6 +4,7 @@
 from tkinter import *
 from tkinter.ttk import *
 import numpy as np
+import functools
 
 class Slider(Frame):
     LINE_COLOR = "#476b6b"
@@ -46,27 +47,36 @@ class Slider(Frame):
             self.bars.append(bar)
             i = i+1
 
-
         self.canv = Canvas(self, height = self.canv_H, width = self.canv_W)
+        self.canv.create_text(self.canv_W-2*self.slider_x, self.canv_H-0.8*self.slider_y, text = "desert")
+        
         self.canv.pack()
         self.canv.bind("<Motion>", self._mouseMotion) #when the mouse is moved
         self.canv.bind("<B1-Motion>", self._moveBar) #when left button is pressed and held down
 
+        # add the slider line
         self.__addTrack(self.slider_x, self.slider_y, self.canv_W-self.slider_x, self.slider_y)
+        
+        # add each slider with position and index
         for bar in self.bars:
-            bar["Ids"] = self.__addBar(bar["Pos"], bar["Idx"])
+            #bar["Ids"] = self.__addBar(bar["Pos"], bar["Idx"])
+            bar["Ids"] = self.addBar(bar["Pos"], bar["Idx"])
+        print(self.bars)
 
 
     def getValues(self):
+        """gets the values for each marker in the slider"""
         values = [bar["Value"] for bar in self.bars]
         return values
 
     def _mouseMotion(self, event):
+        """passes the x coordinate of the mouse and the y coordinate of the mouse.
+        If the mouse is inside a slider will change the cursor to a hand"""
         x = event.x; y = event.y
         selection = self.__checkSelection(x,y)
-        if selection[0]:
-            self.canv.config(cursor = "hand2")
-            self.selected_idx = selection[1]
+        if selection[0]: #if a slider is selected
+            self.canv.config(cursor = "hand2") #change cursor to hand
+            self.selected_idx = selection[1] #retrieve the index of the selected slider
         else:
             self.canv.config(cursor = "")
             self.selected_idx = None
@@ -77,7 +87,8 @@ class Slider(Frame):
             return False
         pos = self.__calcPos(x)
         idx = self.selected_idx
-        self.__moveBar(idx,pos)
+        self.moveBar(idx,pos)
+        #self.__moveBar(idx,pos)
 
         # set the values in the entry boxes
         values = slider.getValues()
@@ -101,13 +112,28 @@ class Slider(Frame):
 
 
     def __addTrack(self, startx, starty, endx, endy):
+        # add initial slider line
         id1 = self.canv.create_line(startx, starty, endx, endy, fill = Slider.LINE_COLOR, width = Slider.LINE_WIDTH)
+
+        #add desert text and oval
+        R = Slider.BAR_RADIUS
+        r = Slider.BAR_RADIUS_INNER
+        y = endy
+        x = endx
+
+        self.canv.create_text(self.canv_W-2*self.slider_x, self.canv_H-0.8*self.slider_y, text = "desert")
+        self.canv.create_oval(x-R,y-R,x+R,y+R, fill = Slider.BAR_COLOR_OUTTER, width = 2, outline = "")
+        self.canv.create_oval(x-r,y-r,x+r,y+r, fill = Slider.BAR_COLOR_INNER, outline = "")
+
         return id
 
-    def __addBar(self, pos, idx):
+    #def __addBar(self, pos, idx):
+    def addBar(self, pos, idx):
         names = ['forest', 'ice', 'water', 'desert']
+        colour = ['green', 'white', 'blue', 'yellow']
 
-        """@ pos: position of the bar, ranged from (0,1)"""
+        """@ pos: position of the bar, ranged from (0,1).
+        Wil create the actual slider objects"""
         if pos <0 or pos >1:
             raise Exception("Pos error - Pos: "+str(pos))
         R = Slider.BAR_RADIUS
@@ -117,6 +143,10 @@ class Slider(Frame):
         x = self.slider_x+pos*L
         id_outer = self.canv.create_oval(x-R,y-R,x+R,y+R, fill = Slider.BAR_COLOR_OUTTER, width = 2, outline = "")
         id_inner = self.canv.create_oval(x-r,y-r,x+r,y+r, fill = Slider.BAR_COLOR_INNER, outline = "")
+
+        L = 1
+        self.canv.create_line(x-L, y-2*R, x+L, y-2*R, fill = colour[idx], width = Slider.LINE_WIDTH)
+
         if self.show_value:
             y_value = y+Slider.BAR_RADIUS+8
             #value = pos*(self.max_val - self.min_val)+self.min_val
@@ -126,14 +156,30 @@ class Slider(Frame):
         else:
             return [id_outer, id_inner]
 
-    def __moveBar(self, idx, pos):
-        print(idx)
+    #def __moveBar(self, idx, pos):
+    def moveBar(self, idx, posit, entry = False):
+
+        if entry and idx>0:
+            c_value = self.bars[idx-1]
+    
+            pos = (c_value["Value"]+posit*100)/100
+            #pos = c_value["Value"]+pos
+            #print(pos)
+            #for bar in self.bars:
+            #    print(bar["Value"])
+        else:
+            pos = posit
+
+
+
+        """slider will be moved"""
         ids = self.bars[idx]["Ids"]
         for id in ids:
-            self.canv.delete(id)
-        self.bars[idx]["Ids"] = self.__addBar(pos, idx)
-        self.bars[idx]["Pos"] = pos
-        self.bars[idx]["Value"] = pos*(self.max_val - self.min_val)+self.min_val
+            self.canv.delete(id) #deletes old slider nmarker
+        #self.bars[idx]["Ids"] = self.__addBar(pos, idx)
+        self.bars[idx]["Ids"] = self.addBar(pos, idx)
+        self.bars[idx]["Pos"] = pos #sets new position
+        self.bars[idx]["Value"] = pos*(self.max_val - self.min_val)+self.min_val #sets new value
 
     def __calcPos(self, x):
         """calculate position from x coordinate"""
@@ -184,7 +230,73 @@ ice_value.pack()
 water_value.pack()
 desert_value.pack()
 
+#added this but it belongs to the entry class and I want it to belong to the slider class
+def type_albedo(idx, pos):
+    print(type(pos))
+    print(pos)
+    #idx = int(idx)
+    #print(type(idx))
+    #slider.moveBar(pos=pos, idx=0)
+    return
+
+
+def test(self, param):
+    print(param)
+    return
+
+def check_total():
+    current_tot = forest_perc.get() + ice_perc.get() + water_perc.get()
+    print(current_tot)
+    if current_tot > 100:
+        print("Current total greater than 100% please reduce some of your values")
+    else:
+        desert_perc.set(100-current_tot)
+    return
+
+def forest_change(event):
+        # add function to deal with errors if the box is empty
+        try:
+            f_pos = forest_perc.get()
+        except TclError:
+            f_pos = 0
+        slider.moveBar(posit = f_pos/100, idx = 0, entry=True)
+        check_total()
+        return
+
+def ice_change(event):
+        # add function to deal with errors if the box is empty
+        try:
+            ice_pos = ice_perc.get()
+        except TclError:
+            ice_pos = 0
+        slider.moveBar(posit = ice_pos/100, idx = 1, entry=True)
+        check_total()
+        return
+
+def water_change(event):
+        # add function to deal with errors if the box is empty
+        try:
+            water_pos = water_perc.get()
+        except TclError:
+            water_pos = 0
+        slider.moveBar(posit = water_pos/100, idx = 2, entry=True)
+        check_total()
+        return
+
+def desert_change(event):
+        desert_pos = desert_perc.get()
+        slider.moveBar(posit = desert_pos/100, idx = 3, entry=True)
+        return
+
+#data = {'h':'t'}
+
+forest_value.bind('<KeyRelease>', forest_change)
+ice_value.bind('<KeyRelease>', ice_change)
+water_value.bind('<KeyRelease>', water_change)
+desert_value.bind('<KeyRelease>', desert_change)
+
+#forest_value.bind('<KeyRelease>', functools.partial(test, param = forest_perc.get()))
+
+
 root.title("Slider Widget")
 root.mainloop()
-
-print(slider.getValues())
