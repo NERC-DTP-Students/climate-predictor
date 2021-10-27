@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from climatepredictor import solve_over_time
+from energymodel import solve_over_time #not required I don't think as we don't want to solve in this file
 import matplotlib.path as mplPath
 
 Solar = 1368 #Wm^2
@@ -23,7 +23,7 @@ delta_cc = 1
 solution = solve_over_time(Solar,albedo,em1,em2,sigma,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
 
 def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
-    plt.figure()
+    fig = plt.figure()
 
     if xaxis == 'co2':
         inc_co2 = []
@@ -65,10 +65,14 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     elif xaxis == 'cloud cover': plt.xlabel('Cloud Cover')
     elif xaxis == 'time': plt.xlabel('Time (years)')
     plt.ylabel('Temerature (K)')
-    plt.show()
 
-plotting(solution, 'On', 'On', 'On','time')
+    #plt.show()
+    return fig
 
+#commenting out so doesn't run when imported
+#plotting(solution, 'On', 'On', 'On','time')
+
+#don't think this is needed but no harm for now.
 if __name__ == '__main__':
-    plotting()
+    plotting(solution, 'On','On','On','time')
 

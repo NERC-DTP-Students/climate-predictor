@@ -85,7 +85,7 @@ def solve_model(Solar,albedo,em1,em2,sigma = 5.67e-8):
 
     return solution # 3x1 matrix of [Ts,T1,T2]
 
-def solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep,sigma = 5.67e-8,):
+def solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep,sigma = 5.67e-8):
     """Function to solve the model over many timesteps, to produce a time series of temperatures.
 
     Inputs:
@@ -126,5 +126,5 @@ our_solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo
 # plt.show()
 
 if __name__ == '__main__':
-    solve_model(), solve_over_time()
+     solve_model(), solve_over_time()
 
