@@ -32,6 +32,7 @@ def make_simple_entry(root,label,variable,rowno,colno):
 def make_radio_button(frame,name,variable_in,value_in,rowno):
     radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in)
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
+    radio_button.bind('<Button-1>', execute_main)
 
 #function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
@@ -44,6 +45,23 @@ def make_check_button(frame,name,variable_in,initial_state,rowno):
         check_button.state(['!selected'])
 
 def execute_main(pressed):
+    global co2_initial_update
+    global co2_rate_update
+    global cloud_initial_update
+    global cloud_rate_update
+    global albedo_initial_update
+    global albedo_rate_update
+    global epsilon1_initial_update
+    global epsilon1_rate_update
+    global epsilon2_initial_update
+    global epsilon2_rate_update
+    global solar_flux_update
+    global forest_update
+    global ice_update
+    global water_update
+    global desert_update
+    global xaxis_update
+
     co2_initial_update = co2_initial.get() 
     co2_rate_update = co2_rate.get()
     cloud_initial_update = cloud_initial.get()
@@ -55,16 +73,22 @@ def execute_main(pressed):
     epsilon2_initial_update = epsilon2_initial.get()
     epsilon2_rate_update = epsilon2_rate.get()
     solar_flux_update = solar_flux.get()
-    forest_update = forest.get()
-    ice_update = ice.get()
-    water_update = water.get()
-    desert_update = desert.get()
-    time_interval_update = int(time_interval.get())
-    time_duration_update = int(time_duration.get())
+    xaxis_update = xaxis.get()
+    print(xaxis_update)
+    #return xaxis_update
+    #forest_update = slider.forest_perc.get()
+    #ice_update = 
+    #water_update = 
+    #desert_update = 
+    #forest_update = forest.get()
+    #ice_update = ice.get()
+    #water_update = water.get()
+    #desert_update = desert.get()
+    #time_interval_update = int(time_interval.get())
+    #time_duration_update = int(time_duration.get())
     #print(time_duration_update)
     #if time_duration_update > 60: print('over')
     #else: print('under')
-
 
 
 root = Tk()
@@ -110,23 +134,7 @@ solar_flux = DoubleVar(root,value = 1300.0)
 time_interval = IntVar(value = 1)
 time_duration = StringVar(value=50)
 
-global co2_initial_update  
-global co2_rate_update
-global cloud_initial_update
-global cloud_rate_update
-global albedo_initial_update
-global albedo_rate_update
-global epsilon1_initial_update
-global epsilon1_rate_update
-global epsilon2_initial_update
-global epsilon2_rate_update
-global solar_flux_update
-global forest_update
-global ice_update
-global water_update
-global desert_update
-global time_interval_update
-global time_duration_update
+
 
 ttk.Label(varframe, text='Variable Options',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
 
@@ -268,11 +276,12 @@ save_frame.columnconfigure(0, weight=1)
 save_frame.rowconfigure(0, weight=1)
 
 # customise x axis frame
+xaxis = StringVar()
 xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
-make_radio_button(xaxis_frame,'Time','xaxis','time',1)
-make_radio_button(xaxis_frame,'Cloud clover','xaxis','cloud cover',2)
-make_radio_button(xaxis_frame,u'CO\u2082','xaxis','co2',3)
+make_radio_button(xaxis_frame,'Time',xaxis,'time',1)
+make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',2)
+make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',3)
 
 # customise y axis frame
 yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
@@ -282,9 +291,10 @@ make_check_button(yaxis_frame,u'T\u2082','plot_T2','Off',2)
 make_check_button(yaxis_frame,u'T\u209B','plot_Ts','On',3)
 
 #X axis advanced options -initiall a button
-make_radio_button(xaxis_advanced,'Albedo','xaxis','albedo',0)
-make_radio_button(xaxis_advanced,u'\u03B5\u2081','xaxis','epsilon1',1)
-make_radio_button(xaxis_advanced,u'\u03B5\u2082','xaxis','epsilon2',2)
+
+make_radio_button(xaxis_advanced,'Albedo', xaxis,'albedo',0)
+make_radio_button(xaxis_advanced,u'\u03B5\u2081',xaxis,'epsilon1',1)
+make_radio_button(xaxis_advanced,u'\u03B5\u2082',xaxis,'epsilon2',2)
 xaxis_advanced.grid_remove()
 
 def show_plot():
@@ -292,16 +302,14 @@ def show_plot():
     from plots import plotting
     import matplotlib.pyplot as plt
 
-    Solar = 1368 #Wm^2
     albedo = 0.3
-    em1 = 0.5
-    em2 = 0.5
-    sigma = 5.67e-8
+    #em1 = 0.5
+    #em2 = 0.5
     timestep = 1 #years
     length = 50 #years
     delta_albedo = 0.00
-    delta_em1 = 0.02
-    delta_em2 = 0.02
+    #delta_em1 = 0.02
+    #delta_em2 = 0.02
     delta_Solar = 0
     calcs_per_timestep = 10
     co2 = 1
@@ -309,8 +317,8 @@ def show_plot():
     cc = 20
     delta_cc = 1
 
-    solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
-    plotting(solution, 'On', 'On', 'On','time')
+    solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,timestep,length,delta_albedo,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
+    plotting(solution, 'On', 'On', 'On',xaxis_update)
     plt.show()
 
 
