@@ -60,6 +60,8 @@ def execute_main(pressed):
     global ice_update
     global water_update
     global desert_update
+    global time_interval_update
+    global time_duration_update
     global xaxis_update
 
     co2_initial_update = co2_initial.get() 
@@ -73,22 +75,14 @@ def execute_main(pressed):
     epsilon2_initial_update = epsilon2_initial.get()
     epsilon2_rate_update = epsilon2_rate.get()
     solar_flux_update = solar_flux.get()
+    forest_update = forest.get()
+    ice_update = ice.get()
+    water_update = water.get()
+    desert_update = desert.get()
+    time_interval_update = int(time_interval.get())
+    time_duration_update = int(time_duration.get())
     xaxis_update = xaxis.get()
-    print(xaxis_update)
-    #return xaxis_update
-    #forest_update = slider.forest_perc.get()
-    #ice_update = 
-    #water_update = 
-    #desert_update = 
-    #forest_update = forest.get()
-    #ice_update = ice.get()
-    #water_update = water.get()
-    #desert_update = desert.get()
-    #time_interval_update = int(time_interval.get())
-    #time_duration_update = int(time_duration.get())
-    #print(time_duration_update)
-    #if time_duration_update > 60: print('over')
-    #else: print('under')
+
 
 
 root = Tk()
@@ -133,8 +127,6 @@ epsilon2_rate = DoubleVar(root,value = 0.0)
 solar_flux = DoubleVar(root,value = 1300.0)
 time_interval = IntVar(value = 1)
 time_duration = StringVar(value=50)
-
-
 
 ttk.Label(varframe, text='Variable Options',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
 
@@ -237,6 +229,7 @@ value_entry.grid(row = 1, column = 4, sticky=(N, S, E, W))
 value_entry.bind('<KeyRelease>', execute_main)
 label = ttk.Label(slider_frame2, width = 6, text = 'years')
 label.grid(row = 1, column = 5, sticky=(N, S, E, W))
+
 '''slider2 = Scale(slider_frame2, 
                     from_ = 0, 
                     to=100,
