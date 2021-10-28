@@ -55,8 +55,8 @@ The advanced option is for investigating surface temperatures of a generic plane
 
 **Paramters**
 + Albedo
-+ $\varepsilon$ <sub>1</sub> - emissivity of the first atmospheric layer
-+ $\varepsilon$<sub>2</sub> - emissivity of the second atmospheric layer
++ &#949; <sub>1</sub> - emissivity of the first atmospheric layer
++ &#949; <sub>2</sub> - emissivity of the second atmospheric layer
 + S<sub>0</sub> - flux from the star (defaults to present day Sun)
 
 ### **Adjustable and easy to use plotting tool**
@@ -80,7 +80,7 @@ A plot of temperature against a chosen input variable will be generated based on
 
 1. To launch the GUI - _something about the .exe file here_
 
-2. Once the GUI is running input the initial values and change in with time for cloud cover.
+2. Once the GUI is running input the initial values and change with time for cloud cover.
 
 3. Choose current and final land coverage using either the sliders or the entry boxes beneath. **Entries in the boxes must be inputted in descending order i.e forest then ice etc.)**
 
@@ -88,7 +88,7 @@ A plot of temperature against a chosen input variable will be generated based on
 
 5. In the plot options select an x-axis and how many temperatures you want to be displayed.
 
-6. Press plot to show the plot.
+6. The plot will automatically update.
 
 7. Press save plot to save the plot.
 
@@ -96,9 +96,25 @@ A plot of temperature against a chosen input variable will be generated based on
 
 ## Example
 
-In this simple example, shows change in surface temperature for a 10% increase in cloud cover every 50 years. _The numbers reference the steps in the Usage section above._
+In this simple example, shows change in surface temperature for a 10% increase in cloud cover every 50 years and all forest becoming desert over the same time period. _The numbers reference the steps in the Usage section above._
 
-1.
+1. Launch the GUI
+
+2. Input initial and change in cloud cover
+![Input the cloud cover!](examples/set_clouds.png)
+
+3. Input initial and final land usage
+![Input land usage!](examples/set_land_use.png)
+
+4. Choose time interval and timespan to be investigated
+![Input the timespace!](examples/set_time.png)
+
+5. Choose x axis and number of temperatures to be displayed
+![Choose plot options!](examples/set_plot_options.png)
+
+6. Plot automatically updates
+![Resulting!](examples/set_clouds.png)
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Documentation
