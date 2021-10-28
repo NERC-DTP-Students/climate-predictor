@@ -382,17 +382,18 @@ make_value_entry(label_frame,'Cloud cover', 1, cloud_initial, cloud_rate, '%')
 #functions for button for advanced frame
 def reveal():
     
-    return advanced_frame.grid(column=0,row=2+q,sticky=(N, S, E, W),rowspan=k,columnspan=2), hide_button.grid(row=1+q,column=1),slider_frame.grid_remove(),slider_frame_final.grid_remove()
+    return button.grid_remove(), advanced_frame.grid(column=0,row=2+q,sticky=(N, S, E, W),rowspan=k,columnspan=2), hide_button.grid(row=1+q,column=1),slider_frame.grid_remove(),slider_frame_final.grid_remove()
 
 def hide():
     
-    return advanced_frame.grid_remove(),hide_button.grid_remove(), slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)), slider_frame_final.grid(column = 0, row = 26,columnspan=2,rowspan=2,sticky=(N, S, E, W))
+    return button.grid(), advanced_frame.grid_remove(),hide_button.grid_remove(), slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)), slider_frame_final.grid(column = 0, row = 8+q+k,columnspan=2,rowspan=2,sticky=(N, S, E, W))
 
 #add buttons for advanced options in row 1+q
 button=ttk.Button(varframe,text='Advanced Options',command=reveal)
 button.grid(row=1+q, column=0)
-hide_button=ttk.Button(varframe,text='Hide',command=hide)
-hide_button.grid(row=1+q,column=1)
+hide_button=ttk.Button(varframe,text='Hide Advanced Options',command=hide)
+hide_button.grid(row=1+q,column=0)
+hide_button.grid_remove()
 
 #add advanced frame dropdown in variable frame row 5
 k=5 #rowspan
@@ -531,7 +532,7 @@ for i in range(rowspanf):
 
 rowspanf=3
 xaxis_advanced=ttk.Frame(plotframe,padding="12 12 12 12")
-xaxis_advanced.grid(row=6,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=rowspanf)
+xaxis_advanced.grid(row=1,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=rowspanf)
 xaxis_advanced.columnconfigure(0, weight=1)
 for i in range(rowspanf):
     xaxis_advanced.rowconfigure(i, weight=1)
@@ -570,16 +571,16 @@ show_plot()
 #functions for button for advanced axis frame
 def reveal_plot():
     
-    return xaxis_advanced.grid(), hide_button2.grid(), button2.grid_remove(), xaxis_frame.grid_remove()
+    return xaxis_advanced.grid(row=1,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=3), hide_button2.grid(row=5,column=0,sticky=(N, S, E, W)), button2.grid_remove(), xaxis_frame.grid_remove()
 
 def hide_plot():
     
-    return xaxis_advanced.grid_remove(), hide_button2.grid_remove(), button2.grid(), xaxis_frame.grid(row=1,column=0,columnspan=1,sticky=(N, S, E, W),rowspan=4)
+    return xaxis_advanced.grid_remove(), hide_button2.grid_remove(), button2.grid(row=5, column=0,sticky=(N, S, E, W)), xaxis_frame.grid(row=1,column=0,columnspan=1,sticky=(N, S, E, W),rowspan=4)
 
-hide_button2=ttk.Button(plotframe,text='Hide',command=hide_plot)
+hide_button2=ttk.Button(plotframe,text='Hide Advanced X Axis Options',command=hide_plot)
 hide_button2.grid(row=5,column=0,sticky=(N, S, E, W))
 hide_button2.grid_remove()
-button2=ttk.Button(plotframe,text='Advanced X Axis Options',command=reveal_plot)
+button2=ttk.Button(plotframe,text='Show Advanced X Axis Options',command=reveal_plot)
 button2.grid(row=5, column=0,sticky=(N, S, E, W))
 button3=ttk.Button(plotframe, text='Plot',command=show_plot)
 button3.grid(row=9, column=0,sticky=(N,S,E,W))
