@@ -137,8 +137,6 @@ def execute_main(pressed):
     global time_duration_update
     global xaxis_update
 
-    co2_initial_update = co2_initial.get() 
-    co2_rate_update = co2_rate.get()
     cloud_initial_update = cloud_initial.get()
     cloud_rate_update = cloud_rate.get()
     albedo_initial_update = albedo_initial.get()
@@ -167,7 +165,7 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
 #create mainframe
-m=30 #number of rows in mainframe
+m=38 #number of rows in mainframe
 mainframe = ttk.Frame(root, padding="12 12 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
 mainframe.columnconfigure(0, weight=1)
@@ -175,7 +173,7 @@ for i in range(m):
     mainframe.rowconfigure(i, weight=1)
 
 #make frame for changing variables - row 0 of mainframe
-n=17 #rowspan of varframe in main frame
+n=25 #rowspan of varframe in main frame
 varframe=ttk.Frame(mainframe, padding="12 12 12 12")
 varframe.grid(column=0, row=0, sticky=(N, S, E, W),rowspan=n)
 varframe.columnconfigure(0, weight=1)
@@ -184,10 +182,10 @@ varframe.columnconfigure(1, weight=1)
 for i in range(n):
     varframe.rowconfigure(i, weight=1)
 
-#make frame for plot options - row 1 of mainframe
-p=14 #rowspan of plot frame
+#make frame for plot options - row 24 onwards of mainframe
+p=15 #rowspan of plot frame
 plotframe=ttk.Frame(mainframe, padding="12 12 12 12")
-plotframe.grid(column=0, row=19, sticky=(N, S, E, W),rowspan=p)
+plotframe.grid(column=0, row=26, sticky=(N, S, E, W),rowspan=p)
 plotframe.columnconfigure(0, weight=1)
 plotframe.columnconfigure(1, weight=1)
 for i in range(p):
@@ -196,8 +194,6 @@ for i in range(p):
 ######################## Customise Variable Frame ################################################################
 #default values
 #change this to accurate values later
-co2_initial = DoubleVar(root,value = co2_initial_update)#preindustrial
-co2_rate =  DoubleVar(root,value = co2_rate_update)
 cloud_initial = DoubleVar(root,value = cloud_initial_update)
 cloud_rate = DoubleVar(root,value = cloud_rate_update)
 albedo_initial = DoubleVar(root,value = albedo_initial_update)
@@ -214,7 +210,7 @@ ttk.Label(varframe, text='Variable Options',width=30).grid(column=0,row=0, stick
 
 #create frame for labels - row=1, column=0 in variable frame
 #spans the same number of rows as the make_new_entry thing so it lines up
-q=4 #rowspan of frame
+q=3 #rowspan of frame
 label_frame=ttk.Frame(varframe,padding="12 12 12 12")
 label_frame.grid(row=1,column=0,columnspan=2,rowspan=q,sticky=(N, S, E, W))
 label_frame.columnconfigure(0, weight=1)
@@ -233,13 +229,12 @@ def add_labels(root,rowno):
 #add our entry options rows 2,3 in variable frame
 # make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
 add_labels(label_frame,1)
-make_value_entry(label_frame,u'CO\u2082 conc.',2, co2_initial, co2_rate, 'ppm')
-make_value_entry(label_frame,'Cloud cover', 3, cloud_initial, cloud_rate, '%')
+make_value_entry(label_frame,'Cloud cover', 2, cloud_initial, cloud_rate, '%')
 
 #add advanced frame dropdown in variable frame row 4
 k=5 #rowspan
 advanced_frame=ttk.Frame(varframe,padding="12 12 12 12")
-advanced_frame.grid(column=0,row=6,sticky=(N, S, E, W),rowspan=k,columnspan=2)
+advanced_frame.grid(column=0,row=5,sticky=(N, S, E, W),rowspan=k,columnspan=2)
 for i in range(5):
     advanced_frame.columnconfigure(i, weight=1)
 for i in range(k):
@@ -268,11 +263,11 @@ def hide():
 
 
 button=ttk.Button(varframe,text='Advanced Options',command=reveal)
-button.grid(row=5, column=0)
+button.grid(row=4, column=0)
 hide_button=ttk.Button(varframe,text='Hide',command=hide)
-hide_button.grid(row=5,column=1)
+hide_button.grid(row=4,column=1)
 
-#add land use widget here, row 6 in variable frame
+#add initial land use widget here, row 6 in variable frame
 from slider_setup_2 import Slider
 rowspanf=6
 slider_frame=ttk.Frame(varframe,padding="12 12 12 12")
@@ -281,8 +276,10 @@ slider_frame.columnconfigure(0, weight=1)
 slider_frame.columnconfigure(1, weight=1)
 for i in range(rowspanf):
     slider_frame.rowconfigure(i, weight=1)
-slider_title=ttk.Label(slider_frame,text='Land Uses')
+slider_title=ttk.Label(slider_frame,text='Land Uses - Initial')
 slider_title.grid(row=0,column=0,sticky=(N, S, E, W))
+slider_note=ttk.Label(slider_frame,text='Enter values in descending order')
+slider_note.grid(row=0,column=1,sticky=(N, S, E, W))
 # initial positions on the slider (calculated from initial percentages)
 init_positions = [25,50,75]
 # create the slider
@@ -306,10 +303,37 @@ print(type(desert_value))
 
 print(forest_value)
 
+#final land use widget here
+rowspanf=6
+slider_frame_final=ttk.Frame(varframe,padding="12 12 12 12")
+slider_frame_final.grid(row=18,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)) #span just one row as had to put in later
+slider_frame_final.columnconfigure(0, weight=1)
+slider_frame_final.columnconfigure(1, weight=1)
+for i in range(rowspanf):
+    slider_frame_final.rowconfigure(i, weight=1)
+slider_title_final=ttk.Label(slider_frame_final,text='Land Uses - final')
+slider_title_final.grid(row=0,column=0,sticky=(N, S, E, W))
+slider_note_final=ttk.Label(slider_frame,text='Enter values in descending order')
+slider_note_final.grid(row=0,column=1,sticky=(N, S, E, W))
+# initial positions on the slider (calculated from initial percentages)
+init_positions_final = [25,50,75]
+# create the slider
+slider_final = Slider(slider_frame_final, width = 400, height = 60, min_val = 0, max_val = 100, init_lis = init_positions_final, show_value = True)
+slider_final.grid(row=2,column=0,columnspan=2)
+# Entry boxes for the different values
+# use make_simple_entry(root,label,variable,rowno,colno):
+forest_final = slider_final.forest_perc
+ice_final = slider_final.ice_perc
+water_final = slider_final.water_perc
+desert_final = slider_final.desert_perc
+forest_value_final = make_slider_entry(slider_frame_final,'Forest',slider_final.forest_perc,4,0, type = 0)
+ice_value_final = make_slider_entry(slider_frame_final,'Ice',slider_final.ice_perc,5,0, type = 1)
+water_value_final = make_slider_entry(slider_frame_final,'Water',slider_final.water_perc,6,0, type = 2)
+desert_value_final = make_slider_entry(slider_frame_final,'Desert',slider_final.desert_perc,7,0, type = 3)
 
 #add time widget with slider - row 8 in variable frame
 slider_frame2 = ttk.Frame(varframe)
-slider_frame2.grid(column = 0, row = 17,columnspan=2,rowspan=2,sticky=(N, S, E, W))
+slider_frame2.grid(column = 0, row = 24,columnspan=2,rowspan=2,sticky=(N, S, E, W))
 slider_frame2.columnconfigure(0,weight=1)
 slider_frame2.columnconfigure(1,weight=1)
 slider_frame2.rowconfigure(0,weight=1)
@@ -437,7 +461,8 @@ button3=ttk.Button(plotframe, text='Plot',command=show_plot)
 button3.grid(row=10, column=0,sticky=(N,S,E,W))
 
 # add save button
-
+def save_plot(): #add this!
+    pass
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
 button_save.grid(row=10, column=1,sticky=(N, S, E, W))
 root.mainloop()
