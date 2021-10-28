@@ -272,15 +272,7 @@ def make_simple_entry(root,label,variable,rowno,colno):
 def check_initial_total():
     current_tot = forest.get() + ice.get() + water.get()
     if current_tot > 100:
-        """
-        
-        
-        
-        call a function to display a box saying the values add up to more than 100%
-        
-        
-        
-        """
+        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
     else:
         desert.set(100-current_tot)
     return
@@ -288,15 +280,7 @@ def check_initial_total():
 def check_final_total():
     current_tot = forest_final.get() + ice_final.get() + water_final.get()
     if current_tot > 100:
-        """
-        
-        
-        
-        call a function to display a box saying the values add up to more than 100%
-        
-        
-        
-        """
+        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
     else:
         desert_final.set(100-current_tot)
     return
@@ -394,7 +378,7 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
     new_label.grid(row=rowno,column=colno,sticky=(N, S, E, W))
     new_entry=ttk.Entry(root,width=10,textvariable=variable)
     new_entry.grid(row=rowno,column=colno+1,sticky=(N, S, E, W))
-    new_entry.bind('<KeyRelease>', execute_main, add= '+')
+    #new_entry.bind('<KeyRelease>', execute_main, add= '+')
 
     new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type), add= '+')
 
@@ -493,11 +477,11 @@ def execute_main(pressed):
     water_final_update = water_final.get()
     desert_final_update = desert_final.get()
     
-    if forest_update + water_update + ice_update + desert_update > 100:
-        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
+    #if forest_update + water_update + ice_update + desert_update > 100:
+    #    messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
     
-    if forest_final_update + water_final_update + ice_final_update + desert_final_update > 100:
-        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
+    #if forest_final_update + water_final_update + ice_final_update + desert_final_update > 100:
+    #    messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
 
     show_plot()
 
