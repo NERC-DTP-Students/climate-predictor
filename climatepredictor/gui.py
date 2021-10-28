@@ -181,24 +181,24 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
 
 #function for making a Radiobutton
 def make_radio_button(frame,name,variable_in,value_in,rowno,initial_state):
-    radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in)
+    radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in, command = lambda : execute_main(None))
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
     if initial_state=='On':
         radio_button.state(['selected'])
     else:
         radio_button.state(['!selected'])
-    radio_button.bind('<Button-1>', execute_main)
+    #radio_button.bind('<Button-1>', execute_main)
 
 #function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
-    check_button=ttk.Checkbutton(frame,text=name,variable=variable_in,onvalue='On',offvalue='Off')
+    check_button=ttk.Checkbutton(frame,text=name,variable=variable_in,onvalue='On',offvalue='Off', command = lambda : execute_main(None))
     check_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
     check_button.state(['!alternate']) #clear alternate state
     if initial_state=='On':
         check_button.state(['selected'])
     else:
         check_button.state(['!selected'])
-    check_button.bind('<Button-1>', execute_main)
+    #check_button.bind('<Button-1>', execute_main)
 
 #close plots when GUI is closed
 def on_closing():
