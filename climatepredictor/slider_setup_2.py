@@ -135,6 +135,7 @@ class Slider(Frame):
     #def __addBar(self, pos, idx):
     def addBar(self, pos, idx):
         names = ['forest', 'ice', 'water', 'desert']
+        colours = ['green', 'white', 'blue', 'yellow']
 
         """@ pos: position of the bar, ranged from (0,1)"""
         if pos <0 or pos >1:
@@ -144,6 +145,26 @@ class Slider(Frame):
         L = self.canv_W - 2*self.slider_x
         y = self.slider_y
         x = self.slider_x+pos*L
+
+        # draw coloured lined for each of the sliders
+        positions = [bar["Pos"] for bar in self.bars]
+        pos_list = sorted(positions)
+        n=0
+        indx = np.zeros(3)
+        for posit in pos_list:
+            indx[n] = positions.index(posit)
+            print(positions.index(posit))
+            n=n+1
+        print(indx)
+
+        self.canv.create_line(self.slider_x+pos_list[2]*L+R, y, self.slider_x+L, y, fill = colours[3], width = Slider.LINE_WIDTH)
+        self.canv.create_line(self.slider_x+pos_list[1]*L+R, y, self.slider_x+pos_list[2]*L-R, y, fill = colours[int(indx[2])], width = Slider.LINE_WIDTH)
+        self.canv.create_line(self.slider_x+pos_list[0]*L+R, y, self.slider_x+pos_list[1]*L-R, y, fill = colours[int(indx[1])], width = Slider.LINE_WIDTH)
+        self.canv.create_line(self.slider_x, y, self.slider_x+pos_list[0]*L-R, y, fill = colours[int(indx[0])], width = Slider.LINE_WIDTH)
+
+
+
+
         id_outer = self.canv.create_oval(x-R,y-R,x+R,y+R, fill = Slider.BAR_COLOR_OUTTER, width = 2, outline = "")
         id_inner = self.canv.create_oval(x-r,y-r,x+r,y+r, fill = Slider.BAR_COLOR_INNER, outline = "")
         if self.show_value:
