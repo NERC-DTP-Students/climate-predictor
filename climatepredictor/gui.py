@@ -796,7 +796,7 @@ yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
 yaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
 make_check_button(yaxis_frame,u'T\u209B',Ts_switch,'On',1)
 make_check_button(yaxis_frame,u'T\u2081',T1_switch,'On',2)
-make_check_button(yaxis_frame,u'T\u2092',T2_switch,'On',3)
+make_check_button(yaxis_frame,u'T\u2082',T2_switch,'On',3)
 
 #X axis advanced options -initiall a button
 
