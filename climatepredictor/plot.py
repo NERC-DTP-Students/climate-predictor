@@ -20,14 +20,16 @@ delta_co2 = 1
 cc = 20
 delta_cc = 1
 
+
+def make_plot(solution, t, plot_Ts, plot_T1, plot_T2, xaxis):
+
 solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
 
-def make_plot(solution, plot_Ts, plot_T1, plot_T2, xaxis, cc, delta_cc, albedo,delta_albedo\
-    , em1, delta_em1, em2, delta_em2):
+
     plt.close('all')
     fig = plt.figure()
     ax1 = fig.add_subplot(111)
-
+    
     if xaxis == 'cloud cover':
         inc_cc = []
         for i in range(len(solution[0,:])):
@@ -39,9 +41,9 @@ def make_plot(solution, plot_Ts, plot_T1, plot_T2, xaxis, cc, delta_cc, albedo,d
         if plot_Ts == 'Off' and plot_T1 == 'Off' and plot_T2 == 'Off': raise ValueError('No y variable selected')
 
     elif xaxis == 'time':
-        t = []
-        for i in range(len(solution[0,:])):
-            t.append(i*(timestep/calcs_per_timestep))
+      
+        #for i in range(len(solution[0,:])):
+            #t.append(i*(timestep/calcs_per_timestep))
         
         if plot_Ts == 'On': ax1.plot(t,solution[0,:],label = 'Surface temperature')
         if plot_T1 == 'On': ax1.plot(t,solution[1,:], label = 'Lower atmospheric temperature')
