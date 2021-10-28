@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 #from slider_experiments import forest_change
 
 from config import * #import variables from config file
@@ -257,6 +258,12 @@ def execute_main(pressed):
     water_final_update = water_final.get()
     desert_final_update = desert_final.get()
     
+    if forest_update + water_update + ice_update + desert_update > 100:
+        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
+    
+    if forest_final_update + water_final_update + ice_final_update + desert_final_update > 100:
+        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
+
     show_plot()
 
 #solve equations with updated inputs and embed plot into GUI
