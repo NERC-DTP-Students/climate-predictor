@@ -508,7 +508,7 @@ def show_plot():
     
     print(xaxis_update)
     solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
-    fig = make_plot(solution, Ts_update, T1_update, T2_update, xaxis_update,cloud_initial_update,cloud_rate_update)
+    fig = make_plot(solution, Ts_update, T1_update, T2_update, xaxis_update,cloud_initial_update,cloud_rate_update, albedo, albedo_rate, epsilon1_initial_update, epsilon1_rate_update, epsilon2_initial_update, epsilon2_rate_update)
     gui_plot = FigureCanvasTkAgg(fig, outputframe)
     gui_plot.get_tk_widget().grid(row = 1, column = 0, sticky=(N, S, E, W))
 
