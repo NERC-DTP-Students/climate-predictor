@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 
 import time_slider_range
+from config import *
 
 #functions for creating entry types
 

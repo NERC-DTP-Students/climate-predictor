@@ -15,5 +15,5 @@ forest_update = 15.0
 ice_update = 15.0
 water_update = 65.0
 desert_update = 5.0
-# xaxis_update = 
+xaxis_update = 'time'
 # time_interval
