@@ -153,9 +153,9 @@ class Slider(Frame):
         indx = np.zeros(3)
         for posit in pos_list:
             indx[n] = positions.index(posit)
-            print(positions.index(posit))
+            #print(positions.index(posit))
             n=n+1
-        print(indx)
+        #print(indx)
 
         self.canv.create_line(self.slider_x+pos_list[2]*L+R, y, self.slider_x+L, y, fill = colours[3], width = Slider.LINE_WIDTH)
         self.canv.create_line(self.slider_x+pos_list[1]*L+R, y, self.slider_x+pos_list[2]*L-R, y, fill = colours[int(indx[2])], width = Slider.LINE_WIDTH)
