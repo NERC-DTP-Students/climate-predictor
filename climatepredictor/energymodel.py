@@ -49,7 +49,7 @@ cloud_albedo = 0.5
 #default percentage coverages
 ocean_perc, ice_perc, green_perc, desert_perc, cloud_perc = 0.65, 0.15, 0.15, 0.05, 0.50
 
-def calculate_albedo(ocean_perc,ice_perc,green_perc,desert_perc,cloud_perc,cloud_rate,timestep,length):
+def calculate_albedo(ocean_perc,ocean_final,ice_perc,ice_final,green_perc,green_final,desert_perc,desert_final,cloud_perc,cloud_rate,timestep,length):
     """Function to calculate the albedo from the land coverage percentages, using the albedos defined above.
     
     Inputs
@@ -64,6 +64,7 @@ def calculate_albedo(ocean_perc,ice_perc,green_perc,desert_perc,cloud_perc,cloud
     earth_albedo = (ocean_perc/100 * ocean_albedo) + (ice_perc/100 * ice_albedo) + (green_perc/100 * green_albedo) + (desert_perc/100 * desert_albedo)
     total_albedo = (cloud_perc/100 * cloud_albedo) + ((1 - cloud_perc/100) * earth_albedo)
     end_cloud = cloud_perc + (cloud_rate*length)
+    end_earth = (ocean_final/100 * ocean_albedo) + (ice_final/100 * ice_albedo) + (green_final/100 * green_albedo) + (desert_final/100 * desert_albedo)
     end_albedo = (end_cloud/100 * cloud_albedo) + ((1-end_cloud/100) * earth_albedo)
     albedo_rate = (end_albedo - total_albedo)/length
     return total_albedo, albedo_rate
