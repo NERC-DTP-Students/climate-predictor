@@ -274,6 +274,7 @@ def show_plot():
         albedo = albedo_initial_update
         albedo_rate = albedo_rate_update
     
+    print(ice_final_update)
     solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
     fig = make_plot(solution, Ts_update, T1_update, T2_update, xaxis_update)
     gui_plot = FigureCanvasTkAgg(fig, outputframe)
