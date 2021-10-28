@@ -28,7 +28,7 @@ def make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
     entry = ttk.Entry(root, width = 10, textvariable = default_rate)
     entry.grid(row = rowno, column = 3,sticky=(N, S, E, W))
     entry.bind('<KeyRelease>', execute_main)
-    label = ttk.Label(root, width = 10, text = unit+' per yr')
+    label = ttk.Label(root, width = 20, text = unit+' per time interval')
     label.grid(row = rowno, column = 4,sticky=(N, S, E, W))
 
 #make simple entry with one label

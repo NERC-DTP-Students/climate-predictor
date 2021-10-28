@@ -23,6 +23,7 @@ delta_cc = 1
 solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
 
 def make_plot(solution, plot_Ts, plot_T1, plot_T2, xaxis):
+    plt.close('all')
     fig = plt.figure()
     ax1 = fig.add_subplot(111)
 
