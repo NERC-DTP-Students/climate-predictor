@@ -19,3 +19,7 @@ time_interval_update = 1.0
 time_duration_update = 10.0
 xaxis_update = 'time'
 time_duration_update = 50.0
+Ts_update='On' 
+T1_update='On' 
+T2_update='On' 
+
