@@ -167,7 +167,7 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
     new_entry.grid(row=rowno,column=colno+1,sticky=(N, S, E, W))
     new_entry.bind('<KeyRelease>', execute_main, add= '+')
 
-    new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type))
+    new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type), add= '+')
 
 
 #    if type == 0:
@@ -187,7 +187,7 @@ def make_radio_button(frame,name,variable_in,value_in,rowno,initial_state):
         radio_button.state(['selected'])
     else:
         radio_button.state(['!selected'])
-    radio_button.bind('<Shift-Up>', execute_main)
+    radio_button.bind('<Button-1>', execute_main)
 
 #function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
@@ -198,7 +198,7 @@ def make_check_button(frame,name,variable_in,initial_state,rowno):
         check_button.state(['selected'])
     else:
         check_button.state(['!selected'])
-    check_button.bind('<Shift-Up>', execute_main)
+    check_button.bind('<Button-1>', execute_main)
 
 #close plots when GUI is closed
 def on_closing():
@@ -269,9 +269,7 @@ def execute_main(pressed):
 #solve equations with updated inputs and embed plot into GUI
 def show_plot():
     #NEED to replace these variables with connections to GUI inputs!
-    albedo = 0.3
-    timestep = 1 #years
-    delta_albedo = 0.01
+
     delta_Solar = 0
     calcs_per_timestep = 10
     # water_final_update = water_update
@@ -285,12 +283,13 @@ def show_plot():
         albedo = albedo_initial_update
         albedo_rate = albedo_rate_update
     
-    print(Ts_update)
+    print(xaxis_update)
     solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
     fig = make_plot(solution, Ts_update, T1_update, T2_update, xaxis_update)
     gui_plot = FigureCanvasTkAgg(fig, outputframe)
     gui_plot.get_tk_widget().grid(row = 1, column = 0, sticky=(N, S, E, W))
-    
+
+print(xaxis_update)  
 
 root = Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
@@ -591,5 +590,6 @@ def save_plot(): #add this!
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
 button_save.grid(row=9, column=1,sticky=(N, S, E, W))
 
+root.after(10, execute_main)
 root.mainloop()
 
