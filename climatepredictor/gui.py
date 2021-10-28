@@ -34,7 +34,6 @@ def make_simple_entry(root,label,variable,rowno,colno):
 # what happens when the entries are changed
 def check_total():
     current_tot = forest.get() + ice.get() + water.get()
-    print(current_tot)
     if current_tot > 100:
         """
         
@@ -49,40 +48,66 @@ def check_total():
         desert.set(100-current_tot)
     return
 
-def forest_change(event):
+def entry_change(event = None, index = 0):
         # add function to deal with errors if the box is empty
-        try:
-            f_pos = forest.get()
-        except TclError:
-            f_pos = 0
-        slider.moveBar(posit = f_pos/100, idx = 0, entry=True)
+        if index == 0:
+            try:
+                pos = forest.get()
+            except TclError:
+                pos = 0
+        if index == 1:
+            try:
+                pos = ice.get()
+            except TclError:
+                pos = 0
+        if index == 2:
+            try:
+                pos = water.get()
+            except TclError:
+                pos = 0
+        if index == 3:
+            try:
+                pos = desert.get()
+            except TclError:
+                pos = 0
+        slider.moveBar(posit = pos/100, idx = index, entry=True)
         check_total()
         return
 
-def ice_change(event):
-        # add function to deal with errors if the box is empty
-        try:
-            ice_pos = ice.get()
-        except TclError:
-            ice_pos = 0
-        slider.moveBar(posit = ice_pos/100, idx = 1, entry=True)
-        check_total()
-        return
+#def forest_change(event):
+#        # add function to deal with errors if the box is empty
+#        try:
+#            f_pos = forest.get()
+#        except TclError:
+#            f_pos = 0
+#        slider.moveBar(posit = f_pos/100, idx = 0, entry=True)
+#        check_total()
+#        return
 
-def water_change(event):
-        # add function to deal with errors if the box is empty
-        try:
-            water_pos = water.get()
-        except TclError:
-            water_pos = 0
-        slider.moveBar(posit = water_pos/100, idx = 2, entry=True)
-        check_total()
-        return
+#def ice_change(event):
+#        # add function to deal with errors if the box is empty
+#        try:
+#            ice_pos = ice.get()
+#        except TclError:
+#            ice_pos = 0
+#        slider.moveBar(posit = ice_pos/100, idx = 1, entry=True)
+#        check_total()
+#        return
 
-def desert_change(event):
-        desert_pos = desert_perc.get()
-        slider.moveBar(posit = desert_pos/100, idx = 3, entry=True)
-        return
+#def water_change(event):
+        # add function to deal with errors if the box is empty
+#        try:
+#            water_pos = water.get()
+#        except TclError:
+#            water_pos = 0
+#        slider.moveBar(posit = water_pos/100, idx = 2, entry=True)
+#        check_total()
+#        return
+
+#def desert_change(event):
+#        desert_pos = desert_perc.get()
+#        slider.moveBar(posit = desert_pos/100, idx = 3, entry=True)
+#        return
 
 
 #slider entries
@@ -92,14 +117,18 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
     new_entry=ttk.Entry(root,width=10,textvariable=variable)
     new_entry.grid(row=rowno,column=colno+1,sticky=(N, S, E, W))
     new_entry.bind('<KeyRelease>', execute_main, add= '+')
-    if type == 0:
-        new_entry.bind('<KeyRelease>', forest_change, add= '+')
-    elif type ==1:
-        new_entry.bind('<KeyRelease>', ice_change, add= '+')
-    elif type == 2:
-        new_entry.bind('<KeyRelease>', water_change, add= '+')
-    else:
-        new_entry.bind('<KeyRelease>', desert_change, add= '+')
+
+    new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type))
+
+
+#    if type == 0:
+#        new_entry.bind('<KeyRelease>', forest_change, add= '+')
+#    elif type ==1:
+#        new_entry.bind('<KeyRelease>', ice_change, add= '+')
+#    elif type == 2:
+#        new_entry.bind('<KeyRelease>', water_change, add= '+')
+#    else:
+#        new_entry.bind('<KeyRelease>', desert_change, add= '+')
 
 #function for making a Radiobutton
 def make_radio_button(frame,name,variable_in,value_in,rowno):
@@ -295,13 +324,6 @@ forest_value = make_slider_entry(slider_frame,'Forest',slider.forest_perc,4,0, t
 ice_value = make_slider_entry(slider_frame,'Ice',slider.ice_perc,5,0, type = 1)
 water_value = make_slider_entry(slider_frame,'Water',slider.water_perc,6,0, type = 2)
 desert_value = make_slider_entry(slider_frame,'Desert',slider.desert_perc,7,0, type = 3)
-
-print(type(desert_value))
-
-#def forest_change(event):
-#    print("forest")
-
-print(forest_value)
 
 #final land use widget here
 rowspanf=6
