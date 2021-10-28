@@ -483,6 +483,10 @@ def execute_main(pressed):
     #if forest_final_update + water_final_update + ice_final_update + desert_final_update > 100:
     #    messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
 
+    if Ts_update=='Off'and T1_update=='Off'and T2_update=='Off':
+        messagebox.showwarning("WARNING","At least one T on the Y Axis must be selected")
+
+
     show_plot()
 
 #solve equations with updated inputs and embed plot into GUI
@@ -767,7 +771,7 @@ xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
 make_radio_button(xaxis_frame,'Time',xaxis,'time',0,'On')
 make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1,'Off')
-make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2,'Off')
+#make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2,'Off')
 
 # customise y axis frame
 Ts_switch = StringVar()
@@ -778,9 +782,10 @@ T2_switch = StringVar()
 T2_switch.set('On')
 yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
 yaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
-make_check_button(yaxis_frame,u'T\u209B',Ts_switch,'On',1)
-make_check_button(yaxis_frame,u'T\u2081',T1_switch,'On',2)
-make_check_button(yaxis_frame,u'T\u2082',T2_switch,'On',3)
+make_check_button(yaxis_frame,u'T\u209B',Ts_switch,Ts_update,1)
+make_check_button(yaxis_frame,u'T\u2081',T1_switch,T1_update,2)
+make_check_button(yaxis_frame,u'T\u2092',T2_switch,T2_update,3)
+
 
 #X axis advanced options -initiall a button
 
@@ -818,6 +823,6 @@ def save_plot(): #add this!
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
 button_save.grid(row=9, column=1,sticky=(N, S, E, W))
 
-root.after(10, execute_main)
+execute_main
 root.mainloop()
 
