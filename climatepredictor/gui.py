@@ -178,6 +178,8 @@ class Slider(Frame):
         self.canv.create_line(self.slider_x+pos_list[0]*L, y, self.slider_x+pos_list[1]*L, y, fill = colours[int(indx[1])], width = Slider.LINE_WIDTH)
         self.canv.create_line(self.slider_x, y, self.slider_x+pos_list[0]*L, y, fill = colours[int(indx[0])], width = Slider.LINE_WIDTH)
 
+        #print(pos_list[-1])
+
         #self.canv.create_line(self.slider_x+pos_list[2]*L+R, y, self.slider_x+L-R, y, fill = colours[3], width = Slider.LINE_WIDTH)
         #self.canv.create_line(self.slider_x+pos_list[1]*L+R, y, self.slider_x+pos_list[2]*L-R, y, fill = colours[int(indx[2])], width = Slider.LINE_WIDTH)
         #self.canv.create_line(self.slider_x+pos_list[0]*L+R, y, self.slider_x+pos_list[1]*L-R, y, fill = colours[int(indx[1])], width = Slider.LINE_WIDTH)
@@ -336,6 +338,74 @@ def entry_change(event = None, index = 0):
             check_final_total()        
         return
 
+def entry_change(event = None, index = 0):
+        # add function to deal with errors if the box is empty
+        if index == 0:
+            try:
+                pos = forest.get()
+                slider.moveBar(posit = pos/100, idx = index, entry=True)
+                pos = ice.get()
+                slider.moveBar(posit = pos/100, idx = 1, entry=True)
+                pos = water.get()
+                slider.moveBar(posit = pos/100, idx = 2, entry=True)
+            except TclError:
+                pos = 0
+        if index == 1:
+            try:
+                pos = ice.get()
+                slider.moveBar(posit = pos/100, idx = 1, entry=True)
+                pos = water.get()
+                slider.moveBar(posit = pos/100, idx = 2, entry=True)
+            except TclError:
+                pos = 0
+        if index == 2:
+            try:
+                pos = water.get()
+                slider.moveBar(posit = pos/100, idx = 2, entry=True)
+            except TclError:
+                pos = 0
+        #if index == 3:
+        #    try:
+        #        pos = desert.get()
+        #    except TclError:
+        #        pos = 0
+        if index < 4:
+            #slider.moveBar(posit = pos/100, idx = index, entry=True)
+            check_initial_total()
+
+        if index == 4:
+            try:
+                pos = forest_final.get()
+                slider_final.moveBar(posit = pos/100, idx = index-4, entry=True)
+                pos = ice_final.get()
+                slider_final.moveBar(posit = pos/100, idx = 1, entry=True)
+                pos = water_final.get()
+                slider_final.moveBar(posit = pos/100, idx = 2, entry=True)
+            except TclError:
+                pos = 0
+        if index == 5:
+            try:
+                pos = ice_final.get()
+                slider_final.moveBar(posit = pos/100, idx = 1, entry=True)
+                pos = water_final.get()
+                slider_final.moveBar(posit = pos/100, idx = 2, entry=True)                
+            except TclError:
+                pos = 0
+        if index == 6:
+            try:
+                pos = water_final.get()
+                slider_final.moveBar(posit = pos/100, idx = 2, entry=True) 
+            except TclError:
+                pos = 0
+        #if index == 7:
+        #    try:
+        #        pos = desert_final.get()
+        #    except TclError:
+        #        pos = 0
+        if index > 3:
+            check_final_total()        
+        return
+
 #def forest_change(event):
 #        # add function to deal with errors if the box is empty
 #        try:
@@ -451,7 +521,7 @@ def execute_main(pressed):
     global water_final_update
     global desert_final_update
 
-    print("main launched")
+    #print("main launched")
 
     cloud_initial_update = cloud_initial.get()
     cloud_rate_update = cloud_rate.get()
