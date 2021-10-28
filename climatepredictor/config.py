@@ -18,4 +18,4 @@ desert_update = 5.0
 time_interval_update = 1.0
 time_duration_update = 10.0
 xaxis_update = 'time'
-# time_interval
+time_duration_update = 50.0
