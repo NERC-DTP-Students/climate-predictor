@@ -91,11 +91,3 @@ def plotting(solution, plot_Ts, plot_T1, plot_T2, xaxis):
     #plt.show()
     return fig
 
-#commenting out so doesn't run when imported
-plotting(solution, 'On', 'On', 'On','time')
-plt.show()
-
-#don't think this is needed but no harm for now.
-if __name__ == '__main__':
-    plotting(solution, 'On','On','On','time')
-
