@@ -65,7 +65,7 @@ def calculate_albedo(ocean_perc,ocean_final,ice_perc,ice_final,green_perc,green_
     total_albedo = (cloud_perc/100 * cloud_albedo) + ((1 - cloud_perc/100) * earth_albedo)
     end_cloud = cloud_perc + (cloud_rate*length)
     end_earth = (ocean_final/100 * ocean_albedo) + (ice_final/100 * ice_albedo) + (green_final/100 * green_albedo) + (desert_final/100 * desert_albedo)
-    end_albedo = (end_cloud/100 * cloud_albedo) + ((1-end_cloud/100) * earth_albedo)
+    end_albedo = (end_cloud/100 * cloud_albedo) + ((1-end_cloud/100) * end_earth)
     albedo_rate = (end_albedo - total_albedo)/length
     return total_albedo, albedo_rate
 
