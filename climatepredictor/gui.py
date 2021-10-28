@@ -179,10 +179,14 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
 #        new_entry.bind('<KeyRelease>', desert_change, add= '+')
 
 #function for making a Radiobutton
-def make_radio_button(frame,name,variable_in,value_in,rowno):
+def make_radio_button(frame,name,variable_in,value_in,rowno,initial_state):
     radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in)
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
-    radio_button.bind('<Motion>', execute_main)
+    if initial_state=='On':
+        radio_button.state(['selected'])
+    else:
+        radio_button.state(['!selected'])
+    radio_button.bind('<Shift-Up>', execute_main)
 
 #function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
@@ -193,7 +197,7 @@ def make_check_button(frame,name,variable_in,initial_state,rowno):
         check_button.state(['selected'])
     else:
         check_button.state(['!selected'])
-    check_button.bind('<Motion>', execute_main)
+    check_button.bind('<Shift-Up>', execute_main)
 
 #close plots when GUI is closed
 def on_closing():
@@ -274,7 +278,7 @@ def show_plot():
         albedo = albedo_initial_update
         albedo_rate = albedo_rate_update
     
-    print(ice_final_update)
+    print(Ts_update)
     solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
     fig = make_plot(solution, Ts_update, T1_update, T2_update, xaxis_update)
     gui_plot = FigureCanvasTkAgg(fig, outputframe)
@@ -530,9 +534,9 @@ for i in range(rowspanf):
 xaxis = StringVar()
 xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
-make_radio_button(xaxis_frame,'Time',xaxis,'time',0)
-make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1)
-make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2)
+make_radio_button(xaxis_frame,'Time',xaxis,'time',0,'On')
+make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1,'Off')
+make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2,'Off')
 
 # customise y axis frame
 Ts_switch = StringVar()
@@ -546,9 +550,9 @@ make_check_button(yaxis_frame,u'T\u2092',T2_switch,'On',3)
 
 #X axis advanced options -initiall a button
 
-make_radio_button(xaxis_advanced,'Albedo', xaxis,'albedo',0)
-make_radio_button(xaxis_advanced,u'\u03B5\u2081',xaxis,'epsilon1',1)
-make_radio_button(xaxis_advanced,u'\u03B5\u2082',xaxis,'epsilon2',2)
+make_radio_button(xaxis_advanced,'Albedo', xaxis,'albedo',0,'Off')
+make_radio_button(xaxis_advanced,u'\u03B5\u2081',xaxis,'epsilon1',1,'Off')
+make_radio_button(xaxis_advanced,u'\u03B5\u2082',xaxis,'epsilon2',2,'Off')
 xaxis_advanced.grid_remove()
 
 
