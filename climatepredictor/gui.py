@@ -12,7 +12,6 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationTool
 import matplotlib.pyplot as plt
 from plot import make_plot
 from energymodel import solve_over_time, calculate_albedo
-from plots import plotting
 
 
 
@@ -225,6 +224,10 @@ def execute_main(pressed):
     global Ts_update
     global T1_update
     global T2_update
+    global forest_final_update
+    global ice_final_update
+    global water_final_update
+    global desert_final_update
 
     cloud_initial_update = cloud_initial.get()
     cloud_rate_update = cloud_rate.get()
@@ -245,6 +248,10 @@ def execute_main(pressed):
     Ts_update = Ts_switch.get()
     T1_update = T1_switch.get()
     T2_update = T2_switch.get()
+    forest_final_update = forest_final.get()
+    ice_final_update = ice_final.get()
+    water_final_update = water_final.get()
+    desert_final_update = desert_final.get()
     
     show_plot()
 
@@ -256,17 +263,16 @@ def show_plot():
     delta_albedo = 0.01
     delta_Solar = 0
     calcs_per_timestep = 10
-    water_final_update = water_update
-    ice_final_update = ice_update
-    forest_final_update = forest_update
-    desert_final_update = desert_update
+    # water_final_update = water_update
+    # ice_final_update = ice_update
+    # forest_final_update = forest_update
+    # desert_final_update = desert_update
     
     if albedo_initial_update == 0 and albedo_rate_update == 0:
-        albedo, albedo_rate = calculate_albedo(water_update,water_final_update,ice_update,ice_final_update,forest_update,forest_final_update,desert_update,desert_final_update,cloud_initial_update, cloud_rate_update, time_interval_update, time_duration_update)
+        albedo, albedo_rate = calculate_albedo(water_update, water_final_update, ice_update, ice_final_update, forest_update, forest_final_update, desert_update, desert_final_update, cloud_initial_update, cloud_rate_update, time_interval_update, time_duration_update)
     else: 
         albedo = albedo_initial_update
         albedo_rate = albedo_rate_update
-    print(albedo, water_update, ice_update)
     
     solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
     fig = make_plot(solution, Ts_update, T1_update, T2_update, xaxis_update)
