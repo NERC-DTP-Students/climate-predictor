@@ -546,8 +546,11 @@ make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2,'Off')
 
 # customise y axis frame
 Ts_switch = StringVar()
+Ts_switch.set('On')
 T1_switch = StringVar()
+T1_switch.set('On')
 T2_switch = StringVar()
+T2_switch.set('On')
 yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
 yaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
 make_check_button(yaxis_frame,u'T\u209B',Ts_switch,'On',1)
