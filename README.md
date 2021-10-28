@@ -9,7 +9,7 @@
 # Climate Predictor Package 
 <div id="top"></div>
 <p>
-      <a href="https://climate-predictor.readthedocs.io/en/latest/index.html"><strong>Explore the docs </strong></a>
+      <a href="https://climate-predictor.readthedocs.io/en/latest/"><strong>Explore the docs </strong></a>
     <br/>
     <br/>
       .
