@@ -107,8 +107,11 @@ def solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,
     :param sigma: Stefan-Boltzmann constant, 5.67e-8
     
     """
+    t=[] #create blank array for time
     solutions_over_time = solve_model(Solar,albedo,em1,em2,sigma) #solves model for first time
-    for t in range(1,int((length*calcs_per_timestep)/timestep)): #iterates over timesteps to solve at each one
+    t.append(0)
+    for i in range(1,int((length*calcs_per_timestep)/timestep)): #iterates over timesteps to solve at each one
+        t.append(i*(timestep/calcs_per_timestep))
         Solar += delta_Solar/calcs_per_timestep
         #limit albedo, em1, em2 to be between 0 and 1
         if albedo < 1 and albedo > 0: albedo += delta_albedo/calcs_per_timestep
@@ -117,7 +120,7 @@ def solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,
 
         solutions_over_time = np.hstack([solutions_over_time, solve_model(Solar,albedo,em1,em2,sigma)]) #add solution to array
 
-    return solutions_over_time #array, 3xn where n is how the temperatures evolve over time; rows are Ts, T1, T2
+    return solutions_over_time, t #array, 3xn where n is how the temperatures evolve over time; rows are Ts, T1, T2 and temperature array
 
 #FOr testing, will eventually disappear.
 our_solution = solve_over_time(Solar,albedo,em1,em2,timestep,length,delta_albedo,delta_em1,delta_em2,delta_Solar,calcs_per_timestep)
