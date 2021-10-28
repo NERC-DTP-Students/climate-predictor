@@ -32,7 +32,7 @@ def make_simple_entry(root,label,variable,rowno,colno):
     new_entry.bind('<KeyRelease>', execute_main)
 
 # what happens when the entries are changed
-def check_total():
+def check_initial_total():
     current_tot = forest.get() + ice.get() + water.get()
     if current_tot > 100:
         """
@@ -46,6 +46,22 @@ def check_total():
         """
     else:
         desert.set(100-current_tot)
+    return
+
+def check_final_total():
+    current_tot = forest_final.get() + ice_final.get() + water_final.get()
+    if current_tot > 100:
+        """
+        
+        
+        
+        call a function to display a box saying the values add up to more than 100%
+        
+        
+        
+        """
+    else:
+        desert_final.set(100-current_tot)
     return
 
 def entry_change(event = None, index = 0):
@@ -70,8 +86,33 @@ def entry_change(event = None, index = 0):
                 pos = desert.get()
             except TclError:
                 pos = 0
-        slider.moveBar(posit = pos/100, idx = index, entry=True)
-        check_total()
+        if index < 4:
+            slider.moveBar(posit = pos/100, idx = index, entry=True)
+            check_initial_total()
+
+        if index == 4:
+            try:
+                pos = forest_final.get()
+            except TclError:
+                pos = 0
+        if index == 5:
+            try:
+                pos = ice_final.get()
+            except TclError:
+                pos = 0
+        if index == 6:
+            try:
+                pos = water_final.get()
+            except TclError:
+                pos = 0
+        if index == 7:
+            try:
+                pos = desert_final.get()
+            except TclError:
+                pos = 0
+        if index > 3:
+            slider_final.moveBar(posit = pos/100, idx = index-4, entry=True)
+            check_final_total()        
         return
 
 #def forest_change(event):
@@ -348,10 +389,10 @@ forest_final = slider_final.forest_perc
 ice_final = slider_final.ice_perc
 water_final = slider_final.water_perc
 desert_final = slider_final.desert_perc
-forest_value_final = make_slider_entry(slider_frame_final,'Forest',slider_final.forest_perc,4,0, type = 0)
-ice_value_final = make_slider_entry(slider_frame_final,'Ice',slider_final.ice_perc,5,0, type = 1)
-water_value_final = make_slider_entry(slider_frame_final,'Water',slider_final.water_perc,6,0, type = 2)
-desert_value_final = make_slider_entry(slider_frame_final,'Desert',slider_final.desert_perc,7,0, type = 3)
+forest_value_final = make_slider_entry(slider_frame_final,'Forest',slider_final.forest_perc,4,0, type = 4)
+ice_value_final = make_slider_entry(slider_frame_final,'Ice',slider_final.ice_perc,5,0, type = 5)
+water_value_final = make_slider_entry(slider_frame_final,'Water',slider_final.water_perc,6,0, type = 6)
+desert_value_final = make_slider_entry(slider_frame_final,'Desert',slider_final.desert_perc,7,0, type = 7)
 
 #add time widget with slider - row 8 in variable frame
 slider_frame2 = ttk.Frame(varframe)
