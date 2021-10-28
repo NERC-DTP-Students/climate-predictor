@@ -4,7 +4,14 @@ from tkinter import ttk
 import time_slider_range
 from config import *
 
-#functions for creating entry types
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
+
+import matplotlib.pyplot as plt
+from plot import make_plot
+from energymodel import solve_over_time
+
+
 
 #function for making entry for user friendly options
 def make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
@@ -45,6 +52,13 @@ def make_check_button(frame,name,variable_in,initial_state,rowno):
     else:
         check_button.state(['!selected'])
 
+#close plots when GUI is closed
+def on_closing():
+    plt.close('all')
+    root.destroy()
+
+
+#update variables and make plot when key is pressed
 def execute_main(pressed):
     global co2_initial_update
     global co2_rate_update
@@ -83,10 +97,27 @@ def execute_main(pressed):
     time_interval_update = int(time_interval.get())
     time_duration_update = int(time_duration.get())
     xaxis_update = xaxis.get()
+    show_plot()
+
+#solve equations with updated inputs and embed plot into GUI
+def show_plot():
+    #NEED to replace these variables with connections to GUI inputs!
+    albedo = 0.3
+    timestep = 1 #years
+    delta_albedo = 0.01
+    delta_Solar = 0
+    calcs_per_timestep = 10
+
+    solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,timestep,time_duration_update,delta_albedo,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
+    fig = make_plot(solution, 'On', 'On', 'On', xaxis_update)
+    gui_plot = FigureCanvasTkAgg(fig, outputframe)
+    gui_plot.get_tk_widget().grid(row = 1, column = 0, sticky=(N, S, E, W))
+
 
 
 
 root = Tk()
+root.protocol("WM_DELETE_WINDOW", on_closing)
 #set style
 root.tk.call('source','climatepredictor/sun-valley.tcl')
 root.tk.call('set_theme','dark')
@@ -120,6 +151,17 @@ plotframe.columnconfigure(0, weight=1)
 plotframe.columnconfigure(1, weight=1)
 for i in range(p):
     varframe.rowconfigure(i, weight=1)
+
+
+#make frame for plot options - row 1 of mainframe
+m=n+p #rowspan of plot frame
+outputframe=ttk.Frame(mainframe, padding="12 12 12 12")
+outputframe.grid(column=2, row=0, sticky=(N, S, E, W),rowspan=m)
+outputframe.columnconfigure(2, weight=1)
+for i in range(m):
+    outputframe.rowconfigure(i, weight=1)
+
+
 
 ######################## Customise Variable Frame ################################################################
 #default values
@@ -296,9 +338,9 @@ for i in range(rowspanf):
 xaxis = StringVar()
 xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
-make_radio_button(xaxis_frame,'Time',xaxis,'time',1)
-make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',2)
-make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',3)
+make_radio_button(xaxis_frame,'Time',xaxis,'time',0)
+make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1)
+make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2)
 
 # customise y axis frame
 yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
@@ -314,30 +356,11 @@ make_radio_button(xaxis_advanced,u'\u03B5\u2081',xaxis,'epsilon1',1)
 make_radio_button(xaxis_advanced,u'\u03B5\u2082',xaxis,'epsilon2',2)
 xaxis_advanced.grid_remove()
 
-def show_plot():
-    from energymodel import solve_over_time
-    from plots import plotting
-    import matplotlib.pyplot as plt
 
-    albedo = 0.3
-    #em1 = 0.5
-    #em2 = 0.5
-    timestep = 1 #years
-    length = 50 #years
-    delta_albedo = 0.00
-    #delta_em1 = 0.02
-    #delta_em2 = 0.02
-    delta_Solar = 0
-    calcs_per_timestep = 10
-    co2 = 1
-    delta_co2 = 1
-    cc = 20
-    delta_cc = 1
 
-    solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,timestep,length,delta_albedo,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
-    plotting(solution, 'On', 'On', 'On',xaxis_update)
-    plt.show()
-
+######################################## Output Plot Frame ######################################
+#ttk.Label(outputframe, text='Output',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
+show_plot()
 
 #functions for button for advanced axis frame
 def reveal_plot():

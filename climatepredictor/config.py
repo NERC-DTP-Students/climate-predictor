@@ -16,4 +16,4 @@ ice_update = 15.0
 water_update = 65.0
 desert_update = 5.0
 xaxis_update = 'time'
-# time_interval
+time_duration_update = 50.0
