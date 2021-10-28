@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 #from slider_experiments import forest_change
 
 from config import * #import variables from config file
@@ -256,7 +257,7 @@ def make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
     entry = ttk.Entry(root, width = 10, textvariable = default_rate)
     entry.grid(row = rowno, column = 3,sticky=(N, S, E, W))
     entry.bind('<KeyRelease>', execute_main)
-    label = ttk.Label(root, width = 10, text = unit+' per yr')
+    label = ttk.Label(root, width = 20, text = unit+' per time interval')
     label.grid(row = rowno, column = 4,sticky=(N, S, E, W))
 
 #make simple entry with one label
@@ -395,7 +396,7 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
     new_entry.grid(row=rowno,column=colno+1,sticky=(N, S, E, W))
     new_entry.bind('<KeyRelease>', execute_main, add= '+')
 
-    new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type), add = '+')
+    new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type), add= '+')
 
 
 #    if type == 0:
@@ -409,24 +410,24 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
 
 #function for making a Radiobutton
 def make_radio_button(frame,name,variable_in,value_in,rowno,initial_state):
-    radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in)
+    radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in, command = lambda : execute_main(None))
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
     if initial_state=='On':
         radio_button.state(['selected'])
     else:
         radio_button.state(['!selected'])
-    radio_button.bind('<Shift-Up>', execute_main)
+    #radio_button.bind('<Button-1>', execute_main)
 
 #function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
-    check_button=ttk.Checkbutton(frame,text=name,variable=variable_in,onvalue='On',offvalue='Off')
+    check_button=ttk.Checkbutton(frame,text=name,variable=variable_in,onvalue='On',offvalue='Off', command = lambda : execute_main(None))
     check_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
     check_button.state(['!alternate']) #clear alternate state
     if initial_state=='On':
         check_button.state(['selected'])
     else:
         check_button.state(['!selected'])
-    check_button.bind('<Shift-Up>', execute_main)
+    #check_button.bind('<Button-1>', execute_main)
 
 #close plots when GUI is closed
 def on_closing():
@@ -434,7 +435,7 @@ def on_closing():
     root.destroy()
 
 def changed():
-    print('change')
+    #print('change')
     execute_main(0)
     return
 
@@ -492,14 +493,18 @@ def execute_main(pressed):
     water_final_update = water_final.get()
     desert_final_update = desert_final.get()
     
+    if forest_update + water_update + ice_update + desert_update > 100:
+        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
+    
+    if forest_final_update + water_final_update + ice_final_update + desert_final_update > 100:
+        messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
+
     show_plot()
 
 #solve equations with updated inputs and embed plot into GUI
 def show_plot():
     #NEED to replace these variables with connections to GUI inputs!
-    albedo = 0.3
-    timestep = 1 #years
-    delta_albedo = 0.01
+
     delta_Solar = 0
     calcs_per_timestep = 10
     # water_final_update = water_update
@@ -513,12 +518,13 @@ def show_plot():
         albedo = albedo_initial_update
         albedo_rate = albedo_rate_update
     
-    print(Ts_update)
+    print(xaxis_update)
     solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
     fig = make_plot(solution, Ts_update, T1_update, T2_update, xaxis_update)
     gui_plot = FigureCanvasTkAgg(fig, outputframe)
     gui_plot.get_tk_widget().grid(row = 1, column = 0, sticky=(N, S, E, W))
-    
+
+print(xaxis_update)  
 
 root = Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
@@ -530,7 +536,7 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
 #create mainframe
-m=39 #number of rows in mainframe
+m=29 #number of rows in mainframe
 mainframe = ttk.Frame(root, padding="12 12 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
 mainframe.columnconfigure(0, weight=1)
@@ -547,24 +553,23 @@ varframe.columnconfigure(1, weight=1)
 for i in range(n):
     varframe.rowconfigure(i, weight=1)
 
-#make frame for plot options - row n+1 to m  mainframe
-p=10 #rowspan of plot frame
-plotframe=ttk.Frame(mainframe, padding="12 12 12 12")
-plotframe.grid(column=0, row=n+1, sticky=(N, S, E, W),rowspan=p)
-plotframe.columnconfigure(0, weight=1)
-plotframe.columnconfigure(1, weight=1)
-for i in range(p):
-    plotframe.rowconfigure(i, weight=1)
-
-
 #make frame for plot options - row 1 of mainframe
-m=n+p #rowspan of plot frame
+r=10 #rowspan of plot frame
 outputframe=ttk.Frame(mainframe, padding="12 12 12 12")
-outputframe.grid(column=2, row=0, sticky=(N, S, E, W),rowspan=m)
+outputframe.grid(column=2, row=0, sticky=(N, S, E, W),rowspan=r)
 outputframe.columnconfigure(2, weight=1)
+outputframe.columnconfigure(3, weight=1)
 for i in range(m):
     outputframe.rowconfigure(i, weight=1)
 
+#make frame for plot options - row n+1 to m  mainframe
+p=10 #rowspan of plot frame
+plotframe=ttk.Frame(mainframe, padding="12 12 12 12")
+plotframe.grid(column=2, row=r+1, sticky=(N, S, E, W),rowspan=p)
+plotframe.columnconfigure(2, weight=1)
+plotframe.columnconfigure(3, weight=1)
+for i in range(p):
+    plotframe.rowconfigure(i, weight=1)
 
 
 ######################## Customise Variable Frame ################################################################
@@ -611,17 +616,18 @@ make_value_entry(label_frame,'Cloud cover', 1, cloud_initial, cloud_rate, '%')
 #functions for button for advanced frame
 def reveal():
     
-    return advanced_frame.grid(column=0,row=2+q,sticky=(N, S, E, W),rowspan=k,columnspan=2), hide_button.grid(row=1+q,column=1),slider_frame.grid_remove(),slider_frame_final.grid_remove()
+    return button.grid_remove(), advanced_frame.grid(column=0,row=2+q,sticky=(N, S, E, W),rowspan=k,columnspan=2), hide_button.grid(row=1+q,column=1),slider_frame.grid_remove(),slider_frame_final.grid_remove()
 
 def hide():
     
-    return advanced_frame.grid_remove(),hide_button.grid_remove(), slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)), slider_frame_final.grid(column = 0, row = 26,columnspan=2,rowspan=2,sticky=(N, S, E, W))
+    return button.grid(), advanced_frame.grid_remove(),hide_button.grid_remove(), slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)), slider_frame_final.grid(column = 0, row = 8+q+k,columnspan=2,rowspan=2,sticky=(N, S, E, W))
 
 #add buttons for advanced options in row 1+q
 button=ttk.Button(varframe,text='Advanced Options',command=reveal)
 button.grid(row=1+q, column=0)
-hide_button=ttk.Button(varframe,text='Hide',command=hide)
-hide_button.grid(row=1+q,column=1)
+hide_button=ttk.Button(varframe,text='Hide Advanced Options',command=hide)
+hide_button.grid(row=1+q,column=0)
+hide_button.grid_remove()
 
 #add advanced frame dropdown in variable frame row 5
 k=5 #rowspan
@@ -766,7 +772,7 @@ for i in range(rowspanf):
 
 rowspanf=3
 xaxis_advanced=ttk.Frame(plotframe,padding="12 12 12 12")
-xaxis_advanced.grid(row=6,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=rowspanf)
+xaxis_advanced.grid(row=1,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=rowspanf)
 xaxis_advanced.columnconfigure(0, weight=1)
 for i in range(rowspanf):
     xaxis_advanced.rowconfigure(i, weight=1)
@@ -781,8 +787,11 @@ make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2,'Off')
 
 # customise y axis frame
 Ts_switch = StringVar()
+Ts_switch.set('On')
 T1_switch = StringVar()
+T1_switch.set('On')
 T2_switch = StringVar()
+T2_switch.set('On')
 yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
 yaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
 make_check_button(yaxis_frame,u'T\u209B',Ts_switch,'On',1)
@@ -805,16 +814,16 @@ show_plot()
 #functions for button for advanced axis frame
 def reveal_plot():
     
-    return xaxis_advanced.grid(), hide_button2.grid(), button2.grid_remove(), xaxis_frame.grid_remove()
+    return xaxis_advanced.grid(row=1,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=3), hide_button2.grid(row=5,column=0,sticky=(N, S, E, W)), button2.grid_remove(), xaxis_frame.grid_remove()
 
 def hide_plot():
     
-    return xaxis_advanced.grid_remove(), hide_button2.grid_remove(), button2.grid(), xaxis_frame.grid(row=1,column=0,columnspan=1,sticky=(N, S, E, W),rowspan=4)
+    return xaxis_advanced.grid_remove(), hide_button2.grid_remove(), button2.grid(row=5, column=0,sticky=(N, S, E, W)), xaxis_frame.grid(row=1,column=0,columnspan=1,sticky=(N, S, E, W),rowspan=4)
 
-hide_button2=ttk.Button(plotframe,text='Hide',command=hide_plot)
+hide_button2=ttk.Button(plotframe,text='Hide Advanced X Axis Options',command=hide_plot)
 hide_button2.grid(row=5,column=0,sticky=(N, S, E, W))
 hide_button2.grid_remove()
-button2=ttk.Button(plotframe,text='Advanced X Axis Options',command=reveal_plot)
+button2=ttk.Button(plotframe,text='Show Advanced X Axis Options',command=reveal_plot)
 button2.grid(row=5, column=0,sticky=(N, S, E, W))
 button3=ttk.Button(plotframe, text='Plot',command=show_plot)
 button3.grid(row=9, column=0,sticky=(N,S,E,W))
@@ -825,5 +834,6 @@ def save_plot(): #add this!
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
 button_save.grid(row=9, column=1,sticky=(N, S, E, W))
 
+root.after(10, execute_main)
 root.mainloop()
 
