@@ -783,7 +783,6 @@ xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
 make_radio_button(xaxis_frame,'Time',xaxis,'time',0,'On')
 make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1,'Off')
-make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2,'Off')
 
 # customise y axis frame
 Ts_switch = StringVar()
