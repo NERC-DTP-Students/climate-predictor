@@ -175,7 +175,7 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
 def make_radio_button(frame,name,variable_in,value_in,rowno):
     radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in)
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
-    radio_button.bind('<Button-1>', execute_main)
+    radio_button.bind('<Motion>', execute_main)
 
 #function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
@@ -186,6 +186,7 @@ def make_check_button(frame,name,variable_in,initial_state,rowno):
         check_button.state(['selected'])
     else:
         check_button.state(['!selected'])
+    check_button.bind('<Motion>', execute_main)
 
 def execute_main(pressed):
     global co2_initial_update
@@ -206,6 +207,9 @@ def execute_main(pressed):
     global time_interval_update
     global time_duration_update
     global xaxis_update
+    global Ts_update
+    global T1_update
+    global T2_update
 
     cloud_initial_update = cloud_initial.get()
     cloud_rate_update = cloud_rate.get()
@@ -220,9 +224,12 @@ def execute_main(pressed):
     ice_update = ice.get()
     water_update = water.get()
     desert_update = desert.get()
-    time_interval_update = int(time_interval.get())
-    time_duration_update = int(time_duration.get())
+    time_interval_update = int(float(time_interval.get()))
+    time_duration_update = int(float(time_duration.get()))
     xaxis_update = xaxis.get()
+    Ts_update = Ts_switch.get()
+    T1_update = T1_switch.get()
+    T2_update = T2_switch.get()
 
 
 
@@ -468,11 +475,14 @@ make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',2)
 make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',3)
 
 # customise y axis frame
+Ts_switch = StringVar()
+T1_switch = StringVar()
+T2_switch = StringVar()
 yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
 yaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
-make_check_button(yaxis_frame,u'T\u2081','plot_T1','Off',1)
-make_check_button(yaxis_frame,u'T\u2082','plot_T2','Off',2)
-make_check_button(yaxis_frame,u'T\u209B','plot_Ts','On',3)
+make_check_button(yaxis_frame,u'T\u209B',Ts_switch,'Off',1)
+make_check_button(yaxis_frame,u'T\u2081',T1_switch,'Off',2)
+make_check_button(yaxis_frame,u'T\u2092',T2_switch,'On',3)
 
 #X axis advanced options -initiall a button
 
@@ -482,27 +492,29 @@ make_radio_button(xaxis_advanced,u'\u03B5\u2082',xaxis,'epsilon2',2)
 xaxis_advanced.grid_remove()
 
 def show_plot():
-    from energymodel import solve_over_time
+    from energymodel import solve_over_time, calculate_albedo
     from plots import plotting
     import matplotlib.pyplot as plt
 
-    albedo = 0.3
-    #em1 = 0.5
-    #em2 = 0.5
-    timestep = 1 #years
-    length = 50 #years
-    delta_albedo = 0.00
-    #delta_em1 = 0.02
-    #delta_em2 = 0.02
     delta_Solar = 0
     calcs_per_timestep = 10
     co2 = 1
     delta_co2 = 1
     cc = 20
     delta_cc = 1
+    water_final_update = water_update
+    ice_final_update = ice_update
+    forest_final_update = forest_update
+    desert_final_update = desert_update
+    if albedo_initial_update == 0 and albedo_rate_update == 0:
+        albedo, albedo_rate = calculate_albedo(water_update,water_final_update,ice_update,ice_final_update,forest_update,forest_final_update,desert_update,desert_final_update,cloud_initial_update, cloud_rate_update, time_interval_update, time_duration_update)
+    else: 
+        albedo = albedo_initial_update
+        albedo_rate = albedo_rate_update
 
-    solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,timestep,length,delta_albedo,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
-    plotting(solution, 'On', 'On', 'On',xaxis_update)
+    print(albedo, water_update, ice_update)
+    solution = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
+    plotting(solution, Ts_update, T1_update, T2_update, xaxis_update)
     plt.show()
 
 
