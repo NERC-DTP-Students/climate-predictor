@@ -235,15 +235,15 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
 #create mainframe
-m=38 #number of rows in mainframe
+m=39 #number of rows in mainframe
 mainframe = ttk.Frame(root, padding="12 12 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
 mainframe.columnconfigure(0, weight=1)
 for i in range(m):
     mainframe.rowconfigure(i, weight=1)
 
-#make frame for changing variables - row 0 of mainframe
-n=25 #rowspan of varframe in main frame
+#make frame for changing variables - row 0-n of mainframe
+n=29 #rowspan of varframe in main frame
 varframe=ttk.Frame(mainframe, padding="12 12 12 12")
 varframe.grid(column=0, row=0, sticky=(N, S, E, W),rowspan=n)
 varframe.columnconfigure(0, weight=1)
@@ -252,14 +252,14 @@ varframe.columnconfigure(1, weight=1)
 for i in range(n):
     varframe.rowconfigure(i, weight=1)
 
-#make frame for plot options - row 24 onwards of mainframe
-p=15 #rowspan of plot frame
+#make frame for plot options - row n+1 to m  mainframe
+p=10 #rowspan of plot frame
 plotframe=ttk.Frame(mainframe, padding="12 12 12 12")
-plotframe.grid(column=0, row=26, sticky=(N, S, E, W),rowspan=p)
+plotframe.grid(column=0, row=n+1, sticky=(N, S, E, W),rowspan=p)
 plotframe.columnconfigure(0, weight=1)
 plotframe.columnconfigure(1, weight=1)
 for i in range(p):
-    varframe.rowconfigure(i, weight=1)
+    plotframe.rowconfigure(i, weight=1)
 
 ######################## Customise Variable Frame ################################################################
 #default values
@@ -276,11 +276,12 @@ solar_flux = DoubleVar(root,value = solar_flux_update)
 time_interval = IntVar(value = time_interval_update)
 time_duration = StringVar(value= time_duration_update)
 
-ttk.Label(varframe, text='Variable Options',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
+variable_title=ttk.Label(varframe, text='Variable Options',width=30,font='bold')
+variable_title.grid(column=0,row=0, sticky=(N, S, E, W))
 
 #create frame for labels - row=1, column=0 in variable frame
 #spans the same number of rows as the make_new_entry thing so it lines up
-q=3 #rowspan of frame
+q=2 #rowspan of frame
 label_frame=ttk.Frame(varframe,padding="12 12 12 12")
 label_frame.grid(row=1,column=0,columnspan=2,rowspan=q,sticky=(N, S, E, W))
 label_frame.columnconfigure(0, weight=1)
@@ -296,15 +297,30 @@ def add_labels(root,rowno):
     change_label=ttk.Label(root, text='Change',width=10)
     change_label.grid(column=3,row=rowno, sticky=(N, S, E, W))
 
-#add our entry options rows 2,3 in variable frame
+#add our cloud cover entry options and title in rows 1, 2 in variable frame
 # make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
-add_labels(label_frame,1)
-make_value_entry(label_frame,'Cloud cover', 2, cloud_initial, cloud_rate, '%')
+add_labels(label_frame,0)
+make_value_entry(label_frame,'Cloud cover', 1, cloud_initial, cloud_rate, '%')
 
-#add advanced frame dropdown in variable frame row 4
+#functions for button for advanced frame
+def reveal():
+    
+    return advanced_frame.grid(column=0,row=2+q,sticky=(N, S, E, W),rowspan=k,columnspan=2), hide_button.grid(row=1+q,column=1),slider_frame.grid_remove(),slider_frame_final.grid_remove()
+
+def hide():
+    
+    return advanced_frame.grid_remove(),hide_button.grid_remove(), slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)), slider_frame_final.grid(column = 0, row = 26,columnspan=2,rowspan=2,sticky=(N, S, E, W))
+
+#add buttons for advanced options in row 1+q
+button=ttk.Button(varframe,text='Advanced Options',command=reveal)
+button.grid(row=1+q, column=0)
+hide_button=ttk.Button(varframe,text='Hide',command=hide)
+hide_button.grid(row=1+q,column=1)
+
+#add advanced frame dropdown in variable frame row 5
 k=5 #rowspan
 advanced_frame=ttk.Frame(varframe,padding="12 12 12 12")
-advanced_frame.grid(column=0,row=5,sticky=(N, S, E, W),rowspan=k,columnspan=2)
+advanced_frame.grid(column=0,row=2+q,sticky=(N, S, E, W),rowspan=k,columnspan=2)
 for i in range(5):
     advanced_frame.columnconfigure(i, weight=1)
 for i in range(k):
@@ -321,32 +337,16 @@ solar_entry.bind('<KeyRelease>', execute_main)
 advanced_frame.grid_remove()
 
 
-
-#functions for button for advanced frame
-def reveal():
-    
-    return advanced_frame.grid(), hide_button.grid()
-
-def hide():
-    
-    return advanced_frame.grid_remove(),hide_button.grid_remove()
-
-
-button=ttk.Button(varframe,text='Advanced Options',command=reveal)
-button.grid(row=4, column=0)
-hide_button=ttk.Button(varframe,text='Hide',command=hide)
-hide_button.grid(row=4,column=1)
-
-#add initial land use widget here, row 6 in variable frame
+#add initial land use widget here, row 2+q+k in variable frame
 from slider_setup_2 import Slider
-rowspanf=6
+rowspanf=8
 slider_frame=ttk.Frame(varframe,padding="12 12 12 12")
-slider_frame.grid(row=11,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W))
+slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W))
 slider_frame.columnconfigure(0, weight=1)
 slider_frame.columnconfigure(1, weight=1)
 for i in range(rowspanf):
     slider_frame.rowconfigure(i, weight=1)
-slider_title=ttk.Label(slider_frame,text='Land Uses - Initial')
+slider_title=ttk.Label(slider_frame,text='Land Uses - Initial',)
 slider_title.grid(row=0,column=0,sticky=(N, S, E, W))
 slider_note=ttk.Label(slider_frame,text='Enter values in descending order')
 slider_note.grid(row=0,column=1,sticky=(N, S, E, W))
@@ -367,16 +367,16 @@ water_value = make_slider_entry(slider_frame,'Water',slider.water_perc,6,0, type
 desert_value = make_slider_entry(slider_frame,'Desert',slider.desert_perc,7,0, type = 3)
 
 #final land use widget here
-rowspanf=6
+rowspanf=8
 slider_frame_final=ttk.Frame(varframe,padding="12 12 12 12")
-slider_frame_final.grid(row=18,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)) #span just one row as had to put in later
+slider_frame_final.grid(row=10+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)) #span just one row as had to put in later
 slider_frame_final.columnconfigure(0, weight=1)
 slider_frame_final.columnconfigure(1, weight=1)
 for i in range(rowspanf):
     slider_frame_final.rowconfigure(i, weight=1)
 slider_title_final=ttk.Label(slider_frame_final,text='Land Uses - final')
 slider_title_final.grid(row=0,column=0,sticky=(N, S, E, W))
-slider_note_final=ttk.Label(slider_frame,text='Enter values in descending order')
+slider_note_final=ttk.Label(slider_frame_final,text='Enter values in descending order')
 slider_note_final.grid(row=0,column=1,sticky=(N, S, E, W))
 # initial positions on the slider (calculated from initial percentages)
 init_positions_final = [25,50,75]
@@ -394,9 +394,9 @@ ice_value_final = make_slider_entry(slider_frame_final,'Ice',slider_final.ice_pe
 water_value_final = make_slider_entry(slider_frame_final,'Water',slider_final.water_perc,6,0, type = 6)
 desert_value_final = make_slider_entry(slider_frame_final,'Desert',slider_final.desert_perc,7,0, type = 7)
 
-#add time widget with slider - row 8 in variable frame
+#add time widget with slider - row 23 in variable frame
 slider_frame2 = ttk.Frame(varframe)
-slider_frame2.grid(column = 0, row = 24,columnspan=2,rowspan=2,sticky=(N, S, E, W))
+slider_frame2.grid(column = 0, row = 26,columnspan=2,rowspan=2,sticky=(N, S, E, W))
 slider_frame2.columnconfigure(0,weight=1)
 slider_frame2.columnconfigure(1,weight=1)
 slider_frame2.rowconfigure(0,weight=1)
@@ -434,14 +434,14 @@ slider2.grid(row=1,column=6,sticky=(N, S, E, W))'''
 
 ############################################ Customise plotting frame ###########################################
 #title frame
-plot_options_label=ttk.Label(plotframe, text='Plot Options',width=30)
+plot_options_label=ttk.Label(plotframe, text='Plot Options',width=30,font='bold')
 plot_options_label.grid(column=0,row=0, sticky=(N, S, E, W))
 
 
 # 4 frames
 rowspanf=4
 xaxis_frame=ttk.Frame(plotframe,padding="12 12 12 12")
-xaxis_frame.grid(row=1,column=0,columnspan=1,sticky=(N, S, E, W),rowspan=rowspanf)
+xaxis_frame.grid(row=1,column=0,columnspan=1,sticky=(N, S, E, W),rowspan=4)
 xaxis_frame.columnconfigure(0, weight=1)
 for i in range(rowspanf):
     xaxis_frame.rowconfigure(i, weight=1)
@@ -454,7 +454,7 @@ for i in range(rowspanf):
 
 rowspanf=3
 xaxis_advanced=ttk.Frame(plotframe,padding="12 12 12 12")
-xaxis_advanced.grid(row=5,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=rowspanf)
+xaxis_advanced.grid(row=6,column=0,sticky=(N, S, E, W),columnspan=1,rowspan=rowspanf)
 xaxis_advanced.columnconfigure(0, weight=1)
 for i in range(rowspanf):
     xaxis_advanced.rowconfigure(i, weight=1)
@@ -509,24 +509,25 @@ def show_plot():
 #functions for button for advanced axis frame
 def reveal_plot():
     
-    return xaxis_advanced.grid(), hide_button2.grid(), button2.grid_remove()
+    return xaxis_advanced.grid(), hide_button2.grid(), button2.grid_remove(), xaxis_frame.grid_remove()
 
 def hide_plot():
     
-    return xaxis_advanced.grid_remove(), hide_button2.grid_remove(), button2.grid()
+    return xaxis_advanced.grid_remove(), hide_button2.grid_remove(), button2.grid(), xaxis_frame.grid(row=1,column=0,columnspan=1,sticky=(N, S, E, W),rowspan=4)
 
 hide_button2=ttk.Button(plotframe,text='Hide',command=hide_plot)
-hide_button2.grid(row=8,column=0,sticky=(N, S, E, W))
+hide_button2.grid(row=5,column=0,sticky=(N, S, E, W))
 hide_button2.grid_remove()
 button2=ttk.Button(plotframe,text='Advanced X Axis Options',command=reveal_plot)
-button2.grid(row=8, column=0,sticky=(N, S, E, W))
+button2.grid(row=5, column=0,sticky=(N, S, E, W))
 button3=ttk.Button(plotframe, text='Plot',command=show_plot)
-button3.grid(row=10, column=0,sticky=(N,S,E,W))
+button3.grid(row=9, column=0,sticky=(N,S,E,W))
 
 # add save button
 def save_plot(): #add this!
     pass
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
-button_save.grid(row=10, column=1,sticky=(N, S, E, W))
+button_save.grid(row=9, column=1,sticky=(N, S, E, W))
+
 root.mainloop()
 
