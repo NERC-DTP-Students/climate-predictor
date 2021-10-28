@@ -87,8 +87,8 @@ class Slider(Frame):
             #pos[n] = np.where(value = sorted_values)
 
         percentages = np.concatenate((np.array([sorted_values[0]]), np.diff(sorted_values), np.array([100 - sorted_values[-1]])), axis = 0)
-        print(percentages)
-        print(pos)
+        # print(percentages)
+        # print(pos)
 
         forest_perc.set(percentages[0])
         ice_perc.set(percentages[1])
@@ -194,4 +194,4 @@ desert_perc = DoubleVar(root, 25)
 root.title("Slider Widget")
 root.mainloop()
 
-print(slider.getValues())
+#print(slider.getValues())
