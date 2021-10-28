@@ -295,7 +295,7 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
 #create mainframe
-m=39 #number of rows in mainframe
+m=29 #number of rows in mainframe
 mainframe = ttk.Frame(root, padding="12 12 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
 mainframe.columnconfigure(0, weight=1)
@@ -312,24 +312,23 @@ varframe.columnconfigure(1, weight=1)
 for i in range(n):
     varframe.rowconfigure(i, weight=1)
 
-#make frame for plot options - row n+1 to m  mainframe
-p=10 #rowspan of plot frame
-plotframe=ttk.Frame(mainframe, padding="12 12 12 12")
-plotframe.grid(column=0, row=n+1, sticky=(N, S, E, W),rowspan=p)
-plotframe.columnconfigure(0, weight=1)
-plotframe.columnconfigure(1, weight=1)
-for i in range(p):
-    plotframe.rowconfigure(i, weight=1)
-
-
 #make frame for plot options - row 1 of mainframe
-m=n+p #rowspan of plot frame
+r=10 #rowspan of plot frame
 outputframe=ttk.Frame(mainframe, padding="12 12 12 12")
-outputframe.grid(column=2, row=0, sticky=(N, S, E, W),rowspan=m)
+outputframe.grid(column=2, row=0, sticky=(N, S, E, W),rowspan=r)
 outputframe.columnconfigure(2, weight=1)
+outputframe.columnconfigure(3, weight=1)
 for i in range(m):
     outputframe.rowconfigure(i, weight=1)
 
+#make frame for plot options - row n+1 to m  mainframe
+p=10 #rowspan of plot frame
+plotframe=ttk.Frame(mainframe, padding="12 12 12 12")
+plotframe.grid(column=2, row=r+1, sticky=(N, S, E, W),rowspan=p)
+plotframe.columnconfigure(2, weight=1)
+plotframe.columnconfigure(3, weight=1)
+for i in range(p):
+    plotframe.rowconfigure(i, weight=1)
 
 
 ######################## Customise Variable Frame ################################################################
