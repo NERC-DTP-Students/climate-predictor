@@ -113,7 +113,7 @@ In this simple example, shows change in surface temperature for a 10% increase i
 ![Choose plot options!](examples/set_plot_options.png)
 
 6. Plot automatically updates
-![Resulting!](examples/set_clouds.png)
+![Resulting plot!](examples/graph.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
