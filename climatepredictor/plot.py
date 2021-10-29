@@ -23,6 +23,24 @@ delta_cc = 1
 
 def make_plot(solution, t, plot_Ts, plot_T1, plot_T2, xaxis, cc, delta_cc, albedo,delta_albedo\
     , em1, delta_em1, em2, delta_em2):
+    """
+    Define a function that plots the 2 layer energy balance model against time or a rate of change of a relevant parameter.
+
+    :param solution: The solution over time array created by solve_over_time() in energymodel.py
+    :param t: The time axis created by solve_over_time in energymodel.py
+    :param plot_Ts: A string of either 'On' or 'Off' that records whether plotting surface temperature has been checked.
+    :param plot_T1: A string of either 'On' or 'Off' that records whether plotting lower atmosphere temperature has been checked.
+    :param plot_T2: A string of either 'On' or 'Off' that records whether plotting upper atmosphere temperature has been checked.
+    :param xaxis: A string denoting which xaxis has been selected in the gui.
+    :param cc: The initial cloud cover value, used to generate cloud cover xaxis.
+    :param delta_cc: The rate of change of cloud cover, used to generate cloud cover xaxis.
+    :param albedo: The initial albedo, used to generate albedo axis.
+    :param delta_albedo: The rate of change of albedo, used to generate albedo axis.
+    :param em1: The initial emissivity of the lower atmosphere, used to generate em1 axis.
+    :param delta_em1: The rate of change of emissivity of the lower atmosphere, used to genreate em1 axis.
+    :param em2: The initial emissivity of the upper atmosphere, used to generate albedo axis.
+    :param delta_em2: THe rate of change of emissivity of the upper atmopshere, used to generate em2 axis.
+    """
 
     plt.close('all')
     fig = plt.figure()
