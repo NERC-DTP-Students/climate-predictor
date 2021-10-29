@@ -2,3 +2,5 @@
 source = climatepredictor
 omit =
     climatepredictor/tests/*
+    climatepredictor/theme/*
+    climatepredictor/sun-valley.tcl
