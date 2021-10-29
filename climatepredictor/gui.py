@@ -1,3 +1,32 @@
+"""
+Main GUI file.
+Builds the GUI and calls functions to calculate the temperature of the planet in the upper and lower atmosphere
+and on the surface.
+
+
+Classes:
++ Slider: builds the albedo slider where the user can adjust the composition of the surface of the planet
+
+Functions:
++ make_value_entry: function for making entry box
++ make_simmple_entry: function for making entry box
++ check_initial_total: checks that the initial surface composition adds up to 100%
++ check_final_total: checks that the final surface composition adds up to 100%
++ entry_change: moves the slider if the composition of the planet is changed in the entry box
++ make_slider_entry: creates entry box for the slider
++ make_radio_button: makes a radio button
++ make_check_button: makes a check box
++ on_closing: closes the plot
++ changed: calls the execute_main function once the slider changes
++ execute_main: updates variables and makes a plot when a key is pressed
++ show_plot: solve equations with updated inputs and embed plot into GUI
++ add_labels: adds labels to the GUI
++ reveal: reveals the advanced options
++ hide: hides the advanced options
++ reveal_plot: advanced plotting options
++ hide_plot: basic plotting options
+"""
+
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
