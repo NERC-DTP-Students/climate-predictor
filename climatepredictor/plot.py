@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from energymodel import solve_over_time #not required I don't think as we don't want to solve in this file
 import matplotlib.path as mplPath
 
 Solar = 1368 #Wm^2
