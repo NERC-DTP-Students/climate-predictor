@@ -195,6 +195,7 @@ This package is distributed under the MIT license. For more information see <a h
 
 + Basic model inspired based on <a href='https://biocycle.atmos.colostate.edu/shiny/2layer'>this diagram </a>
 + GUI theme based on: <a href='https://github.com/rdbende/Sun-Valley-ttk-theme'> this template.</a>
++ Slider based on: <a href='https://github.com/MenxLi/tkSliderWidget'> this code. </a>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

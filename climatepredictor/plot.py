@@ -1,3 +1,7 @@
+""" Makes plots of the planet surface and two levels of atmosphere depending on an array of parameters. 
+    To see the parameters, check out under the function make_plot. 
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.path as mplPath
