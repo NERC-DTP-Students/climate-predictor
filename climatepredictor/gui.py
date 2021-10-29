@@ -580,7 +580,7 @@ def show_plot():
     gui_plot = FigureCanvasTkAgg(fig, outputframe)
     gui_plot.get_tk_widget().grid(row = 1, column = 0, sticky=(N, S, E, W))
 
-print(xaxis_update)  
+ 
 
 root = Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
@@ -883,14 +883,23 @@ hide_button2.grid(row=5,column=0,sticky=(N, S, E, W))
 hide_button2.grid_remove()
 button2=ttk.Button(plotframe,text='Show Advanced X Axis Options',command=reveal_plot)
 button2.grid(row=5, column=0,sticky=(N, S, E, W))
-button3=ttk.Button(plotframe, text='Plot',command=show_plot)
-button3.grid(row=9, column=0,sticky=(N,S,E,W))
 
+
+#add entry for filename
+filename=StringVar()
+save_label=ttk.Label(plotframe,text='Saved plot name',padding='12 12 12 12')
+save_label.grid(row=6,column=0)
+save_entry=ttk.Entry(plotframe,textvariable=filename)
+save_entry.grid(row=6,column=1)
 # add save button
-def save_plot(): #add this!
-    pass
+def save_plot(): 
+    #import os
+    #import sys
+    #sys.path.insert(0, os.path.abspath('.'))
+    #print(sys.path)
+    plt.savefig(fname=filename.get()+'.png')
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
-button_save.grid(row=9, column=1,sticky=(N, S, E, W))
+button_save.grid(row=5, column=1,sticky=(N, S, E, W))
 
 execute_main
 root.mainloop()
