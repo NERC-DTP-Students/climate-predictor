@@ -345,6 +345,8 @@ def make_slider_entry(root, label, variable, rowno, colno, type):
 def make_value_entry(root, caption, rowno, default_initial, default_rate, unit):
     '''Creates a GUI entry window with boxes to enter the initial value and rate of change (eg. cloud cover initial percent and percent rate of change
 
+    Runs execute_main when entry is changed
+
     :root: main GUI frame
     :caption: name of variable
     :rowno: row within GUI frame to place entry
@@ -369,6 +371,8 @@ def make_value_entry(root, caption, rowno, default_initial, default_rate, unit):
 def make_simple_entry(root, label, variable, rowno, colno):
     '''Creates a GUI entry window with  a single box to enter a value
 
+    Runs execute_main when entry is changed
+
     :root: main GUI frame
     :label: text to label entry box
     :rowno: row number within GUI frame to place entry
@@ -384,17 +388,39 @@ def make_simple_entry(root, label, variable, rowno, colno):
 
 # function for making a Radiobutton
 def make_radio_button(frame,name,variable_in,value_in,rowno):
+    '''Creates a GUI radiobutton
+
+    Runs execute_main when button is clicked
+
+    :frame: main GUI frame
+    :name: text to label entry box
+    :variable_in: name of variable that controls radiobuttons
+    :value_in: default initial value of variable
+    :rowno: row number within GUI frame to place button
+
+    '''
     radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in, command = lambda : execute_main(None))
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
    
 
 # function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
+    '''Creates a GUI check button
+
+    Runs execute_main when button is clicked
+    
+    :frame: main GUI frame
+    :name: text to label entry box
+    :variable_in: name of variable that controls radiobuttons
+    :initial_state: default initial value of variable
+    :rowno: row number within GUI frame to place button
+    '''
     check_button=ttk.Checkbutton(frame,text=name, variable=variable_in, onvalue='On', offvalue='Off', command = lambda : execute_main(None))
     check_button.grid(column=0, row=rowno, sticky=(N, S, E, W))
 
-#close plots when GUI is closed
+
 def on_closing():
+    '''Closes all matplotlib plots when GUI is closed so that program stops running'''
     plt.close('all')
     root.destroy()
 
@@ -405,6 +431,10 @@ def changed():
 
 #update variables and make plot when key is pressed
 def execute_main(pressed):
+    '''Updates all global variables from GUI, sends them to solver, and plots output
+    This function is run every time a change is made in the GUI
+    Throws warnings when max time duration is exceeded or Y axis is not selected
+    '''
     global co2_initial_update
     global co2_rate_update
     global cloud_initial_update
@@ -431,8 +461,6 @@ def execute_main(pressed):
     global water_final_update
     global desert_final_update
 
-    #print("main launched")
-
     cloud_initial_update = cloud_initial.get()
     cloud_rate_update = cloud_rate.get()
     albedo_initial_update = albedo_initial.get()
@@ -457,12 +485,6 @@ def execute_main(pressed):
     water_final_update = water_final.get()
     desert_final_update = desert_final.get()
     
-    #if forest_update + water_update + ice_update + desert_update > 100:
-    #    messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
-    
-    #if forest_final_update + water_final_update + ice_final_update + desert_final_update > 100:
-    #    messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
-
     # check if at least one temp is being plotted on y axis
     if Ts_update=='Off'and T1_update=='Off'and T2_update=='Off':
         messagebox.showwarning("WARNING","At least one T on the Y Axis must be selected.")
