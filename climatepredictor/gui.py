@@ -466,9 +466,10 @@ def make_slider_entry(root,label,variable,rowno,colno, type):
 def make_radio_button(frame,name,variable_in,value_in,rowno,initial_state):
     radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in, command = lambda : execute_main(None))
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
+    radio_button.state(['!alternate'])
     if initial_state=='On':
         radio_button.state(['selected'])
-    else:
+    elif initial_state=='Off':
         radio_button.state(['!selected'])
     #radio_button.bind('<Button-1>', execute_main)
 
@@ -843,7 +844,7 @@ xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
 make_radio_button(xaxis_frame,'Time',xaxis,'time',0,'On')
 make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1,'Off')
-#make_radio_button(xaxis_frame,u'CO\u2082',xaxis,'co2',2,'Off')
+
 
 
 # customise y axis frame
