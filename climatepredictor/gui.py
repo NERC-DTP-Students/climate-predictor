@@ -772,8 +772,8 @@ for i in range(rowspanf):
 xaxis = StringVar()
 xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
-make_radio_button(xaxis_frame,'Time',xaxis,'time',0)
-make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1)
+make_radio_button(xaxis_frame,'Time',xaxis,'time',1)
+make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',2)
 xaxis.set('time') #set xaxis to a value
 
 # customise Y axis frame
@@ -782,9 +782,9 @@ T1_switch = StringVar()
 T2_switch = StringVar()
 yaxis_label=ttk.Label(yaxis_frame,text='Y Axis')
 yaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
-make_check_button(yaxis_frame,u'T\u209B',Ts_switch,Ts_update,1)
-make_check_button(yaxis_frame,u'T\u2081',T1_switch,T1_update,2)
-make_check_button(yaxis_frame,u'T\u2082',T2_switch,T2_update,3)
+make_check_button(yaxis_frame,'T surface',Ts_switch,Ts_update,1)
+make_check_button(yaxis_frame,'T lower atmosphere',T1_switch,T1_update,2)
+make_check_button(yaxis_frame,'T upper atmosphere',T2_switch,T2_update,3)
 Ts_switch.set('On')
 T1_switch.set('On')
 T2_switch.set('On')
