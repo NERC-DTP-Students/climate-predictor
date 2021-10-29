@@ -146,36 +146,34 @@ class Slider(Frame):
 
         percentages = np.concatenate((np.array([sorted_values[0]]), np.diff(sorted_values), np.array([100 - sorted_values[-1]])), axis=0)
 
-        self.forest_perc.set(np.round(percentages[int(pos[0])],1))
-        self.ice_perc.set(np.round(percentages[int(pos[1])],1))
-        self.water_perc.set(np.round(percentages[int(pos[2])],1))
-        self.desert_perc.set(np.round(percentages[3],1))
-
-
+        self.forest_perc.set(np.round(percentages[int(pos[0])], 1))
+        self.ice_perc.set(np.round(percentages[int(pos[1])], 1))
+        self.water_perc.set(np.round(percentages[int(pos[2])], 1))
+        self.desert_perc.set(np.round(percentages[3], 1))
 
     def __addTrack(self, startx, starty, endx, endy):
         # add initial slider line
-        id1 = self.canv.create_line(startx, starty, endx, endy, fill = Slider.LINE_COLOR, width = Slider.LINE_WIDTH)
+        self.canv.create_line(startx, starty, endx, endy, fill=Slider.LINE_COLOR, width=Slider.LINE_WIDTH)
 
-        #add desert text and oval
+        # add desert text and oval
         R = Slider.BAR_RADIUS
         r = Slider.BAR_RADIUS_INNER
         y = endy
         x = endx
 
-        self.canv.create_text(self.canv_W-2*self.slider_x, self.canv_H-0.8*self.slider_y, text = "desert")
-        self.canv.create_oval(x-R,y-R,x+R,y+R, fill = Slider.BAR_COLOR_OUTTER, width = 2, outline = "")
-        self.canv.create_oval(x-r,y-r,x+r,y+r, fill = Slider.BAR_COLOR_INNER, outline = "")
+        self.canv.create_text(self.canv_W-2*self.slider_x, self.canv_H-0.8*self.slider_y, text="desert")
+        self.canv.create_oval(x-R, y-R, x+R, y+R, fill=Slider.BAR_COLOR_OUTTER, width= 2, outline="")
+        self.canv.create_oval(x-r, y-r, x+r, y+r, fill=Slider.BAR_COLOR_INNER, outline="")
 
         return id
 
-    #def __addBar(self, pos, idx):
+    # def __addBar(self, pos, idx):
     def addBar(self, pos, idx):
         names = ['forest', 'ice', 'water', 'desert']
         colours = ['green', 'white', 'blue', 'yellow']
 
         """@ pos: position of the bar, ranged from (0,1)"""
-        if pos <0 or pos >1:
+        if pos < 0 or pos > 1:
             raise Exception("Pos error - Pos: "+str(pos))
         R = Slider.BAR_RADIUS
         r = Slider.BAR_RADIUS_INNER
@@ -186,60 +184,45 @@ class Slider(Frame):
         # draw coloured lined for each of the sliders
         positions = [bar["Pos"] for bar in self.bars]
         pos_list = sorted(positions)
-        n=0
+        n = 0
         indx = np.zeros(3)
         for posit in pos_list:
             indx[n] = positions.index(posit)
-            n=n+1
+            n = n+1
 
-        self.canv.create_line(self.slider_x+pos_list[2]*L, y, self.slider_x+L, y, fill = colours[3], width = Slider.LINE_WIDTH)
-        self.canv.create_line(self.slider_x+pos_list[1]*L, y, self.slider_x+pos_list[2]*L, y, fill = colours[int(indx[2])], width = Slider.LINE_WIDTH)
-        self.canv.create_line(self.slider_x+pos_list[0]*L, y, self.slider_x+pos_list[1]*L, y, fill = colours[int(indx[1])], width = Slider.LINE_WIDTH)
-        self.canv.create_line(self.slider_x, y, self.slider_x+pos_list[0]*L, y, fill = colours[int(indx[0])], width = Slider.LINE_WIDTH)
+        self.canv.create_line(self.slider_x+pos_list[2]*L, y, self.slider_x+L, y, fill=colours[3], width=Slider.LINE_WIDTH)
+        self.canv.create_line(self.slider_x+pos_list[1]*L, y, self.slider_x+pos_list[2]*L, y, fill=colours[int(indx[2])], width=Slider.LINE_WIDTH)
+        self.canv.create_line(self.slider_x+pos_list[0]*L, y, self.slider_x+pos_list[1]*L, y, fill=colours[int(indx[1])], width=Slider.LINE_WIDTH)
+        self.canv.create_line(self.slider_x, y, self.slider_x+pos_list[0]*L, y, fill=colours[int(indx[0])], width=Slider.LINE_WIDTH)
 
-        #print(pos_list[-1])
+        id_outer = self.canv.create_oval(x-R, y-R, x+R, y+R, fill=Slider.BAR_COLOR_OUTTER, width=2, outline="")
+        id_inner = self.canv.create_oval(x-r, y-r, x+r, y+r, fill=Slider.BAR_COLOR_INNER, outline="")
 
-        #self.canv.create_line(self.slider_x+pos_list[2]*L+R, y, self.slider_x+L-R, y, fill = colours[3], width = Slider.LINE_WIDTH)
-        #self.canv.create_line(self.slider_x+pos_list[1]*L+R, y, self.slider_x+pos_list[2]*L-R, y, fill = colours[int(indx[2])], width = Slider.LINE_WIDTH)
-        #self.canv.create_line(self.slider_x+pos_list[0]*L+R, y, self.slider_x+pos_list[1]*L-R, y, fill = colours[int(indx[1])], width = Slider.LINE_WIDTH)
-        #self.canv.create_line(self.slider_x, y, self.slider_x+pos_list[0]*L-R, y, fill = colours[int(indx[0])], width = Slider.LINE_WIDTH)
-
-
-
-
-        id_outer = self.canv.create_oval(x-R,y-R,x+R,y+R, fill = Slider.BAR_COLOR_OUTTER, width = 2, outline = "")
-        id_inner = self.canv.create_oval(x-r,y-r,x+r,y+r, fill = Slider.BAR_COLOR_INNER, outline = "")
-
-        #from gui import changed
+        # from gui import changed
         if self.changed:
             changed()
 
-        #execute_main(0)
-
         if self.show_value:
             y_value = y+Slider.BAR_RADIUS+8
-            #value = pos*(self.max_val - self.min_val)+self.min_val
-            #id_value = self.canv.create_text(x,y_value, text = format(value, Slider.DIGIT_PRECISION))
-            id_value = self.canv.create_text(x,y_value,fill='white',text = names[idx])
+            id_value = self.canv.create_text(x, y_value, fill='white', text=names[idx])
             return [id_outer, id_inner, id_value]
         else:
             return [id_outer, id_inner]
 
-    #def __moveBar(self, idx, pos):
-    def moveBar(self, idx, posit, entry = False):
+    # def __moveBar(self, idx, pos):
+    def moveBar(self, idx, posit, entry=False):
 
-        if entry and idx>0:
-            c_value = self.bars[idx-1]
-    
+        if entry and idx > 0:
+            c_value = self.bars[idx-1]  
             pos = (c_value["Value"]+posit*100)/100
         else:
-            pos = posit       
+            pos = posit
 
         """slider will be moved"""
         ids = self.bars[idx]["Ids"]
         for id in ids:
             self.canv.delete(id)
-        #self.bars[idx]["Ids"] = self.__addBar(pos, idx)
+        # self.bars[idx]["Ids"] = self.__addBar(pos, idx)
         self.bars[idx]["Ids"] = self.addBar(pos, idx)
         self.bars[idx]["Pos"] = pos
         self.bars[idx]["Value"] = pos*(self.max_val - self.min_val)+self.min_val
@@ -247,9 +230,9 @@ class Slider(Frame):
     def __calcPos(self, x):
         """calculate position from x coordinate"""
         pos = (x - self.slider_x)/(self.canv_W-2*self.slider_x)
-        if pos<0:
+        if pos < 0:
             return 0
-        elif pos>1:
+        elif pos > 1:
             return 1
         else:
             return pos
@@ -266,28 +249,31 @@ class Slider(Frame):
                 return [True, idx]
         return [False, None]
 
-#function for making entry for user friendly options
-def make_value_entry(root,caption,rowno,default_initial, default_rate, unit):
-    label = ttk.Label(root, width = 10, text = caption)
-    label.grid(row = rowno, column = 0,sticky=(N, S, E, W))
-    entry = ttk.Entry(root, width = 10, textvariable = default_initial)
-    entry.grid(row = rowno, column = 1,sticky=(N, S, E, W))
-    entry.bind('<KeyRelease>', execute_main)
-    label = ttk.Label(root, width =10, text = unit)
-    label.grid(row = rowno, column = 2,sticky=(N, S, E, W))
-    entry = ttk.Entry(root, width = 10, textvariable = default_rate)
-    entry.grid(row = rowno, column = 3,sticky=(N, S, E, W))
-    entry.bind('<KeyRelease>', execute_main)
-    label = ttk.Label(root, width = 20, text = unit+' per time interval')
-    label.grid(row = rowno, column = 4,sticky=(N, S, E, W))
 
-#make simple entry with one label
-def make_simple_entry(root,label,variable,rowno,colno):
-    new_label=ttk.Label(root,text=label,width=10)
-    new_label.grid(row=rowno,column=colno,sticky=(N, S, E, W))
-    new_entry=ttk.Entry(root,width=10,textvariable=variable)
-    new_entry.grid(row=rowno,column=colno+1,sticky=(N, S, E, W))
+# function for making entry for user friendly options
+def make_value_entry(root, caption, rowno, default_initial, default_rate, unit):
+    label = ttk.Label(root, width=10, text=caption)
+    label.grid(row=rowno, column=0, sticky=(N, S, E, W))
+    entry = ttk.Entry(root, width=10, textvariable=default_initial)
+    entry.grid(row=rowno, column=1, sticky=(N, S, E, W))
+    entry.bind('<KeyRelease>', execute_main)
+    label = ttk.Label(root, width=10, text=unit)
+    label.grid(row=rowno, column=2, sticky=(N, S, E, W))
+    entry = ttk.Entry(root, width=10, textvariable=default_rate)
+    entry.grid(row=rowno, column=3, sticky=(N, S, E, W))
+    entry.bind('<KeyRelease>', execute_main)
+    label = ttk.Label(root, width=20, text=unit+' per time interval')
+    label.grid(row=rowno, column=4, sticky=(N, S, E, W))
+
+
+# make simple entry with one label
+def make_simple_entry(root, label, variable, rowno, colno):
+    new_label = ttk.Label(root, text=label, width=10)
+    new_label.grid(row=rowno, column=colno, sticky=(N, S, E, W))
+    new_entry = ttk.Entry(root, width=10, textvariable=variable)
+    new_entry.grid(row=rowno, column=colno+1, sticky=(N, S, E, W))
     new_entry.bind('<KeyRelease>', execute_main)
+
 
 # what happens when the entries are changed
 def check_initial_total():
@@ -298,6 +284,7 @@ def check_initial_total():
     else:
         desert.set(100-current_tot)
         return TRUE
+
 
 def check_final_total():
     current_tot = forest_final.get() + ice_final.get() + water_final.get()
