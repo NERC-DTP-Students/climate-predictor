@@ -6,26 +6,26 @@ This section gives all the documentation for the classes and functions within th
 .. toctree::
 **Default Inputs**
 -------------
-.. automodule:: config
+.. automodule:: climatepredictor.config
    :members:
   
-**Classes**
+**Modules**
 --------------
 **energymodel**
 ^^^^^^^^^^^^^^^^
-.. automodule:: energymodel
-   :members:
-  
-**plot**
-^^^^^^^^^
-.. automodule:: plot
-   :members:
-  
-**save**
-^^^^^^^^^
-.. automodule:: save
+.. automodule:: climatepredictor.energymodel
    :members:
 
+**gui**
+^^^^^^^^^^^^^^^^
+.. automodule:: climatepredictor.gui
+   :members:
+
+**plot**
+^^^^^^^^^
+.. automodule:: climatepredictor.plot
+   :members:
+  
 **Functions**
 --------------
 
@@ -47,9 +47,4 @@ This section gives all the documentation for the classes and functions within th
 **make_plot**
 ^^^^^^^^^^^^^^
 .. automodule:: make_plot
-   :members:
-  
-**saving**
-^^^^^^^^^^^
-.. automodule:: saving
    :members:
