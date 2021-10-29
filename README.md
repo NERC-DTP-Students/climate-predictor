@@ -25,7 +25,7 @@
   <ol>
     <li><a href="#basics">Basics</a></li>
     <li><a href="#installation">Installation</a></li>
-    <li><a href="#scientific-background">Scienitific Background</a></li>
+    <li><a href="#scientific-background-and-model-implementation">Scienitific Background and Model Implementation</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#example">Example</a></li>
     <li><a href="#documentation">Documentation</a></li>
@@ -70,15 +70,54 @@ A plot of temperature against a chosen input variable will be generated based on
 
 ## Installation
 
+To install the software download the appropriate single executable file for your operating system from the repository. If you want to run the code directly clone this github repository and run gui.py.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Scientific Background
+## Scientific Background and Model Implementation 
+|![Two layer atmosphere!](examples/two_layer.png)|
+|:--:|
+|Two layer atmosphere model used in this program. Image credit <a href='https://biocycle.atmos.colostate.edu/shiny/2layer/'> here.</a>|
+
+This package is for modelling the greenouse effect for a two layer model of the atmosphere. The atmosphere is assumed transparent to incoming radiation (in the visible range), but with a certain proportion reflected (set by the albedo, &alpha;). The atmosphere absorbs and reradiates a proportion of the outgoing radiation (in the infrared range) set by the emissivity (&varepsilon;) of the two atmospheric layers. The package solves for the temperature of the surface and the two layers in the atmosphere.
+
+In the package the albedo is set by the cloud cover and land usage proportions or can be set manually by the user in advanced options. Different land surfaces have different albedos, for example ice reflects more incoming radiation than forest. The emissivity of the layers can be altered in advanced options as can the incoming stellar flux.
+
+**Assumptions**
++ The Earth radiates as a black body
++ Atmospheric properties across the Earth are uniform (1D model)
++ The atmosphere consists of two layers with constant emissivities
++ Cloud cover is uniformly distributed across the surface (all land uses are equally blocked by clouds)
+
+**Input Variables**
+
+Basic
++ Land usage - fraction of surface covered by water, ice, forest, desert
++ Cloud cover - percentage surface coverage
+
+Advanced
++ Albedo
++ &varepsilon;<sub>1</sub> and &varepsilon;<sub>2</sub> emissivity of the two atmospheric layers
+
+For every input variable an initial value and change per time interval can be chosen. The overall length of time to be considered is also chosen. All input variables default to present day values.
+
+**Output Variables**
+
+Temperature of the surface, T<sub>s</sub>, and the two atmospheric layers, T<sub>1</sub> and T<sub>2</sub>.
+
+**Implementation**
+
+The model creates timesteps which are one tenth of the chosen time interval. At each timestep the model uses a matrix to solve a series of simultaneous equations for T<sub>1</sub>, T<sub>2</sub> and T<sub>s</sub>. The varying quantities are then incremented by one tenth of the change per chosen time interval and the process repeats to build a smooth curve of global temperatures with time/varying quantity. The model solves for the temperature based on a snapshot of atmospheric properties at a given time. It does not account for transport processes in the atmosphere or thermal properties such as specific heat capacity which may delay the heating or cooling of the atmosphere.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Usage
 
-1. To launch the GUI - _something about the .exe file here_
+The usage instructions are the same when running the Python script or the stand alone executable file apart from the different options in step 1. 
+
+1. To launch the GUI:
+  + Python: Run <a href='https//:github.com/NERC-DTP-Students/climate-predictor/main/climatepredictor/gui.py'>gui.py</a>.
+  + Exe: Double click on the gui icon
 
 2. Once the GUI is running input the initial values and change with time for cloud cover.
 
@@ -90,7 +129,7 @@ A plot of temperature against a chosen input variable will be generated based on
 
 6. The plot will automatically update.
 
-7. Press save plot to save the plot.
+7. Press save plot to save the plot. The plot will save in the same directory as the GUI application. To alter this just write the relative path you want to save the file to into the entry box. The .png suffix is automatically added.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -115,11 +154,13 @@ In this simple example, shows change in surface temperature for a 10% increase i
 6. Plot automatically updates
 ![Resulting plot!](examples/graph.png)
 
+7. Input your chosen filename and press Save to save the file
+![Saving plot!](examples/save.png)
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Documentation
-The package is fully documented on <a href="https://climate-predictor.readthedocs.io/en/latest/index.html"><strong>ReadTheDocs</strong></a>
-
+The package is fully documented on <a href="https://climate-predictor.readthedocs.io/en/latest/index.html"><strong>ReadTheDocs</strong></a>. 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Contributing

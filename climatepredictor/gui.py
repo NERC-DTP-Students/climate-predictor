@@ -522,16 +522,14 @@ def show_plot():
     gui_plot.get_tk_widget().grid(row = 1, column = 0, sticky=(N, S, E, W))
 
  
-import os
-import sys
-sys.path.insert(0, os.path.abspath('.'))
+
 
 root = Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
 #set style
 
-root.tk.call('source',sys.path[0]+'/climatepredictor/sun-valley.tcl')
-root.tk.call('set_theme','dark')
+#root.tk.call('source',sys.path[0]+'/climatepredictor/sun-valley.tcl')
+#root.tk.call('set_theme','dark')
 root.title('Climate Predictor')
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
