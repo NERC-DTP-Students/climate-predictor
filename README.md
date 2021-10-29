@@ -51,7 +51,7 @@ The default mode is for a investigating surface temperatures of the Earth.
 
 For each parameter the user sets an initial value and a change with time. A timeframe is selected and the global surface temperature over time is plotted.
 
-The advanced option is for investigating surface temperatures of a generic planet.
+The advanced option is for investigating surface temperatures of a generic planet. Note that if the albedo is set to a non-zero value in the advanced option, the albedo overrides the cloud cover and land cover parameters in the default mode.
 
 **Paramters**
 + Albedo
