@@ -295,41 +295,38 @@ def check_final_total():
         desert_final.set(100-current_tot)
         return TRUE
 
-def entry_change(event = None, index = 0):
-        """called when the entry boxes are changed by the user in the slider class"""
-        # add function to deal with errors if the box is empty
-        if index < 4:
-            test = check_initial_total()
-            if test:
-                if index == 0:
-                    try:
-                        pos = forest.get()
-                        slider.moveBar(posit = pos/100, idx = index, entry=True)
-                        pos = ice.get()
-                        slider.moveBar(posit = pos/100, idx = 1, entry=True)
-                        pos = water.get()
-                        slider.moveBar(posit = pos/100, idx = 2, entry=True)
-                    except TclError:
-                        pos = 0
-                if index == 1:
-                    try:
-                        pos = ice.get()
-                        slider.moveBar(posit = pos/100, idx = 1, entry=True)
-                        pos = water.get()
-                        slider.moveBar(posit = pos/100, idx = 2, entry=True)
-                    except TclError:
-                        pos = 0
+
+def entry_change(event=None, index=0):
+    """called when the entry boxes are changed by the user in the slider class"""
+    # add function to deal with errors if the box is empty
+    if index < 4:
+        test = check_initial_total()
+        if test:
+            if index == 0:
+                try:
+                    pos = forest.get()
+                    slider.moveBar(posit = pos/100, idx = index, entry=True)
+                    pos = ice.get()
+                    slider.moveBar(posit = pos/100, idx = 1, entry=True)
+                    pos = water.get()
+                    slider.moveBar(posit = pos/100, idx = 2, entry=True)
+                except TclError:
+                    pos = 0
+            if index == 1:
+                try:
+                    pos = ice.get()
+                    slider.moveBar(posit = pos/100, idx = 1, entry=True)
+                    pos = water.get()
+                    slider.moveBar(posit = pos/100, idx = 2, entry=True)
+                except TclError:
+                    pos = 0
                 if index == 2:
                     try:
                         pos = water.get()
                         slider.moveBar(posit = pos/100, idx = 2, entry=True)
                     except TclError:
                         pos = 0
-                #if index == 3:
-                #    try:
-                #        pos = desert.get()
-                #    except TclError:
-                #        pos = 0
+
         if index > 3:
             test = check_final_total()
             print(test)
@@ -357,50 +354,28 @@ def entry_change(event = None, index = 0):
                         pos = water_final.get()
                         slider_final.moveBar(posit = pos/100, idx = 2, entry=True) 
                     except TclError:
-                        pos = 0
-                #if index == 7:
-                #    try:
-                #        pos = desert_final.get()
-                #    except TclError:
-                #        pos = 0      
+                        pos = 0    
         return
 
-#slider entries
-def make_slider_entry(root,label,variable,rowno,colno, type):
+# slider entries
+def make_slider_entry(root, label, variable, rowno, colno, type):
     new_label=ttk.Label(root,text=label,width=10)
-    new_label.grid(row=rowno,column=colno,sticky=(N, S, E, W))
-    new_entry=ttk.Entry(root,width=10,textvariable=variable)
-    new_entry.grid(row=rowno,column=colno+1,sticky=(N, S, E, W))
-    #new_entry.bind('<KeyRelease>', execute_main, add= '+')
-
+    new_label.grid(row=rowno, column=colno, sticky=(N, S, E, W))
+    new_entry=ttk.Entry(root, width=10, textvariable=variable)
+    new_entry.grid(row=rowno, column=colno+1, sticky=(N, S, E, W))
     new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type), add= '+')
 
 
-#    if type == 0:
-#        new_entry.bind('<KeyRelease>', forest_change, add= '+')
-#    elif type ==1:
-#        new_entry.bind('<KeyRelease>', ice_change, add= '+')
-#    elif type == 2:
-#        new_entry.bind('<KeyRelease>', water_change, add= '+')
-#    else:
-#        new_entry.bind('<KeyRelease>', desert_change, add= '+')
-
-#function for making a Radiobutton
+# function for making a Radiobutton
 def make_radio_button(frame,name,variable_in,value_in,rowno):
     radio_button=ttk.Radiobutton(frame,text=name,variable=variable_in, value=value_in, command = lambda : execute_main(None))
     radio_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
    
 
-#function for making a Checkbutton
+# function for making a Checkbutton
 def make_check_button(frame,name,variable_in,initial_state,rowno):
-    check_button=ttk.Checkbutton(frame,text=name,variable=variable_in,onvalue='On',offvalue='Off', command = lambda : execute_main(None))
-    check_button.grid(column=0,row=rowno,sticky=(N, S, E, W))
-    #check_button.state(['!alternate']) #clear alternate state
-    #if initial_state=='On':
-        #check_button.state(['selected'])
-    #else:
-        #check_button.state(['!selected'])
-    #check_button.bind('<Button-1>', execute_main)
+    check_button=ttk.Checkbutton(frame,text=name, variable=variable_in, onvalue='On', offvalue='Off', command = lambda : execute_main(None))
+    check_button.grid(column=0, row=rowno, sticky=(N, S, E, W))
 
 #close plots when GUI is closed
 def on_closing():
