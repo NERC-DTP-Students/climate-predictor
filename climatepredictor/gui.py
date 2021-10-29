@@ -490,6 +490,9 @@ def execute_main(pressed):
             global_max.append(max_duration)
     if bool(global_max)==True:
         messagebox.showwarning("WARNING",("Duration must be less than {:.1f} years with given change.").format(min(global_max)))
+        time_duration_update = min(global_max)
+        time_duration.set(min(global_max))
+
 
     show_plot()
 
