@@ -31,6 +31,16 @@ Alternatively the model can be run in a Python editor of your choice by cloning 
 3. Open gui.py in the climatepredictor file 
 4. Run gui.py 
 
+Usage 
+-------
+
+..toctree::
+  :hidden:
+
+  usage
+
+The :doc:`usage` section contains the documentation for the classes and the functions within the package. 
+
 Exploration
 -------------------------
 
@@ -39,7 +49,7 @@ Exploration
    
    exploration
 
-The :doc:`exploration` section contains the documentation for the classes and the functions within the package 
+The :doc:`exploration` section contains the documentation for the classes and the functions within the package. 
 
 
 Scientific Background
