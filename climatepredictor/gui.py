@@ -841,6 +841,6 @@ def save_plot():
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
 button_save.grid(row=5, column=1,sticky=(N, S, E, W))
 
-execute_main
-root.mainloop()
-
+if __name__ =='__main__':
+    execute_main
+    root.mainloop()
