@@ -7,29 +7,40 @@ See below for How to Start.
 
 Scientific background
 ------------------------
-This TCL and Python lbrary calculates and visualizes planet surface temperatures based on cloud cover and CO2. 
+This TCL and Python library visualizes predicted planet surface temperatures based on changing cloud cover and land usage proportions(ice, water, forest, desert)
+up to 50 years. 
+The model assumes two layers of atmosphere and a single layer of surface, and that the solar radiation warms the surface without affecting the atmosphere. 
+The warm surface then heats the overlying atmosphere via thermal radiation and upward convective heat flux. 
 
-With two layers of atmosphere and a single layer of surface, the sunshine warms the surface without affecting the atmosphere. 
-The warm surface then heats the overlying atmosphere by thermal radiation and upward convective heat flux. 
+More detail on this model can be found .. _here: https://biocycle.atmos.colostate.edu/shiny/2layer/
 
-The user can use the sliders to manipulate the cloud cover and the amount of CO2. You can read our GUI and Python codes in this library. 
-
-More detail on this model can be found on: biocycle.atmos.colostate.edu/shiny/2layer
-The GUI theme is based on https://github.com/rdbende/Sun-Valley-ttk-theme 
 
 Quickstart
 -------------------------
+Running on the vscode 
 
-1. Run main.py 
-2. Use the sidebars. 
+1. Open the Terminal
+2. Run the following code:
+.. example-code::
+   .. code-block:: python
+      python3 -m venv venv
+      source venv/bin/activate            #setting up a virtual environment 
+      git clone https://github.com/NERCT-DTP-Students/climate-predictor
+      cd climate-predictor                #go to the climate-predictor directory
+      code .                              #opens VScode with the file directory 
+      
+3. Open gui.py in the climatepredictor file 
+4. Run gui.py 
 
-
-
+Exploration
+-------------------------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :hidden:
+   
+   exploration
 
+The :doc:'Exploration' section contains the documentation for the classes and the functions within the package 
 
 
 Indices and tables
