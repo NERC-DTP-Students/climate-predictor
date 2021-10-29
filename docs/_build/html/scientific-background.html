@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scientific background &mdash; Climate Predictor 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Climate Predictor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="exploration.html">Exploration</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Climate Predictor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Scientific background</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scientific-background.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="scientific-background">
+<h1>Scientific background<a class="headerlink" href="#scientific-background" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>This package is for modelling the greenouse effect for a two layer model of the atmosphere. The atmosphere is assumed transparent to incoming radiation (in the visible range), but with a certain proportion reflected (set by the albedo, &amp;alpha;). The atmosphere absorbs and reradiates a proportion of the outgoing radiation (in the infrared range) set by the emissivity (&amp;varepsilon;) of the two atmospheric layers. The package solves for the temperature of the surface and the two layers in the atmosphere.</p>
+<p>In the package the albedo is set by the cloud cover and land usage proportions or can be set manually by the user in advanced options. Different land surfaces have different albedos, for example ice reflects more incoming radiation than forest. The emissivity of the layers can be altered in advanced options as can the incoming stellar flux.</p>
+<p><strong>Assumptions</strong>
++ The Earth radiates as a black body
++ Atmospheric properties across the Earth are uniform (1D model)
++ The atmosphere consists of two layers with constant emissivities
++ Cloud cover is uniformly distributed across the surface (all land uses are equally blocked by clouds)</p>
+<p><strong>Input Variables</strong></p>
+<p>Basic
++ Land usage - fraction of surface covered by water, ice, forest, desert
++ Cloud cover - percentage surface coverage</p>
+<p>Advanced
++ Albedo
++ &amp;varepsilon;&lt;sub&gt;1&lt;/sub&gt; and &amp;varepsilon;&lt;sub&gt;2&lt;/sub&gt; emissivity of the two atmospheric layers</p>
+<p>For every input variable an initial value and change per time interval can be chosen. The overall length of time to be considered is also chosen. All input variables default to present day values.</p>
+<p><strong>Output Variables</strong></p>
+<p>Temperature of the surface, T&lt;sub&gt;s&lt;/sub&gt;, and the two atmospheric layers, T&lt;sub&gt;1&lt;/sub&gt; and T&lt;sub&gt;2&lt;/sub&gt;.</p>
+<p><strong>Implementation</strong></p>
+<p>The model creates timesteps which are one tenth of the chosen time interval. At each timestep the model uses a matrix to solve a series of simultaneous equations for T&lt;sub&gt;1&lt;/sub&gt;, T&lt;sub&gt;2&lt;/sub&gt; and T&lt;sub&gt;s&lt;/sub&gt;. The varying quantities are then incremented by one tenth of the change per chosen time interval and the process repeats to build a smooth curve of global temperatures with time/varying quantity. The model solves for the temperature based on a snapshot of atmospheric properties at a given time. It does not account for transport processes in the atmosphere or thermal properties such as specific heat capacity which may delay the heating or cooling of the atmosphere.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, NERC-DTP-Students.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
