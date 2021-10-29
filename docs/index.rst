@@ -34,10 +34,10 @@ Alternatively the model can be run in a Python editor of your choice by cloning 
 Usage 
 -------
 
-..toctree::
-  :hidden:
+.. toctree::
+   :hidden:
 
-  usage
+   usage
 
 The :doc:`usage` section contains the documentation for the classes and the functions within the package. 
 

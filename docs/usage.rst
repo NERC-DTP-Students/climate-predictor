@@ -1,5 +1,8 @@
 Usage
-==========
+========
+
+.. toctree::
+   :hidden:
 
 The usage instructions are the same when running the Python script or the stand alone executable file apart from the different options in step 1. 
 
