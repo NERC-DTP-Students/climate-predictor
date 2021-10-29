@@ -252,40 +252,6 @@ class Slider(Frame):
         return [False, None]
 
 
-
-def make_value_entry(root, caption, rowno, default_initial, default_rate, unit):
-    '''Creates a GUI entry window with an initial value and rate of change (eg. cloud cover initial percent and percent rate of change
-
-    :root: main GUI frame
-    :caption: name of variable
-    :rowno: row within GUI frame to place entry
-    :default_initial: default initial value of variable
-    :default_rate: rate of change of variable
-    :unit: unit of variable (eg. %)
-    '''
-    label = ttk.Label(root, width=10, text=caption)
-    label.grid(row=rowno, column=0, sticky=(N, S, E, W))
-    entry = ttk.Entry(root, width=10, textvariable=default_initial)
-    entry.grid(row=rowno, column=1, sticky=(N, S, E, W))
-    entry.bind('<KeyRelease>', execute_main)
-    label = ttk.Label(root, width=10, text=unit)
-    label.grid(row=rowno, column=2, sticky=(N, S, E, W))
-    entry = ttk.Entry(root, width=10, textvariable=default_rate)
-    entry.grid(row=rowno, column=3, sticky=(N, S, E, W))
-    entry.bind('<KeyRelease>', execute_main)
-    label = ttk.Label(root, width=20, text=unit+' per time interval')
-    label.grid(row=rowno, column=4, sticky=(N, S, E, W))
-
-
-# make simple entry with one label
-def make_simple_entry(root, label, variable, rowno, colno):
-    new_label = ttk.Label(root, text=label, width=10)
-    new_label.grid(row=rowno, column=colno, sticky=(N, S, E, W))
-    new_entry = ttk.Entry(root, width=10, textvariable=variable)
-    new_entry.grid(row=rowno, column=colno+1, sticky=(N, S, E, W))
-    new_entry.bind('<KeyRelease>', execute_main)
-
-
 # what happens when the entries are changed
 def check_initial_total():
     current_tot = forest.get() + ice.get() + water.get()
@@ -375,6 +341,45 @@ def make_slider_entry(root, label, variable, rowno, colno, type):
     new_entry=ttk.Entry(root, width=10, textvariable=variable)
     new_entry.grid(row=rowno, column=colno+1, sticky=(N, S, E, W))
     new_entry.bind('<KeyRelease>', lambda event: entry_change(event, index = type), add= '+')
+
+def make_value_entry(root, caption, rowno, default_initial, default_rate, unit):
+    '''Creates a GUI entry window with boxes to enter the initial value and rate of change (eg. cloud cover initial percent and percent rate of change
+
+    :root: main GUI frame
+    :caption: name of variable
+    :rowno: row within GUI frame to place entry
+    :default_initial: default initial value of variable
+    :default_rate: rate of change of variable
+    :unit: unit of variable (eg. %)
+    '''
+    label = ttk.Label(root, width=10, text=caption)
+    label.grid(row=rowno, column=0, sticky=(N, S, E, W))
+    entry = ttk.Entry(root, width=10, textvariable=default_initial)
+    entry.grid(row=rowno, column=1, sticky=(N, S, E, W))
+    entry.bind('<KeyRelease>', execute_main)
+    label = ttk.Label(root, width=10, text=unit)
+    label.grid(row=rowno, column=2, sticky=(N, S, E, W))
+    entry = ttk.Entry(root, width=10, textvariable=default_rate)
+    entry.grid(row=rowno, column=3, sticky=(N, S, E, W))
+    entry.bind('<KeyRelease>', execute_main)
+    label = ttk.Label(root, width=20, text=unit+' per time interval')
+    label.grid(row=rowno, column=4, sticky=(N, S, E, W))
+
+
+def make_simple_entry(root, label, variable, rowno, colno):
+    '''Creates a GUI entry window with  a single box to enter a value
+
+    :root: main GUI frame
+    :label: text to label entry box
+    :rowno: row number within GUI frame to place entry
+    :variable: default initial value of variable
+    :colno: column number within GUI frame to place entry
+    '''
+    new_label = ttk.Label(root, text=label, width=10)
+    new_label.grid(row=rowno, column=colno, sticky=(N, S, E, W))
+    new_entry = ttk.Entry(root, width=10, textvariable=variable)
+    new_entry.grid(row=rowno, column=colno+1, sticky=(N, S, E, W))
+    new_entry.bind('<KeyRelease>', execute_main)
 
 
 # function for making a Radiobutton
