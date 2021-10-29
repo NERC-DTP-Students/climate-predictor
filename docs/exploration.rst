@@ -4,47 +4,33 @@ Exploration
 This section gives all the documentation for the classes and functions within the package. 
 
 .. toctree::
+   :hidden:
+
 **Default Inputs**
--------------
-.. automodule:: climatepredictor.config
+-------------------
+.. automodule:: config
    :members:
   
 **Modules**
 --------------
+
 **energymodel**
 ^^^^^^^^^^^^^^^^
-.. automodule:: climatepredictor.energymodel
+
+.. automodule:: energymodel
    :members:
 
 **gui**
 ^^^^^^^^^^^^^^^^
-.. automodule:: climatepredictor.gui
+
+.. automodule:: gui
    :members:
 
 **plot**
 ^^^^^^^^^
-.. automodule:: climatepredictor.plot
-   :members:
-  
-**Functions**
---------------
 
-**calculate_albedo**
-^^^^^^^^^^^^^^^^^^^^^
-.. automodule:: calculate_albedo
+.. automodule:: plot
    :members:
-  
-**solve_model**
-^^^^^^^^^^^^^^^
-.. automodule:: solve_model
-   :members:
-  
-**solve_over_time**
-^^^^^^^^^^^^^^^^^^^^
-.. automodule:: solve_over_time
-   :members:
-  
-**make_plot**
-^^^^^^^^^^^^^^
-.. automodule:: make_plot
-   :members:
+
+
+
