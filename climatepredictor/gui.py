@@ -79,10 +79,10 @@ class Slider(Frame):
             bar["Ids"] = self.addBar(bar["Pos"], bar["Idx"])
 
         #initial percentages
-        self.forest_perc = DoubleVar(master,25)
-        self.ice_perc = DoubleVar(master,25)
-        self.water_perc = DoubleVar(master,25)
-        self.desert_perc = DoubleVar(master,25)
+        self.forest_perc = DoubleVar(master,9.4)
+        self.ice_perc = DoubleVar(master,10)
+        self.water_perc = DoubleVar(master,71)
+        self.desert_perc = DoubleVar(master,9.6)
         self.canv.create_text(self.canv_W-2*self.slider_x,self.canv_H-0.8*self.slider_y,text='desert',fill='white')
 
         self.changed = True
@@ -730,7 +730,7 @@ slider_title.grid(row=0,column=0,sticky=(N, S, E, W))
 slider_note=ttk.Label(slider_frame,text='Enter values in descending order')
 slider_note.grid(row=0,column=1,sticky=(N, S, E, W))
 # initial positions on the slider (calculated from initial percentages)
-init_positions = [25,50,75]
+init_positions = [9.6,19.6,90]
 # create the slider
 slider = Slider(slider_frame, width = 400, height = 60, min_val = 0, max_val = 100, init_lis = init_positions, show_value = True)
 slider.grid(row=2,column=0,columnspan=2)
@@ -758,7 +758,7 @@ slider_title_final.grid(row=0,column=0,sticky=(N, S, E, W))
 slider_note_final=ttk.Label(slider_frame_final,text='Enter values in descending order')
 slider_note_final.grid(row=0,column=1,sticky=(N, S, E, W))
 # initial positions on the slider (calculated from initial percentages)
-init_positions_final = [25,50,75]
+init_positions_final = [9.6,19.6,90]
 # create the slider
 slider_final = Slider(slider_frame_final, width = 400, height = 60, min_val = 0, max_val = 100, init_lis = init_positions_final, show_value = True)
 slider_final.grid(row=2,column=0,columnspan=2)
