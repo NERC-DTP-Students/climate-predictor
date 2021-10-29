@@ -1,25 +1,14 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-#from slider_experiments import forest_change
-
-from config import * #import variables from config file
-from time_slider_range import max_time
-from save import saving
-
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2Tk)
-
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
+import numpy as np
+
+from config import * 
+from time_slider_range import max_time
 from plot import make_plot
 from energymodel import solve_over_time, calculate_albedo
-
-# https://github.com/MenxLi/tkSliderWidget
-# need to add the label for the end of the slider and potentially some filling thing but I think this might fail
-
-import numpy as np
-import functools
-
 class Slider(Frame):
     LINE_COLOR = "#476b6b"
     LINE_WIDTH = 3
