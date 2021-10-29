@@ -1,3 +1,3 @@
 from .energymodel import *
-from .plots import *
+from .plot import *
 from .slider_setup_2 import Slider
