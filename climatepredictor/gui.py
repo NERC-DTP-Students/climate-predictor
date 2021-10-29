@@ -4,7 +4,7 @@ from tkinter import messagebox
 #from slider_experiments import forest_change
 
 from config import * #import variables from config file
-import time_slider_range
+from time_slider_range import max_time
 from save import saving
 
 from matplotlib.figure import Figure
@@ -554,9 +554,30 @@ def execute_main(pressed):
     #if forest_final_update + water_final_update + ice_final_update + desert_final_update > 100:
     #    messagebox.showwarning("WARNING","Environment fractions add up to more than 100%")
 
+    # check if at least one temp is being plotted on y axis
     if Ts_update=='Off'and T1_update=='Off'and T2_update=='Off':
-        messagebox.showwarning("WARNING","At least one T on the Y Axis must be selected")
-
+        messagebox.showwarning("WARNING","At least one T on the Y Axis must be selected.")
+    
+    # check that rates of change don't exceed max during time duration
+    global_max = []
+    if cloud_rate_update !=0:
+        max_duration = max_time(100, cloud_initial_update, (cloud_rate_update/time_interval_update))
+        if time_duration_update > max_duration:
+            global_max.append(max_duration)
+    if albedo_rate_update !=0:
+        max_duration = max_time(1, albedo_initial_update, (albedo_rate_update/time_interval_update))
+        if time_duration_update > max_duration:
+            global_max.append(max_duration)
+    if epsilon1_rate_update !=0:
+        max_duration = max_time(1, epsilon1_initial_update, (epsilon1_rate_update/time_interval_update))
+        if time_duration_update > max_duration:
+            global_max.append(max_duration)
+    if epsilon2_rate_update !=0:
+        max_duration = max_time(1, epsilon2_initial_update, (epsilon2_rate_update/time_interval_update))
+        if time_duration_update > max_duration:
+            global_max.append(max_duration)
+    if bool(global_max)==True:
+        messagebox.showwarning("WARNING",("Duration must be less than {:.1f} years with given change.").format(min(global_max)))
 
     show_plot()
 
