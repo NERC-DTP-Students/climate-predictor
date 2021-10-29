@@ -21,7 +21,8 @@ cc = 20
 delta_cc = 1
 
 
-def make_plot(solution, t, plot_Ts, plot_T1, plot_T2, xaxis):
+def make_plot(solution, t, plot_Ts, plot_T1, plot_T2, xaxis, cc, delta_cc, albedo,delta_albedo\
+    , em1, delta_em1, em2, delta_em2):
 
     plt.close('all')
     fig = plt.figure()
