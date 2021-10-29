@@ -9,20 +9,23 @@ from config import *
 from time_slider_range import max_time
 from plot import make_plot
 from energymodel import solve_over_time, calculate_albedo
+
+
 class Slider(Frame):
+
     LINE_COLOR = "#476b6b"
     LINE_WIDTH = 3
     BAR_COLOR_INNER = "#5c8a8a"
     BAR_COLOR_OUTTER = "#c2d6d6"
     BAR_RADIUS = 10
     BAR_RADIUS_INNER = BAR_RADIUS-5
-    DIGIT_PRECISION = '.1f' # for showing in the canvas
+    DIGIT_PRECISION = '.1f'  # for showing in the canvas
 
     # the aesthetics
-    def __init__(self, master, width = 400, height = 80, min_val = 0, max_val = 1, init_lis = None, show_value = True):
-        Frame.__init__(self, master, height = height, width = width)
+    def __init__(self, master, width=400, height=80, min_val=0, max_val=1, init_lis=None, show_value=True):
+        Frame.__init__(self, master, height=height, width=width)
         self.master = master
-        if init_lis == None:
+        if init_lis is None:
             init_lis = [min_val]
         self.init_lis = init_lis
         self.max_val = max_val
@@ -33,46 +36,43 @@ class Slider(Frame):
         self.canv_H = self.H
         self.canv_W = self.W
         self.changed = False
-       
 
         if not show_value:
-            self.slider_y = self.canv_H/2 # y pos of the slider
+            self.slider_y = self.canv_H/2  # y pos of the slider
         else:
             self.slider_y = self.canv_H*2/5
-        self.slider_x = Slider.BAR_RADIUS # x pos of the slider (left side)
+        self.slider_x = Slider.BAR_RADIUS  # x pos of the slider (left side)
 
         self.bars = []
-        self.selected_idx = None # current selection bar index
-        
-        i=0
+        self.selected_idx = None  # current selection bar index
+       
+        i = 0
 
         for value in self.init_lis:
-            pos = (value-min_val)/(max_val-min_val) #sets the position of the bar based on the initial values given
+            pos = (value-min_val)/(max_val-min_val)  # sets the position of the bar based on the initial values given
             ids = []
-            bar = {"Pos":pos, "Ids":ids, "Value":value, "Idx": i} # current value is set to the initial value
+            bar = {"Pos": pos, "Ids": ids, "Value": value, "Idx": i}  # current value is set to the initial value
             self.bars.append(bar)
             i = i+1
 
-
-        self.canv = Canvas(self, height = self.canv_H, width = self.canv_W)
+        self.canv = Canvas(self, height=self.canv_H, width=self.canv_W)
         self.canv.pack()
-        self.canv.bind("<Motion>", self._mouseMotion) #when the mouse is moved
-        self.canv.bind("<B1-Motion>", self._moveBar) #when left button is pressed and held down
+        self.canv.bind("<Motion>", self._mouseMotion)  # when the mouse is moved
+        self.canv.bind("<B1-Motion>", self._moveBar)  # when left button is pressed and held down
  
-       # add the slider line
+        # add the slider line
         self.__addTrack(self.slider_x, self.slider_y, self.canv_W-self.slider_x, self.slider_y)
  
         # add each slider with position and index
         for bar in self.bars:
-            #bar["Ids"] = self.__addBar(bar["Pos"], bar["Idx"])
             bar["Ids"] = self.addBar(bar["Pos"], bar["Idx"])
 
-        #initial percentages
-        self.forest_perc = DoubleVar(master,9.4)
-        self.ice_perc = DoubleVar(master,10)
-        self.water_perc = DoubleVar(master,71)
-        self.desert_perc = DoubleVar(master,9.6)
-        self.canv.create_text(self.canv_W-2*self.slider_x,self.canv_H-0.8*self.slider_y,text='desert',fill='white')
+        # initial percentages
+        self.forest_perc = DoubleVar(master, 9.4)
+        self.ice_perc = DoubleVar(master, 10)
+        self.water_perc = DoubleVar(master, 71)
+        self.desert_perc = DoubleVar(master, 9.6)
+        self.canv.create_text(self.canv_W-2*self.slider_x, self.canv_H-0.8*self.slider_y, text='desert', fill='white')
 
         self.changed = True
 
@@ -84,29 +84,30 @@ class Slider(Frame):
     def _mouseMotion(self, event):
         """passes the x coordinate of the mouse and the y coordinate of the mouse.
         If the mouse is inside a slider will change the cursor to a hand"""       
-        x = event.x; y = event.y
-        selection = self.__checkSelection(x,y)
-        if selection[0]: #if a slider is selected
-            self.canv.config(cursor = "hand2") #change cursor to hand
-            self.selected_idx = selection[1] #retrieve the index of the selected slider
+        x = event.x
+        y = event.y
+        selection = self.__checkSelection(x, y)
+        if selection[0]:  # if a slider is selected
+            self.canv.config(cursor="hand2")  # change cursor to hand
+            self.selected_idx = selection[1]  # retrieve the index of the selected slider
         else:
-            self.canv.config(cursor = "")
+            self.canv.config(cursor="")
             self.selected_idx = None
 
     def _moveBar(self, event):
-        x = event.x; y = event.y
-        if self.selected_idx == None:
+        x = event.x
+        y = event.y
+        if self.selected_idx is None:
             return False
         pos = self.__calcPos(x)
         idx = self.selected_idx
-        #self.__moveBar(idx,pos)
-        self.moveBar(idx,pos)
+        self.moveBar(idx, pos)
 
         # set the values in the entry boxes
         values = self.getValues()
         sorted_values = np.array(sorted(values))
         sorted_list = sorted(values)
-        n=0
+        n = 0
         pos = np.zeros(3)
 
         # deals with if the sliders are dragged over each other
@@ -114,7 +115,7 @@ class Slider(Frame):
             pos[n] = sorted_list.index(value)
             n = n+1
 
-        percentages = np.concatenate((np.array([sorted_values[0]]), np.diff(sorted_values), np.array([100 - sorted_values[-1]])), axis = 0)
+        percentages = np.concatenate((np.array([sorted_values[0]]), np.diff(sorted_values), np.array([100 - sorted_values[-1]])), axis=0)
 
         self.forest_perc.set(np.round(percentages[int(pos[0])],1))
         self.ice_perc.set(np.round(percentages[int(pos[1])],1))
