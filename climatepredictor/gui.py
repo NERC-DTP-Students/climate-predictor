@@ -431,7 +431,7 @@ def changed():
 
 #update variables and make plot when key is pressed
 def execute_main(pressed):
-    '''Updates all global variables from GUI, sends them to solver, and plots output
+    '''Updates all global variables from GUI, sends them solve and plot function
     This function is run every time a change is made in the GUI
     Throws warnings when max time duration is exceeded or Y axis is not selected
     '''
@@ -512,19 +512,13 @@ def execute_main(pressed):
         time_duration_update = min(global_max)
         time_duration.set(min(global_max))
 
-
     show_plot()
 
-#solve equations with updated inputs and embed plot into GUI
-def show_plot():
-    #NEED to replace these variables with connections to GUI inputs!
 
-    delta_Solar = 0
+def show_plot():
+    '''Solves energy balance equations with updated inputs and embeds outplot into GUI '''
+    delta_Solar = 0 # solar doesn't currently have option to change in GUI
     calcs_per_timestep = 10
-    # water_final_update = water_update
-    # ice_final_update = ice_update
-    # forest_final_update = forest_update
-    # desert_final_update = desert_update
     
     if albedo_initial_update == 0 and albedo_rate_update == 0:
         albedo, albedo_rate = calculate_albedo(water_update, water_final_update, ice_update, ice_final_update, forest_update, forest_final_update, desert_update, desert_final_update, cloud_initial_update, cloud_rate_update, time_interval_update, time_duration_update)
@@ -532,27 +526,24 @@ def show_plot():
         albedo = albedo_initial_update
         albedo_rate = albedo_rate_update
     
-  
-
     solution, t = solve_over_time(solar_flux_update,albedo,epsilon1_initial_update,epsilon2_initial_update,time_interval_update,time_duration_update,albedo_rate,epsilon1_rate_update,epsilon2_rate_update,delta_Solar,calcs_per_timestep)
     fig = make_plot(solution, t, Ts_update, T1_update, T2_update, xaxis_update, cloud_initial_update,cloud_rate_update, albedo, albedo_rate, epsilon1_initial_update, epsilon1_rate_update, epsilon2_initial_update, epsilon2_rate_update)
-
     gui_plot = FigureCanvasTkAgg(fig, outputframe)
     gui_plot.get_tk_widget().grid(row = 1, column = 0, sticky=(N, S, E, W))
 
 
+# create tkinter object
 root = Tk()
 root.protocol("WM_DELETE_WINDOW", on_closing)
-
-#set style - currently having problems when packaging so have commented this out
-
-#root.tk.call('source',sys.path[0]+'/climatepredictor/sun-valley.tcl')
-#root.tk.call('set_theme','dark')
 root.title('Climate Predictor')
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
+#set style - currently having problems when packaging so have commented this out
+#root.tk.call('source',sys.path[0]+'/climatepredictor/sun-valley.tcl')
+#root.tk.call('set_theme','dark')
 
-#create mainframe
+
+# create mainframe
 m=29 #number of rows in mainframe
 mainframe = ttk.Frame(root, padding="12 12 12 12")
 mainframe.grid(column=0, row=0, sticky=(N, S, E, W))
@@ -570,8 +561,8 @@ varframe.columnconfigure(1, weight=1)
 for i in range(n):
     varframe.rowconfigure(i, weight=1)
 
-#make frame for plot options - row 1 of mainframe
-r=10 #rowspan of plot frame
+# make frame for plot options - row 1 of mainframe
+r=10 # rowspan of plot frame
 outputframe=ttk.Frame(mainframe, padding="12 12 12 12")
 outputframe.grid(column=2, row=0, sticky=(N, S, E, W),rowspan=r)
 outputframe.columnconfigure(2, weight=1)
@@ -579,7 +570,7 @@ outputframe.columnconfigure(3, weight=1)
 for i in range(m):
     outputframe.rowconfigure(i, weight=1)
 
-#make frame for plot options - row n+1 to m  mainframe
+# make frame for plot options - row n+1 to m  mainframe
 p=10 #rowspan of plot frame
 plotframe=ttk.Frame(mainframe, padding="12 12 12 12")
 plotframe.grid(column=2, row=r+1, sticky=(N, S, E, W),rowspan=p)
@@ -589,9 +580,8 @@ for i in range(p):
     plotframe.rowconfigure(i, weight=1)
 
 
-######################## Customise Variable Frame ################################################################
-#default values
-#change this to accurate values later
+######################## Customise Variable Frame #############################
+#initialize default values into tkinter variables
 cloud_initial = DoubleVar(root,value = cloud_initial_update)
 cloud_rate = DoubleVar(root,value = cloud_rate_update)
 albedo_initial = DoubleVar(root,value = albedo_initial_update)
@@ -632,11 +622,9 @@ make_value_entry(label_frame,'Cloud cover', 1, cloud_initial, cloud_rate, '%')
 
 #functions for button for advanced frame
 def reveal():
-    
     return button.grid_remove(), advanced_frame.grid(column=0,row=2+q,sticky=(N, S, E, W),rowspan=k,columnspan=2), hide_button.grid(row=1+q,column=1),slider_frame.grid_remove(),slider_frame_final.grid_remove()
 
 def hide():
-    
     return button.grid(), advanced_frame.grid_remove(),hide_button.grid_remove(), slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W)), slider_frame_final.grid(column = 0, row = 8+q+k,columnspan=2,rowspan=2,sticky=(N, S, E, W))
 
 #add buttons for advanced options in row 1+q
@@ -667,7 +655,6 @@ advanced_frame.grid_remove()
 
 
 #add initial land use widget here, row 2+q+k in variable frame
-#from slider_setup_2 import Slider
 rowspanf=8
 slider_frame=ttk.Frame(varframe,padding="12 12 12 12")
 slider_frame.grid(row=2+q+k,column=0,columnspan=2,rowspan=rowspanf,sticky=(N, S, E, W))
@@ -753,19 +740,6 @@ value_entry.bind('<KeyRelease>', execute_main)
 label = ttk.Label(slider_frame2, width = 6, text = 'years')
 label.grid(row = 1, column = 5, sticky=(N, S, E, W))
 
-'''slider2 = Scale(slider_frame2, 
-                    from_ = 0, 
-                    to=100,
-                    length = 300, 
-                    orient = 'horizontal',
-                    command = lambda s:time_duration.set('%0.0f' % float(s)), 
-                    variable = time_duration,
-                    tickinterval = 25,
-                    showvalue = False
-                    )
-slider2.grid(row=1,column=6,sticky=(N, S, E, W))'''
-
-
 
 ############################################ Customise plotting frame ###########################################
 #title frame
@@ -794,7 +768,7 @@ xaxis_advanced.columnconfigure(0, weight=1)
 for i in range(rowspanf):
     xaxis_advanced.rowconfigure(i, weight=1)
 
-# customise x axis frame
+# customise X axis frame
 xaxis = StringVar()
 xaxis_label=ttk.Label(xaxis_frame,text='X Axis')
 xaxis_label.grid(column=0,row=0,sticky=(N, S, E, W))
@@ -802,9 +776,7 @@ make_radio_button(xaxis_frame,'Time',xaxis,'time',0)
 make_radio_button(xaxis_frame,'Cloud cover',xaxis,'cloud cover',1)
 xaxis.set('time') #set xaxis to a value
 
-
-
-# customise y axis frame
+# customise Y axis frame
 Ts_switch = StringVar()
 T1_switch = StringVar()
 T2_switch = StringVar()
@@ -817,8 +789,7 @@ Ts_switch.set('On')
 T1_switch.set('On')
 T2_switch.set('On')
 
-#X axis advanced options -initiall a button
-
+# X axis advanced options
 make_radio_button(xaxis_advanced,'Albedo', xaxis,'albedo',0)
 make_radio_button(xaxis_advanced,u'\u03B5\u2081',xaxis,'epsilon1',1)
 make_radio_button(xaxis_advanced,u'\u03B5\u2082',xaxis,'epsilon2',2)
@@ -826,10 +797,8 @@ xaxis_advanced.grid_remove()
 
 
 
-######################################## Output Plot Frame ######################################
-#ttk.Label(outputframe, text='Output',width=30).grid(column=0,row=0, sticky=(N, S, E, W))
+############################ Output Plot Frame ################################
 show_plot()
-
 #functions for button for advanced axis frame
 def reveal_plot():
     
@@ -854,8 +823,9 @@ save_entry=ttk.Entry(plotframe,textvariable=filename)
 save_entry.grid(row=6,column=1)
 # add save button
 def save_plot(): 
-    
+
     plt.savefig(fname=filename.get()+'.png')
+    
 button_save=ttk.Button(plotframe,text='Save Plot',command=save_plot)
 button_save.grid(row=5, column=1,sticky=(N, S, E, W))
 
