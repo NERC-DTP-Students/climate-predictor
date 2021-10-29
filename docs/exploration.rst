@@ -7,24 +7,24 @@ This section gives all the documentation for the classes and functions within th
 **Default Inputs**
 -------------
 .. automodule:: config
-  :members:
+   :members:
   
 **Classes**
 --------------
 **energymodel**
 ^^^^^^^^^^^^^^^^
 .. automodule:: energymodel
-  :members:
+   :members:
   
 **plot**
 ^^^^^^^^^
 .. automodule:: plot
-  :members:
+   :members:
   
 **save**
 ^^^^^^^^^
 .. automodule:: save
-  :members:
+   :members:
 
 **Functions**
 --------------
@@ -32,24 +32,24 @@ This section gives all the documentation for the classes and functions within th
 **calculate_albedo**
 ^^^^^^^^^^^^^^^^^^^^^
 .. automodule:: calculate_albedo
-  :members:
+   :members:
   
 **solve_model**
 ^^^^^^^^^^^^^^^
 .. automodule:: solve_model
-  :members:
+   :members:
   
 **solve_over_time**
 ^^^^^^^^^^^^^^^^^^^^
 .. automodule:: solve_over_time
-  :members:
+   :members:
   
 **make_plot**
 ^^^^^^^^^^^^^^
 .. automodule:: make_plot
-  :members:
+   :members:
   
 **saving**
 ^^^^^^^^^^^
 .. automodule:: saving
-  :members:
+   :members:
