@@ -41,7 +41,9 @@ from energymodel import solve_over_time, calculate_albedo
 
 
 class Slider(Frame):
+    '''Creates a class for the slider GUI function that controls the relative land cover proportions
 
+    '''
     LINE_COLOR = "#476b6b"
     LINE_WIDTH = 3
     BAR_COLOR_INNER = "#5c8a8a"
@@ -250,8 +252,17 @@ class Slider(Frame):
         return [False, None]
 
 
-# function for making entry for user friendly options
+
 def make_value_entry(root, caption, rowno, default_initial, default_rate, unit):
+    '''Creates a GUI entry window with an initial value and rate of change (eg. cloud cover initial percent and percent rate of change
+
+    :root: main GUI frame
+    :caption: name of variable
+    :rowno: row within GUI frame to place entry
+    :default_initial: default initial value of variable
+    :default_rate: rate of change of variable
+    :unit: unit of variable (eg. %)
+    '''
     label = ttk.Label(root, width=10, text=caption)
     label.grid(row=rowno, column=0, sticky=(N, S, E, W))
     entry = ttk.Entry(root, width=10, textvariable=default_initial)
