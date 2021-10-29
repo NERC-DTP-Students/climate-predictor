@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exploration &mdash; Climate Predictor 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Scientific background" href="scientificbackground.html" />
+    <link rel="prev" title="Welcome to Climate Predictor’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Climate Predictor
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exploration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-config"><strong>Default Inputs</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules"><strong>Modules</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-energymodel"><strong>energymodel</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gui"><strong>gui</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-plot"><strong>plot</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="scientificbackground.html">Scientific background</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Climate Predictor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Exploration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/exploration.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="exploration">
+<h1>Exploration<a class="headerlink" href="#exploration" title="Permalink to this headline"></a></h1>
+<p>This section gives all the documentation for the classes and functions within the package.</p>
+<div class="toctree-wrapper compound">
+</div>
+<section id="module-config">
+<span id="default-inputs"></span><h2><strong>Default Inputs</strong><a class="headerlink" href="#module-config" title="Permalink to this headline"></a></h2>
+<p>Defines variables to be used across the program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">co2_initial_update</dt>
+<dd class="field-odd"><p>initial CO2 (ppm), currently not used in program</p>
+</dd>
+<dt class="field-even">co2_rate_update</dt>
+<dd class="field-even"><p>change rate of CO2 (ppm), currently not used in program</p>
+</dd>
+<dt class="field-odd">cloud_initial_update</dt>
+<dd class="field-odd"><p>initial percent of global cloud cover (%)</p>
+</dd>
+<dt class="field-even">cloud_rate_update</dt>
+<dd class="field-even"><p>change rate of global cloud cover (%)</p>
+</dd>
+<dt class="field-odd">albedo_initial_update</dt>
+<dd class="field-odd"><p>initial albedo (unitless)</p>
+</dd>
+<dt class="field-even">albedo_rate_update</dt>
+<dd class="field-even"><p>change rate of albedo (unitless)</p>
+</dd>
+<dt class="field-odd">epsilon1_initial_update</dt>
+<dd class="field-odd"><p>inital emissivity of lower atmospheric layer (unitless)</p>
+</dd>
+<dt class="field-even">epsilon1_rate_update</dt>
+<dd class="field-even"><p>change rate of emissivity of lower atmospheric layer (unitless)</p>
+</dd>
+<dt class="field-odd">epsilon2_initial_update</dt>
+<dd class="field-odd"><p>inital emissivity of upper atmospheric layer (unitless)</p>
+</dd>
+<dt class="field-even">epsilon2_rate_update</dt>
+<dd class="field-even"><p>emissivity of upper atmospheric layer (unitless)</p>
+</dd>
+<dt class="field-odd">solar_flux_update</dt>
+<dd class="field-odd"><p>flux from the Sun at the top of Earth’s atmosphere (W/m^2)</p>
+</dd>
+<dt class="field-even">forest_update</dt>
+<dd class="field-even"><p>initial percent of Earth covered by forest (%)</p>
+</dd>
+<dt class="field-odd">ice_update</dt>
+<dd class="field-odd"><p>initial percent of Earth covered by ice and snow (%)</p>
+</dd>
+<dt class="field-even">water_update</dt>
+<dd class="field-even"><p>initial percent of Earth covered by liquid water (%)</p>
+</dd>
+<dt class="field-odd">desert_update</dt>
+<dd class="field-odd"><p>initial percent of Earth covered by desert and bare earth (%)</p>
+</dd>
+<dt class="field-even">forest_final_update</dt>
+<dd class="field-even"><p>final percent of Earth covered by forest (%)</p>
+</dd>
+<dt class="field-odd">ice_final_update</dt>
+<dd class="field-odd"><p>final percent of Earth covered by ice and snow (%)</p>
+</dd>
+<dt class="field-even">water_final_update</dt>
+<dd class="field-even"><p>final percent of Earth covered by liquid water (%)</p>
+</dd>
+<dt class="field-odd">desert_final_update</dt>
+<dd class="field-odd"><p>final percent of Earth covered by desert and bare earth (%)</p>
+</dd>
+<dt class="field-even">time_interval_update</dt>
+<dd class="field-even"><p>time interval over which change rate occurs (years)</p>
+</dd>
+<dt class="field-odd">time_duration_update</dt>
+<dd class="field-odd"><p>total time duration of interest (years)</p>
+</dd>
+<dt class="field-even">xaxis_update</dt>
+<dd class="field-even"><p>default X axis variable on plot, set to ‘time’</p>
+</dd>
+<dt class="field-odd">Ts_update</dt>
+<dd class="field-odd"><p>On/Off switch for plotting T of surface on plot</p>
+</dd>
+<dt class="field-even">T1_update</dt>
+<dd class="field-even"><p>On/Off switch for plotting T of lower atmosphere on plot</p>
+</dd>
+<dt class="field-odd">T2_update</dt>
+<dd class="field-odd"><p>On/Off switch for plotting T of upper atmosphere on plot</p>
+</dd>
+</dl>
+</section>
+<section id="modules">
+<h2><strong>Modules</strong><a class="headerlink" href="#modules" title="Permalink to this headline"></a></h2>
+<section id="module-energymodel">
+<span id="energymodel"></span><h3><strong>energymodel</strong><a class="headerlink" href="#module-energymodel" title="Permalink to this headline"></a></h3>
+<p>This energy model contains the input variables to calculate the resultant 3 x 50 matrix of
+temperature on the ground surface, lower layer atmosphere, and upper layer atmosphere.</p>
+<p>Below are descriptions of each variable.</p>
+<p>Solar: solar flux at the top of the atmosphere
+albedo: reflectivity, or the proportion of the radiation reflected by a surface.
+em1: broadband thermal emissivity of the lower atmospheric layer
+em2: broadband thermal emissivity of the upper atmospheric layer
+sigma: Stefan-Boltzmann constant
+tunestep: The incrememntal time unit
+length: the range of years in the model. This model runs up to 50 years.</p>
+<p>delta_albedo: change of reflectivity
+delta_em1 = change of emissivity of the lower atmospheric layer
+delta_em2 = change of emissivity of the upper atmospheric layer
+delta_Solar = change of solar flux at the top of the atmosphere
+calcs_per_timestep = interpolates betweeen timestep</p>
+<p>Reference: <a class="reference external" href="https://biocycle.atmos.colostate.edu/shiny/2layer/">https://biocycle.atmos.colostate.edu/shiny/2layer/</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="energymodel.calculate_albedo">
+<span class="sig-prename descclassname"><span class="pre">energymodel.</span></span><span class="sig-name descname"><span class="pre">calculate_albedo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ocean_perc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ocean_final</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ice_perc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ice_final</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">green_perc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">green_final</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desert_perc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desert_final</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud_perc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cloud_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#energymodel.calculate_albedo" title="Permalink to this definition"></a></dt>
+<dd><p>Function to calculate the albedo from the land coverage percentages, using the albedos defined above.</p>
+<p>Inputs
+:param ocean_perc: percentage of earth covered by oceans
+:param ice_perc: percentage of earth covered by ice and snow
+:param green_perc: percentage of earth covered by grasslands, forrests and urban areas
+:param desert_perc: percentage of earth covered by sandy deserts</p>
+<p>Outputs
+:param total_albedo: float number between 0 and 1, showing the earth’s effective total albedo</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="energymodel.solve_model">
+<span class="sig-prename descclassname"><span class="pre">energymodel.</span></span><span class="sig-name descname"><span class="pre">solve_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Solar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albedo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">em1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">em2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.67e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#energymodel.solve_model" title="Permalink to this definition"></a></dt>
+<dd><p>Function to solve the model at one particular timestep.</p>
+<p>Inputs
+:param Solar: Solar flux in W/m2
+:param albedo: albedo, as calculated from user inputs
+:param em1: emissivity of the first layer
+:param em2: emissivity of the second layer
+:param sigma: Stefan-Boltzmann constant, 5.67e-8</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="energymodel.solve_over_time">
+<span class="sig-prename descclassname"><span class="pre">energymodel.</span></span><span class="sig-name descname"><span class="pre">solve_over_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Solar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albedo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">em1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">em2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_albedo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_em1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_em2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_Solar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calcs_per_timestep</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.67e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#energymodel.solve_over_time" title="Permalink to this definition"></a></dt>
+<dd><p>Function to solve the model over many timesteps, to produce a time series of temperatures.</p>
+<p>Inputs:
+:param Solar: Solar flux in W/m2
+:param albedo: albedo, as calculated from user inputs
+:param em1: emissivity of the first layer
+:param em2: emissivity of the second layer
+:param timestep: timestep specified by the user in years
+:param length: length of time to run the model for in years
+:param delta_albedo: change in albedo per timestep
+:param delta_em1: change in em1 per timesetp
+:param delta_em2: change in em2 per timestep
+:param delta_Solar: change in Solar per timestep
+:param calcs_per_timestep: number of calculations to perform per timestep (by interpolation)
+:param sigma: Stefan-Boltzmann constant, 5.67e-8</p>
+</dd></dl>
+
+</section>
+<section id="module-gui">
+<span id="gui"></span><h3><strong>gui</strong><a class="headerlink" href="#module-gui" title="Permalink to this headline"></a></h3>
+<p>Main GUI file.
+Builds the GUI and calls functions to calculate the temperature of the planet in the upper and lower atmosphere
+and on the surface.</p>
+<p>Classes:
++ Slider: builds the albedo slider where the user can adjust the composition of the surface of the planet</p>
+<p>Functions:
++ make_value_entry: function for making entry box
++ make_simmple_entry: function for making entry box
++ check_initial_total: checks that the initial surface composition adds up to 100%
++ check_final_total: checks that the final surface composition adds up to 100%
++ entry_change: moves the slider if the composition of the planet is changed in the entry box
++ make_slider_entry: creates entry box for the slider
++ make_radio_button: makes a radio button
++ make_check_button: makes a check box
++ on_closing: closes the plot
++ changed: calls the execute_main function once the slider changes
++ execute_main: updates variables and makes a plot when a key is pressed
++ show_plot: solve equations with updated inputs and embed plot into GUI
++ add_labels: adds labels to the GUI
++ reveal: reveals the advanced options
++ hide: hides the advanced options
++ reveal_plot: advanced plotting options
++ hide_plot: basic plotting options</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="gui.Slider">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">Slider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">master</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">80</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_lis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.Slider" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a class for the slider GUI function that controls the relative land cover proportions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gui.Slider.getValues">
+<span class="sig-name descname"><span class="pre">getValues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.Slider.getValues" title="Permalink to this definition"></a></dt>
+<dd><p>gets the values for each marker in the slider</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.entry_change">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">entry_change</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.entry_change" title="Permalink to this definition"></a></dt>
+<dd><p>called when the entry boxes are changed by the user in the slider class</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.execute_main">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">execute_main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pressed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.execute_main" title="Permalink to this definition"></a></dt>
+<dd><p>Updates all global variables from GUI, sends them solve and plot function
+This function is run every time a change is made in the GUI
+Throws warnings when max time duration is exceeded or Y axis is not selected</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.make_check_button">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">make_check_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowno</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.make_check_button" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a GUI check button</p>
+<p>Runs execute_main when button is clicked</p>
+<dl class="field-list simple">
+<dt class="field-odd">Frame</dt>
+<dd class="field-odd"><p>main GUI frame</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>text to label entry box</p>
+</dd>
+<dt class="field-odd">Variable_in</dt>
+<dd class="field-odd"><p>name of variable that controls radiobuttons</p>
+</dd>
+<dt class="field-even">Initial_state</dt>
+<dd class="field-even"><p>default initial value of variable</p>
+</dd>
+<dt class="field-odd">Rowno</dt>
+<dd class="field-odd"><p>row number within GUI frame to place button</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.make_radio_button">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">make_radio_button</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowno</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.make_radio_button" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a GUI radiobutton</p>
+<p>Runs execute_main when button is clicked</p>
+<dl class="field-list simple">
+<dt class="field-odd">Frame</dt>
+<dd class="field-odd"><p>main GUI frame</p>
+</dd>
+<dt class="field-even">Name</dt>
+<dd class="field-even"><p>text to label entry box</p>
+</dd>
+<dt class="field-odd">Variable_in</dt>
+<dd class="field-odd"><p>name of variable that controls radiobuttons</p>
+</dd>
+<dt class="field-even">Value_in</dt>
+<dd class="field-even"><p>default initial value of variable</p>
+</dd>
+<dt class="field-odd">Rowno</dt>
+<dd class="field-odd"><p>row number within GUI frame to place button</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.make_simple_entry">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">make_simple_entry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colno</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.make_simple_entry" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a GUI entry window with  a single box to enter a value</p>
+<p>Runs execute_main when entry is changed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Root</dt>
+<dd class="field-odd"><p>main GUI frame</p>
+</dd>
+<dt class="field-even">Label</dt>
+<dd class="field-even"><p>text to label entry box</p>
+</dd>
+<dt class="field-odd">Rowno</dt>
+<dd class="field-odd"><p>row number within GUI frame to place entry</p>
+</dd>
+<dt class="field-even">Variable</dt>
+<dd class="field-even"><p>default initial value of variable</p>
+</dd>
+<dt class="field-odd">Colno</dt>
+<dd class="field-odd"><p>column number within GUI frame to place entry</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.make_value_entry">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">make_value_entry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">caption</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_initial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gui.make_value_entry" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a GUI entry window with boxes to enter the initial value and rate of change (eg. cloud cover initial percent and percent rate of change</p>
+<p>Runs execute_main when entry is changed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Root</dt>
+<dd class="field-odd"><p>main GUI frame</p>
+</dd>
+<dt class="field-even">Caption</dt>
+<dd class="field-even"><p>name of variable</p>
+</dd>
+<dt class="field-odd">Rowno</dt>
+<dd class="field-odd"><p>row within GUI frame to place entry</p>
+</dd>
+<dt class="field-even">Default_initial</dt>
+<dd class="field-even"><p>default initial value of variable</p>
+</dd>
+<dt class="field-odd">Default_rate</dt>
+<dd class="field-odd"><p>rate of change of variable</p>
+</dd>
+<dt class="field-even">Unit</dt>
+<dd class="field-even"><p>unit of variable (eg. %)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.on_closing">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">on_closing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.on_closing" title="Permalink to this definition"></a></dt>
+<dd><p>Closes all matplotlib plots when GUI is closed so that program stops running</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gui.show_plot">
+<span class="sig-prename descclassname"><span class="pre">gui.</span></span><span class="sig-name descname"><span class="pre">show_plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gui.show_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Solves energy balance equations with updated inputs and embeds outplot into GUI</p>
+</dd></dl>
+
+</section>
+<section id="module-plot">
+<span id="plot"></span><h3><strong>plot</strong><a class="headerlink" href="#module-plot" title="Permalink to this headline"></a></h3>
+<p>Makes plots of the planet surface and two levels of atmosphere depending on an array of parameters.
+To see the parameters, check out under the function make_plot.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="plot.make_plot">
+<span class="sig-prename descclassname"><span class="pre">plot.</span></span><span class="sig-name descname"><span class="pre">make_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_Ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_T1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_T2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xaxis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_cc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">albedo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_albedo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">em1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_em1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">em2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_em2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.make_plot" title="Permalink to this definition"></a></dt>
+<dd><p>Define a function that plots the 2 layer energy balance model against time or a rate of change of a relevant parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>solution</strong> – The solution over time array created by solve_over_time() in energymodel.py</p></li>
+<li><p><strong>t</strong> – The time axis created by solve_over_time in energymodel.py</p></li>
+<li><p><strong>plot_Ts</strong> – A string of either ‘On’ or ‘Off’ that records whether plotting surface temperature has been checked.</p></li>
+<li><p><strong>plot_T1</strong> – A string of either ‘On’ or ‘Off’ that records whether plotting lower atmosphere temperature has been checked.</p></li>
+<li><p><strong>plot_T2</strong> – A string of either ‘On’ or ‘Off’ that records whether plotting upper atmosphere temperature has been checked.</p></li>
+<li><p><strong>xaxis</strong> – A string denoting which xaxis has been selected in the gui.</p></li>
+<li><p><strong>cc</strong> – The initial cloud cover value, used to generate cloud cover xaxis.</p></li>
+<li><p><strong>delta_cc</strong> – The rate of change of cloud cover, used to generate cloud cover xaxis.</p></li>
+<li><p><strong>albedo</strong> – The initial albedo, used to generate albedo axis.</p></li>
+<li><p><strong>delta_albedo</strong> – The rate of change of albedo, used to generate albedo axis.</p></li>
+<li><p><strong>em1</strong> – The initial emissivity of the lower atmosphere, used to generate em1 axis.</p></li>
+<li><p><strong>delta_em1</strong> – The rate of change of emissivity of the lower atmosphere, used to genreate em1 axis.</p></li>
+<li><p><strong>em2</strong> – The initial emissivity of the upper atmosphere, used to generate albedo axis.</p></li>
+<li><p><strong>delta_em2</strong> – THe rate of change of emissivity of the upper atmopshere, used to generate em2 axis.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Climate Predictor’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scientificbackground.html" class="btn btn-neutral float-right" title="Scientific background" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, NERC-DTP-Students.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
